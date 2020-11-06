@@ -1,0 +1,399 @@
+a {
+    text-decoration: none!important;
+    color: black;
+}
+
+a:hover {
+    color: #FE5722;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    box-shadow: 0 0 0px 1000px #148D8D inset;
+    -webkit-text-fill-color: white !important;
+}
+
+body {
+    background-color: #F6F6F6;
+}
+
+
+/*  
+=============================================================================================================================================================
+=========================================================================  NAVBAR  ==========================================================================
+=============================================================================================================================================================
+*/
+
+.navbar {
+    background-color: white!important;
+    -webkit-box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.navbar .container div.parts {
+    display: flex;
+    flex-direction: row;
+}
+
+.part1 {
+    width: 20%;
+    align-items: center;
+}
+
+.part2 {
+    width: 50%;
+}
+
+.part2 .searchDiv {
+    width: 100%;
+}
+
+.part2 .searchDiv .searchInput {
+    width: 85%;
+    border-radius: 15px;
+    border: 1px solid #CBCBCB;
+}
+
+.part2 .searchDiv .searchInput:focus {
+    outline: none;
+    border: 1px solid #FE5722;
+}
+
+.part2 .searchDiv .searchButton {
+    border-radius: 15px;
+    padding: 3px 14px 3px 14px;
+    background-color: transparent;
+    border: 1px solid #FE5722;
+    color: #FE5722;
+    transition: all .25s ease-in-out;
+}
+
+.part2 .searchDiv .searchButton:hover {
+    background-color: #FE5722;
+    color: white;
+    border: 1px solid transparent;
+}
+
+.part3 {
+    justify-self: flex-end;
+    justify-content: flex-end;
+    width: 30%;
+}
+
+.part3 a.nav-link:hover {
+    color: #148D8D;
+}
+
+.profileBox {
+    position: relative;
+    padding: 0 1rem;
+}
+
+.profileBox .profileText:hover {
+    color: #FE5722!important;
+    cursor: pointer;
+}
+
+#navbarCollapse {
+    transition: all .25s ease;
+    font-size: 18px;
+}
+
+#navbarCollapse:hover {
+    color: #FE5722;
+    cursor: pointer;
+}
+
+.rotate180deg {
+    transform: rotate(180deg);
+}
+
+.profileExtension {
+    position: absolute;
+    display: none;
+    top: 55px;
+    left: -20px;
+    width: 170px;
+    transition: all .2s ease;
+}
+
+.profileExtension ul {
+    padding-inline-start: 0px;
+    margin: 0;
+    list-style: none;
+    background-color: white;
+    -webkit-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.75);
+}
+
+.profileExtension ul li {
+    text-align: left;
+    color: black;
+    margin: 0;
+    padding: 10px 35px 10px 35px;
+}
+
+.profileExtension ul li:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.profileExtension ul li a:hover {
+    color: #148D8D;
+}
+
+
+/*  
+=============================================================================================================================================================
+============================================================== LOGIN and Register  ==========================================================================
+=============================================================================================================================================================
+*/
+
+.container2 {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 100px;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.container2 .display-4 {
+    margin-left: 150px;
+}
+
+.con-input {
+    display: flex;
+    background-color: #148D8D;
+    align-items: center;
+    padding: 5px;
+    padding-left: 10px;
+    border-radius: 12px;
+    position: relative;
+    width: 350px;
+    margin-top: 25px;
+    margin-left: 150px;
+    outline: 1px solid white;
+}
+
+.con-input input {
+    height: 40px;
+    border: 0px;
+    background-color: transparent;
+    outline: none;
+    font-size: .9rem;
+    font-family: 'Poppins', sans-serif;
+    margin-left: 8px;
+    width: 100%;
+    transition: all .25s ease;
+    color: white;
+}
+
+.con-input input::placeholder {
+    color: white;
+}
+
+.con-input input:focus {
+    padding-left: 5px;
+    padding-right: 0px;
+}
+
+.con-input input:focus~.bg {
+    border: 2px solid #000;
+}
+
+.con-input input:focus~i {
+    transform: translate(0, -8px);
+    box-shadow: 0px, 8px, 20px, 0px rgba(0, 0, 0, .15);
+}
+
+.con-input i.icon {
+    order: -1;
+    background-color: #fff;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    z-index: 20;
+    transition: all .25s ease;
+}
+
+.bg {
+    background-color: transparent;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+    left: 0px;
+    top: 0px;
+    pointer-events: none;
+    border-radius: inherit;
+    box-sizing: border-box;
+    border: 2px solid transparent;
+    transition: all .25s ease;
+}
+
+.formButton {
+    margin-top: 25px;
+    border-radius: 10px;
+    background-color: white;
+    color: #148D8D;
+    border: 2px solid #148D8D;
+    margin-left: 400px;
+}
+
+.formButton:hover {
+    background-color: #148D8D;
+    color: white;
+    border: 2px solid transparent;
+}
+
+.verticalLine {
+    margin-top: 70px;
+    border-left: 4px solid #148D8D;
+    height: 600px;
+}
+
+.verticalLine2 {
+    margin-top: 70px;
+    border-left: 4px solid #148D8D;
+    height: 500px;
+}
+
+.container3 {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 100px;
+}
+
+.container3 .display-4 {
+    margin-left: 170px;
+    margin-bottom: 60px;
+}
+
+.brand-color {
+    color: #148D8D;
+}
+
+.container3 p {
+    font-size: 30px;
+    margin-left: 100px;
+}
+
+
+/*  
+=============================================================================================================================================================
+============================================================== Book PAGE ====================================================================================
+=============================================================================================================================================================
+*/
+
+.bookContainer {
+    margin-top: 80px;
+}
+
+.bookImage {
+    height: 300px;
+    width: auto;
+}
+
+.bookImage:hover {
+    transform: scale(1.2);
+}
+
+.row .col-5 .card .card-body {
+    position: relative;
+}
+
+#reviewButton:hover {
+    cursor: pointer;
+    border: 1px solid #148D8D;
+    color: #148D8D;
+}
+
+#quoteButton:hover {
+    cursor: pointer;
+    border: 1px solid #148D8D;
+    color: #148D8D;
+}
+
+#reviews {
+    display: inline;
+    transition: all .25s ease;
+}
+
+#quotes {
+    display: none;
+    transition: all .25s ease;
+}
+
+.bookh3Title {
+    font-family: 'Roboto Slab', serif;
+}
+
+
+/*  
+=============================================================================================================================================================
+============================================================== Books PAGE ====================================================================================
+=============================================================================================================================================================
+*/
+
+.pl-5 .bookh3Title {
+    font-size: 1.3rem;
+}
+
+.card .card-body .ml-auto .btn-group a {
+    color: white;
+    margin-right: 10px;
+    border-radius: 4px;
+}
+
+.booksContainer .cardDeck {
+    flex-wrap: wrap;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.booksContainer .cardDeck .card {
+    width: 180px;
+    margin-right: 15px;
+    margin-left: 15px;
+    margin-bottom: 30px;
+    padding: 0px;
+    opacity: 1;
+}
+
+.booksContainer .cardDeck .card .card-body {
+    padding: 1rem;
+}
+
+.booksContainer .cardDeck .card img {
+    height: 250px;
+    width: 178px;
+}
+
+.middle {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%)
+}
+
+.booksContainer .cardDeck .card:hover {
+    -webkit-box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.55);
+    -moz-box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.55);
+    box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.55);
+}

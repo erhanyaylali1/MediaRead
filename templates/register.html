@@ -1,0 +1,60 @@
+{% extends "layout.html" %} {% block title %} Register {% endblock %} {% block content %}
+
+<div class="row">
+
+    <div class="col-5">
+
+        <form action="" method="post" name="loginForm" autocomplete="off">
+            <div class="container2">
+                <p class="display-4">Please Register</p>
+                <div class="con-input">
+
+                    <input type="text" name="fullname" placeholder="Name and Surname" required="required">
+                    <i class="bx bx-user icon"></i>
+                    <div class="bg"></div>
+
+                </div>
+                <div class="con-input">
+
+                    <input type="text" name="email" placeholder="E-Mail" required="required">
+                    <i class="bx bx-user icon"></i>
+                    <div class="bg"></div>
+
+                </div>
+                <div class="con-input">
+
+                    <input type="text" name="username" placeholder="Username" required="required">
+                    <i class="bx bx-user icon"></i>
+                    <div class="bg"></div>
+
+                </div>
+                <div class="con-input">
+
+                    <input type="text" name="password" type="password" placeholder="Password" required="required">
+                    <i class="bx bx-user icon"></i>
+                    <div class="bg"></div>
+
+                </div>
+                <button type="submit" class="btn formButton">Register</button>
+            </div>
+        </form>
+    </div>
+    <div class="verticalLine">
+
+    </div>
+    <div class="col-6">
+        <div class="container3">
+            <h1 class="display-4">Welcome to the <span class="brand-color">Media Read</span></h1>
+            <p><span class="brand-color">Media Read</span> offers you a Useful Social Platform.</p>
+            <p>In <span class="brand-color">Media Read</span>, You can search book, create your own virtual library and rate books.</p>
+            <p>You can see what your friends read or what kind of books they like?</p>
+            <p>Also lots of statistics wait for you in <span class="brand-color">Media Read</span>.</p>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "layout.html" %} 
+{% block title %} Login {% endblock %} 
+{% block content %} 
+
+<div class="row">
+
+    <div class="col-5">
+
+        <form action="" method="post" name="loginForm">
+            <div class="container2">
+                <p class="display-4">Please Login</p>
+                <div class="con-input">
+
+                    <input type="text" name="username" placeholder="Username" required="required">
+                    <i class="bx bx-user icon"></i>
+                    <div class="bg"></div>
+
+                </div>
+                <div class="con-input">
+
+                    <input type="text" name="password" placeholder="Password" required="required">
+                    <i class="bx bx-user icon"></i>
+                    <div class="bg"></div>
+
+                </div>
+                <button type="submit" class="btn formButton">Login</button>
+            </div>
+        </form>
+    </div>
+    <div class="verticalLine2">
+
+    </div>
+    <div class="col-6">
+        <div class="container3">
+            <h1 class="display-4"><span class="brand-color">Media Read</span></h1>
+            <p>Welcome Back</p>
+            <p>Please Login to reach features of <span class="brand-color"> Media Read</span></p>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
