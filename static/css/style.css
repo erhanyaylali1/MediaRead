@@ -19,6 +19,39 @@ body {
     background-color: #F6F6F6;
 }
 
+.profileInfo {
+    position: fixed;
+    top: 170px;
+}
+
+.profileList {
+    list-style: none;
+}
+
+.profileList li {
+    margin-bottom: 20px;
+}
+
+.profileList li a {
+    font-size: 1.4rem;
+}
+
+.titleName {
+    font-size: 1.8rem;
+}
+
+.backtotop {
+    position: fixed;
+    bottom: 20px;
+    right: 40px;
+    font-size: 30px;
+    background-color: #148D8D;
+    color: #F6F6F6;
+    padding: 0px 9px 0px 9px;
+    border-radius: 50px;
+    display: none;
+}
+
 
 /*  
 =============================================================================================================================================================
@@ -90,6 +123,7 @@ body {
 .profileBox {
     position: relative;
     padding: 0 1rem;
+    z-index: 555;
 }
 
 .profileBox .profileText:hover {
@@ -304,6 +338,7 @@ body {
 .bookImage {
     height: 300px;
     width: auto;
+    object-fit: cover;
 }
 
 .bookImage:hover {
@@ -402,6 +437,25 @@ body {
 
 /*  
 =============================================================================================================================================================
-============================================================== Authors Page =================================================================================
+============================================================== Author Page ==================================================================================
 =============================================================================================================================================================
 */
+
+.authorContainer {
+    margin-top: 80px;
+}
+
+.authorBooksTable {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.authorBooksTable tbody tr td {
+    vertical-align: inherit;
+}
+
+.authorBooksTable tbody tr td img {
+    height: 100px;
+    width: auto;
+    object-fit: cover;
+}
