@@ -2,6 +2,7 @@ from datetime import datetime
 from flask import Flask, render_template, current_app, abort, url_for, request, render_template, redirect, session
 from flask_mysqldb import MySQL
 
+
 def home_page():
     return render_template("index.html")
 
