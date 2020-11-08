@@ -6,14 +6,18 @@
     <div class="row pt-5">
 
         <div class="col-3 profileInfo">
+            {% if session["logged_in"] %}
             <a href="" class="titleName">Erhan Yaylalı</a>
             <ul class="mt-5 profileList">
+
                 <li><a href="">My Books</a></li>
                 <li><a href="">My Quotes</a></li>
                 <li><a href="">My Reviews</a></li>
                 <li><a href="">Read Books</a></li>
                 <li><a href="">Statistics</a></li>
+
             </ul>
+            {% else %} {% endif %}
         </div>
         <div class="col-8 ml-auto">
             <div class="card mb-4">

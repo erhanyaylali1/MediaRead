@@ -392,6 +392,10 @@ body {
     border-radius: 4px;
 }
 
+.booksContainer {
+    margin-top: 125px;
+}
+
 .booksContainer .cardDeck {
     flex-wrap: wrap;
     display: flex;
@@ -410,6 +414,12 @@ body {
 
 .booksContainer .cardDeck .card .card-body {
     padding: 1rem;
+}
+
+.booksContainer .cardDeck .card .card-body p:first-child {
+    max-height: 50px;
+    height: 50px;
+    overflow: hidden;
 }
 
 .booksContainer .cardDeck .card img {

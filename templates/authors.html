@@ -1,91 +1,31 @@
-{% extends "layout.html" %} 
-{% block title %} Authors {% endblock %} 
+{% extends "layout.html" %} {% block title %} Authors {% endblock %} {% block content %}
 
-{% block content %}
+<div class="container booksContainer">
 
-    <div class="container booksContainer mt-5">
-
-         <div class="card mb-5">
-            <div class="card-body pl-5 d-flex flex-row align-items-center">
-                <div>
-                    <p class="bookh3Title m-0">Authors</p>
-                </div>
+    <div class="card mb-5">
+        <div class="card-body pl-5 d-flex flex-row align-items-center">
+            <div>
+                <p class="bookh3Title m-0">Authors</p>
             </div>
         </div>
-        <div class="cardDeck px-4 mb-5">
-            <div class="card">
-                <a href=""><img class="card-img-top" src="http://the-hobbitmovie.com/wp-content/uploads/2010/05/JRRtolkien.jpg" alt="Author Card Image"></a>
-                <div class="card-body">  
-                    <p class="card-text"><a href="">J. R. R. Tolkien</a></p>
-                    <p class="card-text"><a href="">12 Adet Kitap</a></p>
-                </div>
-            </div>
-            <div class="card">
-                <a href=""><img class="card-img-top" src="https://pyxis.nymag.com/v1/imgs/fdd/6fb/7b7b00b295974cd02f285f3bb1f94ae9ce-3-jk-rowling.rvertical.w1200.jpg" alt="Author Card Image"></a>
-                <div class="card-body">  
-                    <p class="card-text"><a href="">J. K. Rowling</a></p>
-                    <p class="card-text"><a href="">7 Adet Kitap</a></p>
-                </div>
-            </div>
-            <div class="card">
-                <a href=""><img class="card-img-top" src="http://the-hobbitmovie.com/wp-content/uploads/2010/05/JRRtolkien.jpg" alt="Author Card Image"></a>
-                <div class="card-body">  
-                    <p class="card-text"><a href="">J. R. R. Tolkien</a></p>
-                    <p class="card-text"><a href="">12 Adet Kitap</a></p>
-                </div>
-            </div>
-            <div class="card">
-                <a href=""><img class="card-img-top" src="https://pyxis.nymag.com/v1/imgs/fdd/6fb/7b7b00b295974cd02f285f3bb1f94ae9ce-3-jk-rowling.rvertical.w1200.jpg" alt="Author Card Image"></a>
-                <div class="card-body">  
-                    <p class="card-text"><a href="">J. K. Rowling</a></p>
-                    <p class="card-text"><a href="">7 Adet Kitap</a></p>
-                </div>
-            </div>
-            <div class="card">
-                <a href=""><img class="card-img-top" src="http://the-hobbitmovie.com/wp-content/uploads/2010/05/JRRtolkien.jpg" alt="Author Card Image"></a>
-                <div class="card-body">  
-                    <p class="card-text"><a href="">J. R. R. Tolkien</a></p>
-                    <p class="card-text"><a href="">12 Adet Kitap</a></p>
-                </div>
-            </div>
-            <div class="card">
-                <a href=""><img class="card-img-top" src="https://pyxis.nymag.com/v1/imgs/fdd/6fb/7b7b00b295974cd02f285f3bb1f94ae9ce-3-jk-rowling.rvertical.w1200.jpg" alt="Author Card Image"></a>
-                <div class="card-body">  
-                    <p class="card-text"><a href="">J. K. Rowling</a></p>
-                    <p class="card-text"><a href="">7 Adet Kitap</a></p>
-                </div>
-            </div>
-            <div class="card">
-                <a href=""><img class="card-img-top" src="http://the-hobbitmovie.com/wp-content/uploads/2010/05/JRRtolkien.jpg" alt="Author Card Image"></a>
-                <div class="card-body">  
-                    <p class="card-text"><a href="">J. R. R. Tolkien</a></p>
-                    <p class="card-text"><a href="">12 Adet Kitap</a></p>
-                </div>
-            </div>
-            <div class="card">
-                <a href=""><img class="card-img-top" src="https://pyxis.nymag.com/v1/imgs/fdd/6fb/7b7b00b295974cd02f285f3bb1f94ae9ce-3-jk-rowling.rvertical.w1200.jpg" alt="Author Card Image"></a>
-                <div class="card-body">  
-                    <p class="card-text"><a href="">J. K. Rowling</a></p>
-                    <p class="card-text"><a href="">7 Adet Kitap</a></p>
-                </div>
-            </div>
-            <div class="card">
-                <a href=""><img class="card-img-top" src="http://the-hobbitmovie.com/wp-content/uploads/2010/05/JRRtolkien.jpg" alt="Author Card Image"></a>
-                <div class="card-body">  
-                    <p class="card-text"><a href="">J. R. R. Tolkien</a></p>
-                    <p class="card-text"><a href="">12 Adet Kitap</a></p>
-                </div>
-            </div>
-            <div class="card">
-                <a href=""><img class="card-img-top" src="https://pyxis.nymag.com/v1/imgs/fdd/6fb/7b7b00b295974cd02f285f3bb1f94ae9ce-3-jk-rowling.rvertical.w1200.jpg" alt="Author Card Image"></a>
-                <div class="card-body">  
-                    <p class="card-text"><a href="">J. K. Rowling</a></p>
-                    <p class="card-text"><a href="">7 Adet Kitap</a></p>
-                </div>
+    </div>
+    <div class="cardDeck px-4 mb-5">
+
+        {% for author in authors %}
+
+        <div class="card">
+            <a href="/authors/{{ author[0] }}"><img class="card-img-top" src="{{ author[3] }}"></a>
+            <div class="card-body">
+                <p class="card-text"><a href="/authors/{{ author[0] }}">{{ author[1] }}</a></p>
+                <p>adet kitap</p>
             </div>
         </div>
 
+        {% endfor %}
 
     </div>
+
+
+</div>
 
 {% endblock %}
