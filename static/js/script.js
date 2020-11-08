@@ -32,4 +32,8 @@ $(document).ready(function() {
         return false;
     });
 
+    $(".addBookForm").click(function() {
+        $("#addBookFormId").show("fast");
+    })
+
 });

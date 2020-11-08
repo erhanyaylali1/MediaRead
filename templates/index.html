@@ -7,14 +7,14 @@
 
         <div class="col-3 profileInfo">
             {% if session["logged_in"] %}
-            <a href="" class="titleName">Erhan Yaylalı</a>
+            <a href="users/{{ userInfo[0] }}" class="titleName">{{ userInfo[1] }}</a>
             <ul class="mt-5 profileList">
 
-                <li><a href="">My Books</a></li>
-                <li><a href="">My Quotes</a></li>
-                <li><a href="">My Reviews</a></li>
-                <li><a href="">Read Books</a></li>
-                <li><a href="">Statistics</a></li>
+                <li><a href="users/{{ userInfo[0] }}/myLibrary">My Library</a></li>
+                <li><a href="users/{{ userInfo[0] }}/myQuotes">My Quotes</a></li>
+                <li><a href="users/{{ userInfo[0] }}/myReview">My Reviews</a></li>
+                <li><a href="users/{{ userInfo[0] }}/myReadBooks">Read Books</a></li>
+                <li><a href="users/{{ userInfo[0] }}/myStatistics">Statistics</a></li>
 
             </ul>
             {% else %} {% endif %}

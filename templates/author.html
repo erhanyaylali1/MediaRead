@@ -28,8 +28,6 @@
                             {{ author[2] }}
                         </div>
                     </div>
-
-
                 </div>
             </div>
 
@@ -45,20 +43,57 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for book in books  %}
+                    {% for book in books %}
 
-                        <tr>
-                            <td>
-                                <a href="/books/{{ book[0] }}"><img src="{{ book[6] }}" alt=""></a>
-                            </td>
-                            <td><a href="/books/{{ book[0] }}">{{ book[1] }}</a></td>
-                            <td>{{ book[2] }}</td>
-                            <td>{{ book[5] }}</td>
-                        </tr>
+                    <tr>
+                        <td>
+                            <a href="/books/{{ book[0] }}"><img src="{{ book[6] }}" alt=""></a>
+                        </td>
+                        <td><a href="/books/{{ book[0] }}">{{ book[1] }}</a></td>
+                        <td>{{ book[2] }}</td>
+                        <td>{{ book[5] }}</td>
+                    </tr>
 
                     {% endfor %}
                 </tbody>
             </table>
+            <div class="row mt-5">
+                <div class="my-4 mx-5">
+                    <button class="btn btn-primary text-white addBookForm">Add Book</button>
+                </div>
+                <form id="addBookFormId" class="ml-4 mb-5 p-3" action="" method="post" name="addBook" autocomplete="off">
+                    <div class="addBookForm">
+                        <h3 class="">Book's Information</h3>
+                        <div class="con-input">
+
+                            <input type="text" name="title" placeholder="Book Title" required="required">
+
+                        </div>
+                        <div class="con-input">
+
+                            <input type="text" name="page" placeholder="Book Page" required="required">
+
+                        </div>
+                        <div class="con-input">
+
+                            <input type="text" name="publisher" placeholder="Book Publisher" required="required">
+
+                        </div>
+                        <div class="con-input">
+
+                            <textarea class="text-white" rows="5" name="summary" placeholder="Book Summary" required="required"></textarea>
+
+                        </div>
+                        <div class="con-input">
+
+                            <input type="text" name="image" placeholder="Book Image URL" required="required">
+
+                        </div>
+                        <button type="submit" class="btn formButton">Add</button>
+                    </div>
+                </form>
+            </div>
+
         </div>
     </div>
 

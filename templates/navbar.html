@@ -1,4 +1,4 @@
-<nav class="navbar fixed-top navbar-expand-md navbar-light bg-dark">
+<nav class="navbar navbar-expand-md navbar-light bg-dark">
     <div class="container justify-content-between">
         <div class="part1 parts">
             <a href="/"><img src="{{ url_for('static', filename='img/logo.png') }}" width="50" height="30"></a>
@@ -12,16 +12,21 @@
         </div>
         <div class="part3 parts align-items-center">
             <a class="nav-link " href="/books">Books</a>
-            <a class="nav-link " href="/authors">Authors</a> {% if session["logged_in"] %}
+            <a class="nav-link " href="/authors">Authors</a> 
+            <a class="nav-link " href="/categories">Categories</a>
+            {% if session["logged_in"] %}
+
             <div class="profileBox">
                 <div class="d-flex align-items-center">
                     <a class="profileText mr-3">
-                            Profile
-                        </a>
+                                My Profile
+                            </a>
                     <i class="fas fa-caret-down" id="navbarCollapse"></i>
                     <div class="profileExtension">
                         <ul class="">
-                            <li><a href="">My Profile</a></li>
+                            <li>
+                                <a href=""></a>
+                            </li>
                             <li><a href="">My Library</a></li>
                             <li><a href="">My Quotes</a></li>
                             <li><a href="">Read Books</a></li>
@@ -31,7 +36,9 @@
                     </div>
                 </div>
             </div>
+
             {% else %}
+
             <a class="nav-link " href="/login">Login</a>
             <a class="nav-link " href="/register">Register</a> {% endif %}
 

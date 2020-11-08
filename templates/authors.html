@@ -4,20 +4,24 @@
 
     <div class="card mb-5">
         <div class="card-body pl-5 d-flex flex-row align-items-center">
+
             <div>
                 <p class="bookh3Title m-0">Authors</p>
             </div>
         </div>
     </div>
+    <div class="mb-3 float-right">
+        <a href="/addAuthor" class="btn btn-primary text-white">Add Author</a>
+    </div>
     <div class="cardDeck px-4 mb-5">
 
-        {% for author in authors %}
+        {% for i in range(0, length) %}
 
         <div class="card">
-            <a href="/authors/{{ author[0] }}"><img class="card-img-top" src="{{ author[3] }}"></a>
+            <a href="/authors/{{ authors[i][0] }}"><img class="card-img-top" src="{{ authors[i][3] }}"></a>
             <div class="card-body">
-                <p class="card-text"><a href="/authors/{{ author[0] }}">{{ author[1] }}</a></p>
-                <p>adet kitap</p>
+                <p class="card-text"><a href="/authors/{{ authors[i][0] }}">{{ authors[i][1] }}</a></p>
+                <p>{{ booksNum[i][0] }} adet kitap</p>
             </div>
         </div>
 
