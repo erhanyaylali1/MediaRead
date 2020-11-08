@@ -12,9 +12,8 @@
         </div>
         <div class="part3 parts align-items-center">
             <a class="nav-link " href="/books">Books</a>
-            <a class="nav-link " href="/authors">Authors</a> 
-            <a class="nav-link " href="/categories">Categories</a>
-            {% if session["logged_in"] %}
+            <a class="nav-link " href="/authors">Authors</a>
+            <a class="nav-link " href="/categories">Categories</a> {% if session["logged_in"] %}
 
             <div class="profileBox">
                 <div class="d-flex align-items-center">
@@ -24,9 +23,6 @@
                     <i class="fas fa-caret-down" id="navbarCollapse"></i>
                     <div class="profileExtension">
                         <ul class="">
-                            <li>
-                                <a href=""></a>
-                            </li>
                             <li><a href="">My Library</a></li>
                             <li><a href="">My Quotes</a></li>
                             <li><a href="">Read Books</a></li>

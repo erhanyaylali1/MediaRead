@@ -1,4 +1,4 @@
-{% extends "layout.html" %} {% block title %} Author {% endblock %} {% block content %}
+{% extends "layout.html" %} {% block title %} {{ author[1] }} {% endblock %} {% block content %}
 
 <div class="container authorContainer">
 
@@ -83,6 +83,14 @@
 
                             <textarea class="text-white" rows="5" name="summary" placeholder="Book Summary" required="required"></textarea>
 
+                        </div>
+                        <div class="form-group con-input flex-column">
+                            <label for="exampleFormControlSelect2" class="text-white">Category</label>
+                            <select multiple class="form-control" name="cat" id="exampleFormControlSelect2">
+                                {% for i in range(0, length)  %}                                    
+                                    <option value="{{categories[i][0]}}">{{categories[i][1]}}</option>
+                                {% endfor %}
+                              </select>
                         </div>
                         <div class="con-input">
 

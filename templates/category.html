@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block title %}
+    {{ category }}
+{% endblock  %}
+{% block content %}
+
+    <div class="container booksContainer">
+
+        <div class="card mb-5">
+            <div class="card-body pl-5 d-flex flex-row align-items-center">
+                <div>
+                    <p class="bookh3Title m-0">{{ category }}</p>
+                </div>
+                <div class="ml-auto">
+                    <div class="btn-group">
+                        <a type="button" class="btn btn-info">A-Z by Book Name</a>
+                        <a type="button" class="btn btn-info">A-Z by Author Name</a>
+                        <a type="button" class="btn btn-info">Rate (High to Low)</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cardDeck px-4 mb-5">
+            {% for i in range(0, length) %}
+            <div class="card">
+                <a href="/books/{{ books[i][0] }}"><img class="card-img-top" src="{{ books[i][6] }}" alt="Book Card Image"></a>
+                <div class="card-body">
+                    <p><a href="/books/{{ books[i][0] }}">{{ books[i][1] }}</a></p>
+                    <p class="card-text"><a href="/authors/{{ authors[i][0] }}"> {{ authors[i][0] }}</a></p>
+                    {% if books[i][5] == 0 %}
+                    <p class="card-text text-right"><small class="text-muted">Rate: {{ books[i][5] }}</small></p>
+                    {% else %} {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

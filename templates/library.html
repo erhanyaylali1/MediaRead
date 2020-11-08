@@ -1,28 +1,24 @@
-{% extends "layout.html" %} {% block title %} Books {% endblock %} {% block content %}
+{% extends "layout.html" %} {% block title %} My Library {% endblock %} {% block content %}
 
 <div class="container booksContainer">
 
     <div class="card mb-5">
         <div class="card-body pl-5 d-flex flex-row align-items-center">
             <div>
-                <p class="bookh3Title m-0">Books (Total: {{ len }} Books)</p>
+                <p class="bookh3Title m-0">My Library (Total: {{length}} Books)</p>
             </div>
             <div class="ml-auto">
                 <div class="btn-group">
-                    <form action="" method="POST"></form>
-                    <input type="submit" name="selected_sort" value="A-Z by Book Name" class="btn btn-info">
-                    <input type="submit" name="selected_sort" value="A-Z by Author Name" class="btn btn-info">
-                    <input type="submit" name="selected_sort" value="Rate (High to Low)" class="btn btn-info">
+                    <a type="button" class="btn btn-info">A-Z by Book Name</a>
+                    <a type="button" class="btn btn-info">A-Z by Author Name</a>
+                    <a type="button" class="btn btn-info">Rate (High to Low)</a>
                 </div>
             </div>
         </div>
     </div>
     <div class="cardDeck px-4 mb-5">
-        {%for i in range(0, len)%}
+        {%for i in range(0, length)%}
         <div class="card">
-            <form action="" method="post">
-                <button name="bookId" value="{{books[i][0]}}-{{authors[i][0]}}" type="submit" class="addToLibrary btn btn-primary" data-toggle="tooltip" data-placement="top" title="Add to My Library"><i class="far fa-plus-square"></i></button>
-            </form>
             <a href="/books/{{ books[i][0] }}"><img class="card-img-top" src="{{ books[i][6] }}" alt="Book Card Image"></a>
             <div class="card-body">
                 <p><a href="/books/{{ books[i][0] }}">{{ books[i][1] }}</a></p>

@@ -1,4 +1,4 @@
-{% extends "layout.html" %} {% block title %} Book {% endblock %} {% block content %}
+{% extends "layout.html" %} {% block title %} {{ book[1] }} {% endblock %} {% block content %}
 
 
 <div class="container bookContainer">
@@ -35,9 +35,8 @@
                             <b>Category</b>
                         </div>
                         <div class="col-8">
-                            {% for category in categories  %}
-                                <a href="/authors/{{ category[0] }}">{{ category[1] }} </a>
-                            {% endfor %}
+                            {% for category in categories %}
+                            <a href="/categories/{{ category[0] }}">{{ category[1] }} </a> {% endfor %}
                         </div>
                     </div>
                     <div class="row mt-3">
