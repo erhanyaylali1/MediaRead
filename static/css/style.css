@@ -424,6 +424,20 @@ body {
     border-color: #148D8D;
 }
 
+.deletefromLibrary {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    padding: 1px 6px;
+}
+
+.addToReadBook {
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    padding: 1px 6px;
+}
+
 .booksContainer .cardDeck .card .card-body {
     padding: 1rem;
 }

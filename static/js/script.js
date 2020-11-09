@@ -34,6 +34,5 @@ $(document).ready(function() {
 
     $(".addBookForm").click(function() {
         $("#addBookFormId").show("fast");
-    })
-
+    });
 });

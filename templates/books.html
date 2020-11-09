@@ -9,17 +9,20 @@
             </div>
             <div class="ml-auto">
                 <div class="btn-group">
-                    <form action="" method="POST"></form>
-                    <input type="submit" name="selected_sort" value="A-Z by Book Name" class="btn btn-info">
-                    <input type="submit" name="selected_sort" value="A-Z by Author Name" class="btn btn-info">
-                    <input type="submit" name="selected_sort" value="Rate (High to Low)" class="btn btn-info">
+                    <form action="" method="POST">
+                        <input type="submit" name="selected_sort" value="A-Z by Book Name" class="btn btn-info">
+                        <input type="submit" name="selected_sort" value="A-Z by Author Name" class="btn btn-info">
+                        <input type="submit" name="selected_sort" value="Rate (High to Low)" class="btn btn-info">
+                    </form>
                 </div>
             </div>
         </div>
     </div>
     <div class="cardDeck px-4 mb-5">
+
         {%for i in range(0, len)%}
-        <div class="card">
+
+        <div class="card wow animate__lightSpeedInRight">
             <form action="" method="post">
                 <button name="bookId" value="{{books[i][0]}}-{{authors[i][0]}}" type="submit" class="addToLibrary btn btn-primary" data-toggle="tooltip" data-placement="top" title="Add to My Library"><i class="far fa-plus-square"></i></button>
             </form>
@@ -27,12 +30,17 @@
             <div class="card-body">
                 <p><a href="/books/{{ books[i][0] }}">{{ books[i][1] }}</a></p>
                 <p class="card-text"><a href="/authors/{{ authors[i][0] }}"> {{ authors[i][1] }}</a></p>
-                {% if books[i][5] != 0 %}
-                <p class="card-text text-right"><small class="text-muted">Rate: {{ books[i][5] }}</small></p>
+                {% if books[i][5] == 0 %}
+                <p class="card-text text-right animate__lightSpeedInRight"><small class="text-muted">Rate: {{ books[i][5] }}</small></p>
                 {% else %} {% endif %}
             </div>
+
         </div>
         {% endfor %}
+
+        <div class="animate__lightSpeedInRight">
+            merhaba deneme
+        </div>
     </div>
 </div>
 

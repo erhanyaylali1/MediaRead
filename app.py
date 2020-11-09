@@ -10,7 +10,7 @@ db.check = 0
 
 @app.route('/')
 def home_page():
-
+    
     if session["username"] != "":
         db.cursor.execute("SELECT idUser, fullName from mediaread.user where username = \"" + str(session["username"]) + "\"")
         userInfo = db.cursor.fetchone()
@@ -26,8 +26,6 @@ def books_page():
 
     if request.method == "GET":
 
-        args = request.args.get("selected_sort")
-        print(args)
         db.cursor.execute("SELECT * FROM mediaread.book ORDER BY bookName ASC")
         books = db.cursor.fetchall()
         authors = []
@@ -126,7 +124,6 @@ def author_page(author_id):
             db.cursor.execute(sorgu)
             bookId = db.cursor.fetchone()
             bookId = bookId[0]
-            print(bookId)
 
             for cat in categories:
                 sorgu = "insert into mediaread.book_has_category (book_id, author_id, category_id) values ("+str(bookId)+","+str(author_id)+","+str(cat)+")"
@@ -198,26 +195,46 @@ def category_page(category_id):
 
 
 
-@app.route('/users/<int:user_id>/myLibrary')
+@app.route('/users/<int:user_id>/myLibrary', methods = ["GET","POST"])
 def library_page(user_id):
 
-    sorgu = "select * from mediaread.user_has_book where user_id = " + str(user_id)
-    db.cursor.execute(sorgu)
-    ids = db.cursor.fetchall()
-    books = []
-    authors = []
+    if request.method == "GET":
 
-    for idx in ids:
+        sorgu = "select * from mediaread.user_has_book where user_id = " + str(user_id)
+        db.cursor.execute(sorgu)
+        ids = db.cursor.fetchall()
+        books = []
+        authors = []
 
-        sorgu2 = "select * from mediaread.book where idBook = " + str(idx[1])
-        db.cursor.execute(sorgu2)
-        books.append(db.cursor.fetchone())
-        sorgu3 = "select * from mediaread.author where idAuthor = " + str(idx[2])
-        db.cursor.execute(sorgu3)
-        authors.append(db.cursor.fetchone())
+        for idx in ids:
 
-    length = len(books)
-    return render_template("library.html", books=books, authors=authors, length=length)
+            sorgu2 = "select * from mediaread.book where idBook = " + str(idx[1])
+            db.cursor.execute(sorgu2)
+            books.append(db.cursor.fetchone())
+            sorgu3 = "select * from mediaread.author where idAuthor = " + str(idx[2])
+            db.cursor.execute(sorgu3)
+            authors.append(db.cursor.fetchone())
+
+        length = len(books)
+        return render_template("library.html", books=books, authors=authors, length=length)
+
+    else:
+
+        bookId = request.form["bookId"]
+        ids = bookId.split("-")
+        
+        print(bookId)
+
+        userId = session["userId"]
+        bookId = ids[0]
+        authorId = ids[1]
+        sorgu = "DELETE FROM mediaread.user_has_book WHERE user_id = " + str(userId) + " AND book_id = " + str(bookId) + " AND author_id = " + str(authorId)
+        
+        db.cursor.execute(sorgu)
+        db.con.commit()
+        flash("You added this book in your library","success")
+
+        return redirect(request.url)
 
 
 
