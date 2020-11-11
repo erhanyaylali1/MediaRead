@@ -1,39 +1,46 @@
-{% extends "layout.html" %}
-{% block title %}
-    {{ category }}
-{% endblock  %}
-{% block content %}
+{% extends "layout.html" %} {% block title %} {{ category }} {% endblock %} {% block content %}
 
-    <div class="container booksContainer">
+<div class="container booksContainer">
 
-        <div class="card mb-5">
-            <div class="card-body pl-5 d-flex flex-row align-items-center">
-                <div>
-                    <p class="bookh3Title m-0">{{ category }}</p>
-                </div>
-                <div class="ml-auto">
-                    <div class="btn-group">
-                        <a type="button" class="btn btn-info">A-Z by Book Name</a>
-                        <a type="button" class="btn btn-info">A-Z by Author Name</a>
-                        <a type="button" class="btn btn-info">Rate (High to Low)</a>
-                    </div>
+    <div class="card mb-5">
+        <div class="card-body pl-5 d-flex flex-row align-items-center">
+            <div>
+                <p class="bookh3Title m-0">{{ datas[0][1] }}</p>
+            </div>
+            <div class="ml-auto">
+                <div class="btn-group">
+                    <a type="button" class="btn btn-info">A-Z by Book Name</a>
+                    <a type="button" class="btn btn-info">A-Z by Author Name</a>
+                    <a type="button" class="btn btn-info">Rate (High to Low)</a>
                 </div>
             </div>
-        </div>
-        <div class="cardDeck px-4 mb-5">
-            {% for i in range(0, length) %}
-            <div class="card">
-                <a href="/books/{{ books[i][0] }}"><img class="card-img-top" src="{{ books[i][6] }}" alt="Book Card Image"></a>
-                <div class="card-body">
-                    <p><a href="/books/{{ books[i][0] }}">{{ books[i][1] }}</a></p>
-                    <p class="card-text"><a href="/authors/{{ authors[i][0] }}"> {{ authors[i][0] }}</a></p>
-                    {% if books[i][5] == 0 %}
-                    <p class="card-text text-right"><small class="text-muted">Rate: {{ books[i][5] }}</small></p>
-                    {% else %} {% endif %}
-                </div>
-            </div>
-            {% endfor %}
         </div>
     </div>
+    <div class="cardDeck px-4 mb-5">
+        {% if datas[0][3] != None %} {% for i in range(0, length) %}
+        <div class="card">
+            <a href="/books/{{ datas[i][2] }}"><img class="card-img-top" src="{{ datas[i][11] }}" alt="Book Card Image"></a>
+            <div class="card-body">
+                <p><a href="/books/{{ datas[i][5] }}">{{ datas[i][6] }}</a></p>
+                <p class="card-text"><a href="/authors/{{ datas[i][3] }}"> {{ datas[i][15] }}</a></p>
+                {% if datas[i][10] != 0 %}
+                <p class="card-text text-right"><small class="text-muted">Rate: {{ datas[i][10] }}</small></p>
+                {% else %}
+                <p> No rate yet.</p>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %} {% else %}
+
+        <div class="container">
+
+            <p>There are no book in this Category</p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+</div>
 
 {% endblock %}

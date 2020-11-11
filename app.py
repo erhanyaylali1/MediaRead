@@ -2,21 +2,24 @@ from flask import Flask, render_template, current_app, abort, url_for, request, 
 from flask_mysqldb import MySQL
 from database import Database
 from MySQLdb import IntegrityError
+import decimal
+
 
 app = Flask(__name__)
 app.secret_key = "MediaRead"
 db = Database("127.0.0.1", 3307, "root", "3347", "mediaread")
 db.check = 0
 
+
 @app.route('/')
 def home_page():
-    
+
     if session["username"] != "":
         db.cursor.execute("SELECT idUser, fullName from mediaread.user where username = \"" + str(session["username"]) + "\"")
         userInfo = db.cursor.fetchone()
     else:
         userInfo = ""
-
+ 
     return render_template("index.html", userInfo=userInfo)
 
 
@@ -25,21 +28,32 @@ def home_page():
 def books_page():
 
     if request.method == "GET":
-
-        db.cursor.execute("SELECT * FROM mediaread.book ORDER BY bookName ASC")
-        books = db.cursor.fetchall()
-        authors = []
-        for i in range (len(books)):
-
-            db.cursor.execute("SELECT idAuthor, fullName FROM mediaread.author where idAuthor = " + str(books[i][7]))
-            authors.append(db.cursor.fetchone())
         
-        return render_template("books.html", books=books, authors=authors, len=len(books))    
+        sort = request.args.get('sort')
+
+        if sort == 'book_a':
+            db.cursor.execute("SELECT * FROM mediaread.book LEFT JOIN mediaread.author ON mediaread.book.author_id = mediaread.author.idAuthor ORDER BY mediaread.book.bookName ASC")
+        elif sort == 'book_d':
+            db.cursor.execute("SELECT * FROM mediaread.book LEFT JOIN mediaread.author ON mediaread.book.author_id = mediaread.author.idAuthor ORDER BY mediaread.book.bookName DESC")
+        elif sort == 'author_a':
+            db.cursor.execute("SELECT * FROM mediaread.book LEFT JOIN mediaread.author ON mediaread.book.author_id = mediaread.author.idAuthor ORDER BY mediaread.author.fullName ASC")
+        elif sort == 'author_d':
+            db.cursor.execute("SELECT * FROM mediaread.book LEFT JOIN mediaread.author ON mediaread.book.author_id = mediaread.author.idAuthor ORDER BY mediaread.author.fullName DESC")
+        elif sort == 'rate_a':
+            db.cursor.execute("SELECT * FROM mediaread.book LEFT JOIN mediaread.author ON mediaread.book.author_id = mediaread.author.idAuthor ORDER BY mediaread.book.rate ASC")
+        elif sort == 'rate_d':
+            db.cursor.execute("SELECT * FROM mediaread.book LEFT JOIN mediaread.author ON mediaread.book.author_id = mediaread.author.idAuthor ORDER BY mediaread.book.rate DESC")
+        else:
+            db.cursor.execute("SELECT * FROM mediaread.book LEFT JOIN mediaread.author ON mediaread.book.author_id = mediaread.author.idAuthor")
+
+        allData = db.cursor.fetchall()
+        length = len(allData)
+        return render_template("books.html", allData=allData, length=length)    
     
     else:
-        bookId = request.form["bookId"]
-        ids = bookId.split("-")
 
+        bookId = request.form.get("bookId")
+        ids = bookId.split("-")
         if session["logged_in"]:
             userId = session["userId"]
             bookId = ids[0]
@@ -58,36 +72,104 @@ def books_page():
 
 
 
-@app.route('/books/<int:book_id>')
+@app.route('/books/<int:book_id>', methods = ["GET","POST"])
 def book_page(book_id):
 
-    db.cursor.execute("SELECT * FROM mediaread.book where idBook = " + str(book_id))
-    book = db.cursor.fetchone()
-    db.cursor.execute("SELECT idAuthor, fullName FROM mediaread.author where idAuthor = " + str(book[7]))
-    author = db.cursor.fetchone()
-    db.cursor.execute("SELECT category_id FROM mediaread.book_has_category where book_id = " + str(book_id))
-    categoryIds = db.cursor.fetchall()
-    categories = []
-    for i in range(len(categoryIds)):
-        db.cursor.execute("SELECT * FROM mediaread.category where idCategory = " + str(categoryIds[i][0]))
-        categories.append(db.cursor.fetchone())
+    if request.method == "GET":
+        print(session["username"])
+        sorgu = """ 
+            SELECT * FROM mediaread.book 
+            LEFT JOIN mediaread.author 
+            ON mediaread.book.author_id = mediaread.author.idAuthor 
+            LEFT JOIN mediaread.book_has_category 
+            ON mediaread.book.idbook=mediaread.book_has_category.book_id 
+            LEFT JOIN mediaread.category 
+            ON mediaread.book_has_category.category_id=mediaread.category.idCategory 
+            WHERE mediaread.book.idbook = 
+        """
+        db.cursor.execute(sorgu + str(book_id))
+        book = db.cursor.fetchall()
+        sorgu = """ 
+            SELECT * 
+            FROM mediaread.book
+            LEFT JOIN mediaread.user_review_book
+            ON mediaread.user_review_book.book_id = mediaread.book.idbook
+            LEFT JOIN mediaread.user
+            ON mediaread.user_review_book.user_id = mediaread.user.idUser
+            WHERE mediaread.book.idbook = 
+        """
+        db.cursor.execute(sorgu + str(book_id) + " ORDER BY mediaread.user_review_book.time DESC")
+        reviews = db.cursor.fetchall()
+        check2 = 0
+        if reviews[0][9] is None:
+            check2 = 1
 
-    return render_template("book.html",book_id = book_id, book=book, author=author, categories=categories)
+        sorgu = """ 
+            SELECT * 
+            FROM mediaread.book
+            LEFT JOIN mediaread.quote
+            ON mediaread.book.idbook = mediaread.quote.book_id
+            LEFT JOIN mediaread.user
+            ON mediaread.quote.user_id = mediaread.user.idUser
+            WHERE mediaread.book.idbook =
+        """
+        
+        db.cursor.execute(sorgu + str(book_id) + " ORDER BY mediaread.quote.time DESC")
+        quotes = db.cursor.fetchall()
+        check = 0
+        if quotes[0][9] is None:
+            check = 1
 
+        return render_template("book.html",book=book, reviews=reviews, quotes=quotes, check=check, check2=check2)
+
+    else:
+        
+        quoteVal = request.form.get("addQuoteButton")
+        quote = request.form.get("quote")
+        reviewVal = request.form.get("addReviewButton")
+        review = request.form.get("review")
+        rate = request.form.get("rate")
+
+        if quoteVal is None:
+            reviewVal = reviewVal.split("-")
+            user_id = reviewVal[0]
+            author_id = reviewVal[1]
+            sorgu = "INSERT INTO mediaread.user_review_book (review, rate, user_id, book_id, author_id,time) VALUES (\""+review+"\","+rate+","+str(user_id)+","+str(book_id)+","+str(author_id)+",current_timestamp())"
+            
+            db.cursor.execute(sorgu)
+            db.con.commit()
+
+            sorgu = "SELECT rate,readNumber from mediaread.book where idbook = " + str(book_id)
+            db.cursor.execute(sorgu)
+            comings = db.cursor.fetchone()
+            rateOld = comings[0]
+            readNumber = comings[1]
+            newRate = (rateOld * readNumber + int(rate)) / (readNumber + 1) 
+            sorgu = "UPDATE mediaread.book SET rate = "+ str(newRate)+" where idBook = "+str(book_id)
+            db.cursor.execute(sorgu)
+            db.con.commit()
+
+
+        else:
+            quoteVal = quoteVal.split("-")
+            user_id = quoteVal[0]
+            author_id = quoteVal[1]
+            sorgu = "INSERT INTO mediaread.quote (quoteContent, user_id, book_id, author_id, time) VALUES (\""+quote+"\","+str(user_id)+","+str(book_id)+","+str(author_id)+",current_timestamp())"
+
+            db.cursor.execute(sorgu)
+            db.con.commit()
+
+        return redirect(request.url)
+    
 
 
 @app.route('/authors')
 def authors_page():
 
-    db.cursor.execute("SELECT * FROM mediaread.author")
+    db.cursor.execute("SELECT mediaread.author.idAuthor, mediaread.author.fullName, mediaread.author.authorImage, COUNT(mediaread.book.author_id) FROM mediaread.author LEFT JOIN mediaread.book ON mediaread.author.idAuthor = mediaread.book.author_id group by mediaread.author.idAuthor")
     authors = db.cursor.fetchall()
     length = len(authors)
-    booksNum = []
-    for i in range(len(authors)):
-        db.cursor.execute("SELECT COUNT(bookName) FROM mediaread.book where author_id = " + str(authors[i][0]))
-        booksNum.append(db.cursor.fetchone())
-
-    return render_template("authors.html",authors=authors, length=length, booksNum=booksNum)
+    return render_template("authors.html",authors=authors, length=length)
 
 
 
@@ -169,29 +251,21 @@ def categories_page():
 @app.route('/categories/<int:category_id>')
 def category_page(category_id):
 
-    sorgu = "select book_id from mediaread.book_has_category where category_id = " + str(category_id)
+    sorgu = """
+        SELECT * FROM mediaread.category 
+        LEFT JOIN mediaread.book_has_category 
+        ON mediaread.category.idCategory = mediaread.book_has_category.category_id 
+        LEFT JOIN mediaread.book 
+        ON mediaread.book_has_category.book_id = mediaread.book.idbook 
+        LEFT JOIN mediaread.author 
+        ON mediaread.book.author_id = mediaread.author.idAuthor 
+        WHERE mediaread.category.idCategory = 
+    """
+    sorgu = sorgu + str(category_id)
     db.cursor.execute(sorgu)
-    book_ids = db.cursor.fetchall()
-    sorgu2 = "select categoryName from mediaread.category where idCategory = " + str(category_id)
-    db.cursor.execute(sorgu2)
-    categoryName = db.cursor.fetchone()
-    category = categoryName[0]
-    books = []
-    authors = []
-
-    for book_id in book_ids:
-        
-        sorgu3 = "select * from mediaread.book where idBook = " + str(book_id[0])
-        db.cursor.execute(sorgu3)
-        bookInfos = db.cursor.fetchone()
-        books.append(bookInfos)
-        sorgu4 = "select fullName from mediaread.author where idAuthor = " + str(bookInfos[7])
-        db.cursor.execute(sorgu4)
-        authorName = db.cursor.fetchone()
-        authors.append(authorName)
-
-    length = len(books)
-    return render_template("category.html", books=books, authors=authors, length=length, category=category)
+    datas = db.cursor.fetchall()
+    length = len(datas)
+    return render_template("category.html", datas=datas, length=length)
 
 
 
@@ -200,43 +274,274 @@ def library_page(user_id):
 
     if request.method == "GET":
 
-        sorgu = "select * from mediaread.user_has_book where user_id = " + str(user_id)
+        sort = request.args.get('sort')
+        sorgu = """ 
+            SELECT * FROM mediaread.user_has_book 
+            LEFT JOIN mediaread.book
+            ON mediaread.user_has_book.book_id = mediaread.book.idbook
+            LEFT JOIN mediaread.author 
+            ON mediaread.book.author_id = mediaread.author.idAuthor
+            LEFT JOIN mediaread.user
+            ON mediaread.user_has_book.user_id = mediaread.user.idUser
+            WHERE mediaread.user.idUser = 
+        """
+
+        sorgu = sorgu + str(user_id)
+        if sort == 'book_a':
+            sorgu = sorgu + " ORDER BY mediaread.book.bookName ASC"
+        elif sort == 'book_d':
+            sorgu = sorgu + " ORDER BY mediaread.book.bookName DESC"
+        elif sort == 'author_a':
+            sorgu = sorgu + " ORDER BY mediaread.author.fullName ASC"
+        elif sort == 'author_d':
+            sorgu = sorgu + " ORDER BY mediaread.author.fullName DESC"
+        elif sort == 'rate_a':
+            sorgu = sorgu + " ORDER BY mediaread.book.rate ASC"
+        elif sort == 'rate_d':
+            sorgu = sorgu + " ORDER BY mediaread.book.rate DESC"
+        
         db.cursor.execute(sorgu)
-        ids = db.cursor.fetchall()
-        books = []
-        authors = []
-
-        for idx in ids:
-
-            sorgu2 = "select * from mediaread.book where idBook = " + str(idx[1])
-            db.cursor.execute(sorgu2)
-            books.append(db.cursor.fetchone())
-            sorgu3 = "select * from mediaread.author where idAuthor = " + str(idx[2])
-            db.cursor.execute(sorgu3)
-            authors.append(db.cursor.fetchone())
-
-        length = len(books)
-        return render_template("library.html", books=books, authors=authors, length=length)
+        datas = db.cursor.fetchall()
+        length = len(datas)
+        return render_template("library.html", datas=datas, length=length)
 
     else:
 
-        bookId = request.form["bookId"]
-        ids = bookId.split("-")
+        bookId = request.form.get("bookId")
+        rate = request.form.get("rate")
+        review = request.form.get("review")
+        idler = request.form.get("bookauthor_id")
+        userId = user_id
         
-        print(bookId)
+        if bookId is not None:
 
-        userId = session["userId"]
-        bookId = ids[0]
-        authorId = ids[1]
-        sorgu = "DELETE FROM mediaread.user_has_book WHERE user_id = " + str(userId) + " AND book_id = " + str(bookId) + " AND author_id = " + str(authorId)
+            ids = bookId.split("-")
+            bookId = ids[0]
+            authorId = ids[1]
+            sorgu = "DELETE FROM mediaread.user_has_book WHERE user_id = " + str(userId) + " AND book_id = " + str(bookId) + " AND author_id = " + str(authorId)
+            
+            db.cursor.execute(sorgu)
+            db.con.commit()
+            flash("You've delete this book in your library","success")
+
+            return redirect(request.url)
         
+        else:
+
+            ids = idler.split("-")
+            bookId = ids[0]
+            authorId = ids[1]
+
+            sorgu = "INSERT INTO mediaread.user_review_book (review, rate, user_id, book_id, author_id, time) VALUES (\""+review+"\","+str(rate)+",\""+str(userId)+"\",\""+str(bookId)+"\",\""+str(authorId)+"\",current_timestamp())"
+            db.cursor.execute(sorgu)
+            db.con.commit()
+
+            sorgu2 = "SELECT * FROM mediaread.book where mediaread.book.idbook = " + str(bookId)
+            db.cursor.execute(sorgu2)
+            datas = db.cursor.fetchone()
+
+            readNum = datas[8]
+            rateOld = datas[5]
+            readNum += 1
+            rateNew = ( rateOld * (readNum - 1) + int(rate) ) / readNum
+            sorgu3 = "UPDATE mediaread.book SET rate="+str(rateNew)+", readNumber="+str(readNum)+" where mediaread.book.idbook = "+bookId
+            db.cursor.execute(sorgu3)
+            db.con.commit()
+            sorgu4 = "INSERT INTO mediaread.user_read_book (user_id, book_id, author_id) VALUES ("+str(userId)+", "+str(bookId)+", "+str(authorId)+")"
+            db.cursor.execute(sorgu4)
+            db.con.commit()
+            flash("You added this book to Read Books Page","success")
+            return redirect(url_for("readbook_page",user_id=userId))
+        
+
+
+@app.route('/users/<int:user_id>/readBooks', methods = ["GET","POST"])
+def readbook_page(user_id):
+
+    if request.method == "GET":
+
+        sorgu = """ 
+
+            SELECT * FROM mediaread.user
+            LEFT JOIN mediaread.user_read_book
+            ON mediaread.user.idUser = mediaread.user_read_book.user_id
+            LEFT JOIN mediaread.book
+            ON mediaread.book.idbook = mediaread.user_read_book.book_id
+            LEFT JOIN mediaread.author
+            ON mediaread.author.idAuthor = mediaread.user_read_book.author_id
+            WHERE mediaread.user.idUser = 
+
+        """
+        sort = request.args.get('sort')
+        sorgu += str(user_id)
+        if sort == 'book_a':
+            sorgu += " ORDER BY mediaread.book.bookName ASC"
+        elif sort == 'book_d':
+            sorgu += " ORDER BY mediaread.book.bookName DESC"
+        elif sort == 'author_a':
+            sorgu += " ORDER BY mediaread.author.fullName ASC"
+        elif sort == 'author_d':
+            sorgu += " ORDER BY mediaread.author.fullName DESC"
+        elif sort == 'rate_a':
+            sorgu += " ORDER BY mediaread.book.rate ASC"
+        elif sort == 'rate_d':  
+            sorgu += " ORDER BY mediaread.book.rate DESC"
+       
         db.cursor.execute(sorgu)
+        books = db.cursor.fetchall()
+        length = len(books)
+        empty = 0
+        if books[0][6] is None:
+            empty = 1
+        return render_template("readbook.html", books=books, length=length, empty=empty)
+
+    else:
+        
+        ids = request.form.get("quoteVal")
+        quote = request.form.get("quote")
+        print(ids)
+        idler = ids.split("-")
+        bookId = idler[0]
+        authorId = idler[1]
+
+        sorgu = "INSERT INTO mediaread.quote (quoteContent, user_id, book_id, author_id, time) VALUES (\""+quote+"\","+str(user_id)+","+str(bookId)+","+str(authorId)+", current_timestamp())"
+        db.cursor.execute(sorgu)
+        print(sorgu)
         db.con.commit()
-        flash("You added this book in your library","success")
 
         return redirect(request.url)
 
 
+
+@app.route('/users/<int:user_id>')
+def user(user_id):
+
+    sorgu = """ 
+        SELECT * 
+        FROM mediaread.user
+        LEFT JOIN mediaread.user_review_book
+        ON mediaread.user.idUser = mediaread.user_review_book.user_id
+        LEFT JOIN mediaread.book
+        ON mediaread.book.idbook = mediaread.user_review_book.book_id
+        LEFT JOIN mediaread.author
+        ON mediaread.author.idAuthor = mediaread.user_review_book.author_id
+        WHERE mediaread.user.idUser = 
+    """
+    db.cursor.execute(sorgu+str(user_id)+" ORDER BY mediaread.user_review_book.time DESC")
+    reviews = db.cursor.fetchall()
+
+    sorgu = """ 
+        SELECT * 
+        FROM mediaread.user
+        LEFT JOIN mediaread.quote
+        ON mediaread.user.idUser = mediaread.quote.user_id
+        LEFT JOIN mediaread.book
+        ON mediaread.book.idbook = mediaread.quote.book_id
+        LEFT JOIN mediaread.author
+        ON mediaread.author.idAuthor = mediaread.quote.author_id
+        WHERE mediaread.user.idUser = 
+    """
+    db.cursor.execute(sorgu+str(user_id)+" ORDER BY mediaread.quote.time DESC")
+    quotes = db.cursor.fetchall()
+
+    sorgu = """ 
+        SELECT * 
+        FROM mediaread.user
+        LEFT JOIN mediaread.user_has_book
+        ON mediaread.user.idUser = mediaread.user_has_book.user_id
+        LEFT JOIN mediaread.book
+        ON mediaread.book.idbook = mediaread.user_has_book.book_id
+        LEFT JOIN mediaread.author
+        ON mediaread.author.idAuthor = mediaread.user_has_book.author_id
+        WHERE mediaread.user.idUser = 
+    """
+    db.cursor.execute(sorgu+str(user_id)+" ORDER BY mediaread.book.bookName ASC")
+    books = db.cursor.fetchall()
+
+    sorgu = """ 
+        SELECT * 
+        FROM mediaread.user
+        LEFT JOIN mediaread.user_read_book
+        ON mediaread.user.idUser = mediaread.user_read_book.user_id
+        LEFT JOIN mediaread.book
+        ON mediaread.book.idbook = mediaread.user_read_book.book_id
+        LEFT JOIN mediaread.author
+        ON mediaread.author.idAuthor = mediaread.user_read_book.author_id
+        WHERE mediaread.user.idUser = 
+    """
+    db.cursor.execute(sorgu+str(user_id)+" ORDER BY mediaread.book.bookName ASC")
+    read = db.cursor.fetchall()
+    return render_template("user.html", reviews=reviews, quotes=quotes, len3=len(quotes), books=books, len=len(books), read=read, len2=len(read))
+
+
+
+@app.route('/users/<int:user_id>/statistics')
+def statistics(user_id):
+
+    sorgu = """ 
+        SELECT * 
+        FROM mediaread.user
+        LEFT JOIN mediaread.user_review_book
+        ON mediaread.user.idUser = mediaread.user_review_book.user_id
+        LEFT JOIN mediaread.book
+        ON mediaread.user_review_book.book_id = mediaread.book.idbook
+        LEFT JOIN mediaread.author
+        ON mediaread.book.author_id = mediaread.author.idAuthor
+        WHERE mediaread.user.idUser =     
+    """
+    db.cursor.execute(sorgu+str(user_id)+" ORDER BY mediaread.user_review_book.rate DESC")
+    ratedBooks = db.cursor.fetchall()
+    check1 = 0
+    if ratedBooks[0][6] is None:
+        check1 = 1
+
+    sorgu = """
+        SELECT SUM(mediaread.book.pageNumber), COUNT(mediaread.user_read_book.book_id)
+        FROM mediaread.user
+        LEFT JOIN mediaread.user_read_book
+        ON mediaread.user.idUser = mediaread.user_read_book.user_id
+        LEFT JOIN mediaread.book
+        ON mediaread.user_read_book.book_id = mediaread.book.idbook
+        WHERE mediaread.user.idUser =
+    """
+    db.cursor.execute(sorgu+str(user_id))
+    infos = db.cursor.fetchone()
+    sum1 = infos[0]
+    sum1 = int(sum1)
+    bookpage = infos[1]
+    bookpage = int(bookpage)
+    
+    sorgu = """ 
+        SELECT mediaread.category.idCategory, mediaread.category.categoryName, COUNT(mediaread.book_has_category.category_id) 
+        FROM mediaread.user_read_book
+        LEFT JOIN mediaread.book_has_category
+        ON mediaread.user_read_book.book_id = mediaread.book_has_category.book_id AND mediaread.user_read_book.user_id = 
+    """ + str(user_id) + """
+         LEFT JOIN mediaread.category
+        ON mediaread.book_has_category.category_id = mediaread.category.idCategory
+        GROUP BY mediaread.book_has_category.category_id
+    """
+    
+    db.cursor.execute(sorgu)
+    categories = db.cursor.fetchall()
+    length = len(categories)
+
+    sorgu = """ 
+        SELECT mediaread.author.fullName, mediaread.author.idAuthor, COUNT(mediaread.author.idAuthor)
+        FROM mediaread.user_read_book
+        LEFT JOIN mediaread.book
+        ON mediaread.book.idbook = mediaread.user_read_book.book_id AND mediaread.user_read_book.user_id = 
+    """ + str(user_id) + """
+		LEFT JOIN mediaread.author
+        ON mediaread.book.author_id = mediaread.author.idAuthor
+        GROUP BY mediaread.author.idAuthor
+        ORDER BY COUNT(mediaread.author.idAuthor) DESC
+    """
+    db.cursor.execute(sorgu)
+    authors = db.cursor.fetchall()
+    print(authors)
+    return render_template("statistic.html",ratedBooks=ratedBooks,check1=check1, sum1=sum1, bookpage=bookpage, categories=categories, length=length, authors=authors)
+    
 
 @app.route('/register', methods = ["GET","POST"])
 def register_page():

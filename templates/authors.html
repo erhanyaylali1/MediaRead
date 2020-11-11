@@ -17,10 +17,10 @@
         {% for i in range(0, length) %}
 
         <div class="card">
-            <a href="/authors/{{ authors[i][0] }}"><img class="card-img-top" src="{{ authors[i][3] }}"></a>
+            <a href="/authors/{{ authors[i][0] }}"><img class="card-img-top" src="{{ authors[i][2] }}"></a>
             <div class="card-body">
                 <p class="card-text"><a href="/authors/{{ authors[i][0] }}">{{ authors[i][1] }}</a></p>
-                <p>{{ booksNum[i][0] }} adet kitap</p>
+                <p>{{ authors[i][3] }} adet kitap</p>
             </div>
         </div>
 

@@ -1,0 +1,73 @@
+{% extends "layout.html" %} {% block title %} My Library {% endblock %} {% block content %}
+
+<div class="container booksContainer">
+
+    <div class="card mb-5">
+        <div class="card-body pl-5 d-flex flex-row align-items-center">
+            <div>
+                {% if empty == 1 %}
+                <p class="bookh3Title m-0">No Read Book</p>
+                {% else %}
+                <p class="bookh3Title m-0">Read Book (Total: {{length}} Books)</p>
+                {% endif %}
+            </div>
+            <div class="ml-auto">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Sort
+                    </button>
+                    <div class="dropdown-menu bg-info">
+                        <a type="button" class="btn btn-info" href="?sort=book_a">Book Name <i class=" ml-1 fas fa-arrow-down"></i></a>
+                        <a type="button" class="btn btn-info" href="?sort=book_d">Book Name <i class=" ml-1 fas fa-arrow-up"></i></a>
+                        <a type="button" class="btn btn-info" href="?sort=author_a">Author Name <i class=" ml-1 fas fa-arrow-down"></i></a>
+                        <a type="button" class="btn btn-info" href="?sort=author_d">Author Name <i class=" ml-1 fas fa-arrow-up"></i></a>
+                        <a type="button" class="btn btn-info" href="?sort=rate_d">Rate <i class=" ml-1 fas fa-arrow-down"></i></a>
+                        <a type="button" class="btn btn-info" href="?sort=rate_a">Rate <i class=" ml-1 fas fa-arrow-up"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="cardDeck px-4 mb-5">
+
+        {% if empty == 1 %} {% else %} {%for i in range(0, length)%}
+
+        <div class="card">
+            <button name="readbookId" type=" submit " class="addToReadBook btn btn-success "><i class="far fa-plus-square "></i><span class="ml-2">Add a Quote</span></button>
+            <div class="addReview ">
+                <form method="post" name="readBook">
+                    <div class="readBookForm">
+                        <h3 class=" ">Add Quote</h3>
+                        <div class="con-input ">
+
+                            <textarea class="text-white " rows="5 " name="quote" placeholder="Quote from Book" required="required "></textarea>
+
+                        </div>
+                        <button type="submit " name="quoteVal" value="{{books[i][6]}}-{{books[i][15]}}" class="btn formButton ">Add</button>
+                    </div>
+                </form>
+            </div>
+            <a href="/books/{{ books[i][6] }} "><img class="card-img-top " src="{{ books[i][14] }} " alt="Book Card Image "></a>
+            <div class="card-body ">
+                <p><a href="/books/{{ books[i][6] }} ">{{ books[i][9] }}</a></p>
+                <p class="card-text "><a href="/authors/{{ books[i][15] }} "> {{ books[i][18] }}</a></p>
+                {% if books[i][13] != 0 %}
+                <p class="card-text text-right animate__lightSpeedInRight "><small class="text-muted ">Rate: {{ books[i][13] }}</small></p>
+                {% else %}
+                <p class="card-text text-right "><small class="text-muted ">No Rate Yet </small></p>
+                {% endif %}
+            </div>
+
+        </div>
+        {% endfor %} {% endif %}
+
+    </div>
+</div>
+
+
+
+
+
+
+
+{% endblock %}
