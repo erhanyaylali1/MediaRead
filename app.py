@@ -76,7 +76,6 @@ def books_page():
 def book_page(book_id):
 
     if request.method == "GET":
-        print(session["username"])
         sorgu = """ 
             SELECT * FROM mediaread.book 
             LEFT JOIN mediaread.author 
@@ -399,14 +398,12 @@ def readbook_page(user_id):
         
         ids = request.form.get("quoteVal")
         quote = request.form.get("quote")
-        print(ids)
         idler = ids.split("-")
         bookId = idler[0]
         authorId = idler[1]
 
         sorgu = "INSERT INTO mediaread.quote (quoteContent, user_id, book_id, author_id, time) VALUES (\""+quote+"\","+str(user_id)+","+str(bookId)+","+str(authorId)+", current_timestamp())"
         db.cursor.execute(sorgu)
-        print(sorgu)
         db.con.commit()
 
         return redirect(request.url)
@@ -539,7 +536,6 @@ def statistics(user_id):
     """
     db.cursor.execute(sorgu)
     authors = db.cursor.fetchall()
-    print(authors)
     return render_template("statistic.html",ratedBooks=ratedBooks,check1=check1, sum1=sum1, bookpage=bookpage, categories=categories, length=length, authors=authors)
     
 

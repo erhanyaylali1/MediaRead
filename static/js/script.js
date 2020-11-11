@@ -73,7 +73,6 @@ $(document).ready(function() {
 
     $(".searchButton").click(function() {
         let val = $(".searchInput").val();
-        console.log(val);
     });
 
 
