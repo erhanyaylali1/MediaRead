@@ -85,7 +85,7 @@
                             <div class="card-footer py-1 px-3">
                                 <span class="float-right">
                                             {{ quote[10] }}   
-                                        </span>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -118,7 +118,11 @@
                                     </td>
                                     <td><a href="/books/{{ book[6] }}">{{ book[9] }}</a></td>
                                     <td>{{ book[10] }}</td>
-                                    <td>{{ book[13] }}</td>
+                                    {% if book[13] == 0 %}
+                                        <td>Not Rated Yet.</td>
+                                    {% else %}
+                                        <td>{{ book[13] }}</td>
+                                    {% endif %}
                                     <td><a href="/authors/{{ book[17] }}">{{ book[18] }}</a></td>
                                 </tr>
 
@@ -150,12 +154,12 @@
 
                                 <tr>
                                     <td>
-                                        <a href="/books/{{ book[6] }}"><img src="{{ book[14] }}" alt=""></a>
+                                        <a href="/books/{{ book[9] }}"><img src="{{ book[15] }}" alt=""></a>
                                     </td>
-                                    <td><a href="/books/{{ book[6] }}">{{ book[9] }}</a></td>
-                                    <td>{{ book[10] }}</td>
-                                    <td>{{ book[13] }}</td>
-                                    <td><a href="/authors/{{ book[17] }}">{{ book[18] }}</a></td>
+                                    <td><a href="/books/{{ book[9] }}">{{ book[10] }}</a></td>
+                                    <td>{{ book[11] }}</td>
+                                    <td>{{ book[14] }}</td>
+                                    <td><a href="/authors/{{ book[18] }}">{{ book[19] }}</a></td>
                                 </tr>
 
                                 {% endfor %}

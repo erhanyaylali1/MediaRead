@@ -7,7 +7,7 @@
 
         <div class="col-3 profileInfo">
             {% if session["logged_in"] %}
-            <a href="users/{{ userInfo[0] }}" class="titleName">{{ userInfo[1] }}</a>
+            <a href="users/{{ userInfo[0] }}" class="display-4">{{ userInfo[1] }}</a>
             <ul class="mt-5 profileList">
 
                 <li><a href="users/{{ userInfo[0] }}/myLibrary">My Library</a></li>

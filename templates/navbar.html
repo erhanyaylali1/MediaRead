@@ -11,6 +11,7 @@
             </div>
         </div>
         <div class="part3 parts align-items-center">
+            
             <a class="nav-link " href="/books">Books</a>
             <a class="nav-link " href="/authors">Authors</a>
             <a class="nav-link " href="/categories">Categories</a> 
@@ -19,16 +20,15 @@
 
             <div class="profileBox">
                 <div class="d-flex align-items-center">
-                    <a class="profileText mr-3">
+                    <a class="profileText mr-3" href="/users/{{session['userId']}}">
                                 My Profile
                     </a>
                     <i class="fas fa-caret-down" id="navbarCollapse"></i>
                     <div class="profileExtension">
                         <ul class="">
-                            <li><a href="">My Library</a></li>
-                            <li><a href="">My Quotes</a></li>
-                            <li><a href="">Read Books</a></li>
-                            <li><a href="">Statistics</a></li>
+                            <li><a href="/users/{{session['userId']}}/myLibrary">My Library</a></li>
+                            <li><a href="/users/{{session['userId']}}/readBooks">Read Books</a></li>
+                            <li><a href="/users/{{session['userId']}}/statistics">Statistics</a></li>
                             <li><a href="/logout">Log Out</a></li>
                         </ul>
                     </div>

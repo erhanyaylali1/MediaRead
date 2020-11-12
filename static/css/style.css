@@ -19,6 +19,19 @@ body {
     background-color: #F6F6F6;
 }
 
+#reviewButton,
+#quoteButton {
+    font-size: 1.2rem;
+}
+
+
+/*
+.cardRenkleri .card-body {
+    background-color: #C5C6C8;
+    color: black;
+}
+
+
 .card-header {
     background-color: #C7935B;
     color: white;
@@ -36,19 +49,6 @@ body {
     background-color: white;
     color: black;
 }
-
-#reviewButton,
-#quoteButton {
-    font-size: 1.2rem;
-}
-
-
-/*
-.cardRenkleri .card-body {
-    background-color: #C5C6C8;
-    color: black;
-}
-
 
 
 .cardRenkleri .card-footer a {
@@ -79,10 +79,6 @@ body {
 
 .profileList li a {
     font-size: 1.4rem;
-}
-
-.titleName {
-    font-size: 1.8rem;
 }
 
 .backtotop {
@@ -275,6 +271,18 @@ body {
     width: 100%;
     transition: all .25s ease;
     color: white;
+    position: relative;
+}
+
+.con-input .psIcon {
+    position: absolute;
+    right: 15px;
+    top: 17px;
+    color: white;
+}
+
+.con-input .psIcon:hover {
+    cursor: pointer;
 }
 
 .con-input input::placeholder {
@@ -294,7 +302,7 @@ body {
     border: 2px solid #000;
 }
 
-.con-input input:focus~i {
+.con-input input:focus~i.icon {
     transform: translate(0, -8px);
     box-shadow: 0px, 8px, 20px, 0px rgba(0, 0, 0, .15);
 }
@@ -425,8 +433,6 @@ body {
 .col-6 .addToReadBook {
     top: 12px;
     left: 10px;
-    background-color: #717171;
-    border-color: #717171;
 }
 
 .col-6 .addReview {

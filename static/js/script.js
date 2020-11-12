@@ -75,7 +75,6 @@ $(document).ready(function() {
         let val = $(".searchInput").val();
     });
 
-
     $("#ratedBooks").click(function() {
         $(".statisticParts").children().not(":first-child").hide();
         $(".statisticParts").children(":first-child").show();
@@ -91,6 +90,23 @@ $(document).ready(function() {
         $(".statisticParts").children(":nth-child(3)").show();
     });
 
+    $(".psIcon").click(function() {
+        $(this).toggleClass('fa-eye');
+        $(this).toggleClass('fa-eye-slash');
+        if ($(this).hasClass('fa-eye-slash')) {
+            $("#passwordInput").attr("type", "password");
+        } else {
+            console.log("text olması lazım");
+            $("#passwordInput").attr("type", "text");
+        }
+    });
 
+    $(document).mouseup(function(e) {
+        var reviewBox = $("#addBookFormId");
+        if (!reviewBox.is(e.target) && reviewBox.has(e.target).length === 0) {
+            reviewBox.hide();
+            reviewBox.parent().css("box-shadow", "none");
+        }
+    })
 
 });
