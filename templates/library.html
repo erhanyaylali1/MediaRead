@@ -30,7 +30,7 @@
             <form action="" method="post">
                 <button name="bookId" value="{{datas[i][1]}}-{{datas[i][2]}}" type="submit" class="deletefromLibrary btn btn-danger"><span class="mr-2">Delete from Library</span><i class="far fa-window-close"></i></button>
             </form>
-            <button name="readbookId" value="{{datas[i][1]}}-{{datas[i][2]}}" type="submit" class="addToReadBook btn btn-success"><i class="far fa-plus-square"></i><span class="ml-2">Add to Read Book</span></button>
+            <button name="readbookId" value="{{datas[i][1]}}-{{datas[i][2]}}" type="submit" class="addToReadBook btn btn-success"><span class="mr-2">Add to Read Book</span><i class="far fa-plus-square"></i></button>
             <div class="addReview">
                 <form class="" action="" method="post" name="readBook" autocomplete="off">
                     <div class="readBookForm">
@@ -49,6 +49,32 @@
                     </div>
                 </form>
             </div>
+            <button class="addtoreadlist addtoreadlist2 btn btn-primary"><span class="mr-2">Add to Readlist</span><i class="far fa-plus"></i></button>
+            <form action="" method="post">
+
+                <div class="readlistList pt-2 px-3">
+                    <fieldset id="">
+                        <legend class="text-white borderB pb-2 px-4">Select Playlist</legend>
+                        <table class="table table-hover authorBooksTable mb-0">
+                            <tbody>
+
+                                {% for readlist in readlists %}
+
+                                <tr>
+                                    <td><input type="checkbox" name="readlist" value="{{datas[i][1]}}-{{datas[i][2]}}-{{readlist[4]}}"></td>
+                                    <td> {{ readlist[5] }} </td>
+                                </tr>
+
+                                {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </fieldset>
+
+                    <button class="btn btn-primary btn-sm mb-2 mt-1 float-right addlistbut">Add</button>
+                </div>
+
+            </form>
             <a href="/books/{{ datas[i][1] }}"><img class="card-img-top" src="{{ datas[i][9] }}" alt="Book Card Image"></a>
             <div class="card-body">
                 <p><a href="/books/{{ datas[i][1] }}">{{ datas[i][4] }}</a></p>

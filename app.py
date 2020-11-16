@@ -51,27 +51,67 @@ def books_page():
 
         allData = db.cursor.fetchall()
         length = len(allData)
-        return render_template("books.html", allData=allData, length=length)    
+
+
+        readlists = ""
+        if session["logged_in"]:
+            userId = session["userId"]
+            sorgu = """  
+                SELECT * 
+                FROM mediaread.user_has_readlist
+                LEFT JOIN mediaread.readlist
+                ON mediaread.user_has_readlist.readlist_idreadlist = mediaread.readlist.idreadlist
+                WHERE mediaread.user_has_readlist.user_idUser = 
+            """
+            db.cursor.execute(sorgu+str(userId)+" GROUP BY mediaread.user_has_readlist.readlist_idreadlist")
+            readlists = db.cursor.fetchall()
+
+
+        return render_template("books.html", allData=allData, length=length, readlists=readlists)    
     
     else:
 
-        bookId = request.form.get("bookId")
-        ids = bookId.split("-")
-        if session["logged_in"]:
-            userId = session["userId"]
-            bookId = ids[0]
-            authorId = ids[1]
-            sorgu = "INSERT INTO mediaread.user_has_book (user_id, book_id, author_id) values (" + str(userId) + ", " + str(bookId) + ", " + str(authorId) + ")"
-            
-            try:
-                db.cursor.execute(sorgu)
-                db.con.commit()
-                flash("You added this book in your library","success")
 
-            except IntegrityError:
-                flash("You already have this book in your library","danger")
+        bookId = request.form.get("bookId") 
+        readlistId = request.form.getlist("readlist")
+        if bookId is not None:
 
-        return redirect(url_for("books_page"))
+            ids = bookId.split("-")
+            if session["logged_in"]:
+                userId = session["userId"]
+                bookId = ids[0]
+                authorId = ids[1]
+                sorgu = "INSERT INTO mediaread.user_has_book (user_id, book_id, author_id) values (" + str(userId) + ", " + str(bookId) + ", " + str(authorId) + ")"
+                
+                try:
+                    db.cursor.execute(sorgu)
+                    db.con.commit()
+                    flash("You added this book in your library","success")
+
+                except IntegrityError:
+                    flash("You already have this book in your library","danger")
+
+            return redirect(url_for("books_page"))
+        
+        if readlistId is not None:
+
+            for readId in readlistId:
+                ids = readId.split("-")
+                userId = session["userId"]
+                bookId = ids[0]
+                authorId = ids[1]
+                readlistId = ids[2]
+
+                try:
+                    sorgu = "INSERT INTO mediaread.user_has_readlist (user_idUser, readlist_idreadlist, book_idbook, book_author_id) VALUES ("+str(userId)+","+str(readlistId)+","+str(bookId)+","+str(authorId)+")"
+                    db.cursor.execute(sorgu)
+                    db.con.commit()
+                    flash("You added this book in your readlist","success")
+
+                except IntegrityError:
+                    flash("You already have this book in your readlist","danger")
+
+            return redirect(url_for("readlist_page",user_id=userId,readlist_id=readlistId))
 
 
 
@@ -305,7 +345,18 @@ def library_page(user_id):
         db.cursor.execute(sorgu)
         datas = db.cursor.fetchall()
         length = len(datas)
-        return render_template("library.html", datas=datas, length=length)
+
+        sorgu = """  
+                SELECT * 
+                FROM mediaread.user_has_readlist
+                LEFT JOIN mediaread.readlist
+                ON mediaread.user_has_readlist.readlist_idreadlist = mediaread.readlist.idreadlist
+                WHERE mediaread.user_has_readlist.user_idUser = 
+            """
+        db.cursor.execute(sorgu+str(user_id)+" GROUP BY mediaread.user_has_readlist.readlist_idreadlist")
+        readlists = db.cursor.fetchall()
+
+        return render_template("library.html", datas=datas, length=length,readlists=readlists)
 
     else:
 
@@ -314,7 +365,8 @@ def library_page(user_id):
         review = request.form.get("review")
         idler = request.form.get("bookauthor_id")
         userId = user_id
-        
+        readlistId = request.form.getlist("readlist")
+
         if bookId is not None:
 
             ids = bookId.split("-")
@@ -328,7 +380,7 @@ def library_page(user_id):
 
             return redirect(request.url)
         
-        else:
+        if idler is not None:
 
             ids = idler.split("-")
             bookId = ids[0]
@@ -355,6 +407,26 @@ def library_page(user_id):
             flash("You added this book to Read Books Page","success")
             return redirect(url_for("readbook_page",user_id=userId))
         
+        if readlistId is not None:
+
+            for readId in readlistId:
+                ids = readId.split("-")
+                userId = session["userId"]
+                bookId = ids[0]
+                authorId = ids[1]
+                readlistId = ids[2]
+
+                try:
+                    sorgu = "INSERT INTO mediaread.user_has_readlist (user_idUser, readlist_idreadlist, book_idbook, book_author_id) VALUES ("+str(userId)+","+str(readlistId)+","+str(bookId)+","+str(authorId)+")"
+                    db.cursor.execute(sorgu)
+                    db.con.commit()
+                    flash("You added this book in your readlist","success")
+
+                except IntegrityError:
+                    flash("You already have this book in your readlist","danger")
+            
+            return redirect(url_for("readlist_page",user_id=userId,readlist_id=readlistId))
+
 
 
 @app.route('/users/<int:user_id>/readBooks', methods = ["GET","POST"])
@@ -374,28 +446,61 @@ def readbook_page(user_id):
 
         sorgu += str(user_id)
         sorgu += " ORDER BY mediaread.user_read_book.time"
-        print(sorgu)
         db.cursor.execute(sorgu)
         books = db.cursor.fetchall()
         length = len(books)
         empty = 0
         if books[0][6] is None:
             empty = 1
-        return render_template("readbook.html", books=books, length=length, empty=empty)
+
+        sorgu = """  
+                SELECT * 
+                FROM mediaread.user_has_readlist
+                LEFT JOIN mediaread.readlist
+                ON mediaread.user_has_readlist.readlist_idreadlist = mediaread.readlist.idreadlist
+                WHERE mediaread.user_has_readlist.user_idUser = 
+            """
+        db.cursor.execute(sorgu+str(user_id)+" GROUP BY mediaread.user_has_readlist.readlist_idreadlist")
+        readlists = db.cursor.fetchall()
+
+        return render_template("readbook.html", books=books, length=length, empty=empty, readlists=readlists)
 
     else:
         
         ids = request.form.get("quoteVal")
         quote = request.form.get("quote")
-        idler = ids.split("-")
-        bookId = idler[0]
-        authorId = idler[1]
+        readlistId = request.form.getlist("readlist")
 
-        sorgu = "INSERT INTO mediaread.quote (quoteContent, user_id, book_id, author_id, time) VALUES (\""+quote+"\","+str(user_id)+","+str(bookId)+","+str(authorId)+", current_timestamp())"
-        db.cursor.execute(sorgu)
-        db.con.commit()
+        if readlistId is None:
 
-        return redirect(request.url)
+            idler = ids.split("-")
+            bookId = idler[0]
+            authorId = idler[1]
+            sorgu = "INSERT INTO mediaread.quote (quoteContent, user_id, book_id, author_id, time) VALUES (\""+quote+"\","+str(user_id)+","+str(bookId)+","+str(authorId)+", current_timestamp())"
+            db.cursor.execute(sorgu)
+            db.con.commit()
+
+            return redirect(request.url)
+
+        else:
+
+            for readId in readlistId:
+                ids = readId.split("-")
+                userId = session["userId"]
+                bookId = ids[0]
+                authorId = ids[1]
+                readlistId = ids[2]
+
+                try:
+                    sorgu = "INSERT INTO mediaread.user_has_readlist (user_idUser, readlist_idreadlist, book_idbook, book_author_id) VALUES ("+str(userId)+","+str(readlistId)+","+str(bookId)+","+str(authorId)+")"
+                    db.cursor.execute(sorgu)
+                    db.con.commit()
+                    flash("You added this book in your readlist","success")
+
+                except IntegrityError:
+                    flash("You already have this book in your readlist","danger")
+            
+            return redirect(url_for("readlist_page",user_id=userId,readlist_id=readlistId))
 
 
 
@@ -538,6 +643,110 @@ def statistics(user_id):
 
     return render_template("statistic.html",ratedBooks=ratedBooks,check1=check1, sum1=sum1, bookpage=bookpage, categories=categories, length=length, authors=authors, lastYear=lastYear[0])
     
+
+
+@app.route('/users/<int:user_id>/readlists', methods = ["GET","POST"])
+def readlists_page(user_id):
+
+    if request.method == "GET":
+
+        sorgu = """ 
+        SELECT *
+        FROM mediaread.user_has_readlist
+        LEFT JOIN mediaread.readlist
+        ON mediaread.user_has_readlist.readlist_idreadlist = mediaread.readlist.idreadlist
+        WHERE mediaread.user_has_readlist.user_idUser = """ + str(user_id) + """ GROUP BY mediaread.user_has_readlist.readlist_idreadlist"""
+        db.cursor.execute(sorgu)
+        lists = db.cursor.fetchall()
+        return render_template("readlists.html", lists=lists)
+
+    else:
+
+        id = request.form.get("readlistId")
+
+        sorgu = "DELETE FROM mediaread.user_has_readlist WHERE mediaread.user_has_readlist.readlist_idreadlist = " + str(id)
+        db.cursor.execute(sorgu)
+        db.con.commit()
+
+        sorgu = "DELETE FROM mediaread.readlist WHERE mediaread.readlist.idreadlist = " + str(id)
+        db.cursor.execute(sorgu)
+        db.con.commit()
+
+        
+
+        return redirect(request.url)
+
+
+        
+@app.route('/users/<int:user_id>/readlists/<int:readlist_id>', methods = ["GET","POST"])
+def readlist_page(user_id, readlist_id):
+
+    if request.method == "GET":
+
+        sorgu = """ 
+            SELECT *
+            FROM mediaread.user_has_readlist
+            LEFT JOIN mediaread.readlist
+            ON mediaread.user_has_readlist.readlist_idreadlist = mediaread.readlist.idreadlist
+            LEFT JOIN mediaread.book
+            ON mediaread.user_has_readlist.book_idbook = mediaread.book.idbook
+            LEFT JOIN mediaread.author
+            ON mediaread.book.author_id = mediaread.author.idAuthor
+            WHERE mediaread.user_has_readlist.user_idUser = """ + str(user_id) + " AND mediaread.user_has_readlist.readlist_idreadlist = " + str(readlist_id)
+        
+        db.cursor.execute(sorgu)
+        books = db.cursor.fetchall()
+        length = len(books)
+        return render_template("readlist.html", books=books, length=length)
+
+    else:
+
+        bookId = request.form.get("bookId")
+    
+        sorgu = "DELETE FROM mediaread.user_has_readlist WHERE mediaread.user_has_readlist.user_idUser="+str(user_id)+" AND mediaread.user_has_readlist.readlist_idreadlist="+str(readlist_id)+" AND mediaread.user_has_readlist.book_idbook="+str(bookId)
+        db.cursor.execute(sorgu)
+        db.con.commit()
+
+        return redirect(request.url)
+
+
+
+@app.route('/users/<int:user_id>/createreadlist', methods = ["GET","POST"])
+def create_readlist_page(user_id):
+
+    if request.method == "GET":
+        
+        sorgu = "SELECT * FROM mediaread.book LEFT JOIN mediaread.author ON mediaread.book.author_id = mediaread.author.idAuthor" 
+        db.cursor.execute(sorgu)
+        books = db.cursor.fetchall()
+        return render_template("createReadlist.html", books=books)
+
+    else:
+
+        ids = request.form.getlist("book")
+        name = request.form.get("name")
+        summary = request.form.get("summary")
+
+        sorgu = "INSERT INTO mediaread.readlist (readlistName, summary) VALUES (\"" + name + "\" , \"" + summary + "\")"
+        db.cursor.execute(sorgu)
+        db.con.commit()
+
+        sorgu = "SELECT * FROM mediaread.readlist order by idreadlist DESC LIMIT 1"
+        db.cursor.execute(sorgu)
+        data = db.cursor.fetchone()
+        readlist_id = data[0]
+
+        for id in ids:
+            arr = id.split("-")
+            book_id = arr[0]
+            author_id = arr[1]
+            sorgu = "INSERT INTO mediaread.user_has_readlist (user_idUser, readlist_idreadlist, book_idbook, book_author_id) VALUES ("+str(user_id)+","+str(readlist_id)+","+book_id+","+author_id+")"
+            db.cursor.execute(sorgu)
+            db.con.commit()
+
+
+        return redirect(url_for("readlists_page",user_id=user_id))
+
 
 
 @app.route('/register', methods = ["GET","POST"])

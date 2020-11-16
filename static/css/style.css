@@ -475,7 +475,7 @@ body {
 
 .booksContainer .cardDeck .card button.addToLibrary {
     position: absolute;
-    top: 5px;
+    top: 10px;
     right: 10px;
     padding: 1px 6px;
     background-color: #148D8D;
@@ -493,12 +493,27 @@ body {
 
 .deletefromLibrary {
     position: absolute;
-    top: 5px;
+    top: 10px;
     right: 10px;
     padding: 1px 6px;
 }
 
+.addtoreadlist {
+    position: absolute;
+    top: 50px;
+    right: 10px;
+    padding: 1px 6px;
+}
+
+.addtoreadlist2 {
+    top: 90px;
+}
+
 .deletefromLibrary:hover span {
+    display: inline;
+}
+
+.addtoreadlist:hover span {
     display: inline;
 }
 
@@ -506,14 +521,22 @@ body {
     z-index: 44;
 }
 
+.addtoreadlist:hover {
+    z-index: 44;
+}
+
 .deletefromLibrary span {
+    display: none;
+}
+
+.addtoreadlist span {
     display: none;
 }
 
 .addToReadBook {
     position: absolute;
-    top: 5px;
-    left: 10px;
+    top: 50px;
+    right: 10px;
     padding: 1px 6px;
 }
 
@@ -526,6 +549,25 @@ body {
 }
 
 .addToReadBook:hover {
+    z-index: 44;
+}
+
+.addQuoteButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 1px 6px;
+}
+
+.addQuoteButton span {
+    display: none;
+}
+
+.addQuoteButton:hover span {
+    display: inline;
+}
+
+.addQuoteButton:hover {
     z-index: 44;
 }
 
@@ -777,4 +819,104 @@ body {
 
 #pieChart2 rect {
     fill: transparent!important;
+}
+
+
+/*  
+=============================================================================================================================================================
+============================================================== ReadLists Page ==================================================================================
+=============================================================================================================================================================
+*/
+
+.readlistContainer {
+    margin-top: 125px;
+}
+
+.readlistContainer button.btn-link {
+    text-decoration: none;
+    color: black;
+    font-size: 1.3rem;
+}
+
+.readlistContainer tr:first-child td {
+    border-top: none;
+}
+
+.readlistContainer .cardDeck button:hover {
+    color: #138496;
+}
+
+.readlistContainer table tr td i {
+    color: #333333;
+}
+
+.readlistContainer table tr td i:hover {
+    color: #FE5722;
+    cursor: pointer;
+}
+
+#addReadList {
+    max-height: 700px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.readlistform .con-input {
+    width: 300px;
+}
+
+.readlistform button {
+    margin-left: 210px;
+    margin-top: 30px;
+    background-color: #138496;
+    border-color: #138496;
+}
+
+.readlistform button:hover {
+    background-color: #33A4B6;
+    border-color: #33A4B6;
+}
+
+.readlistbody .card .card-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.readlistbody .card .card-header form {
+    display: flex;
+    align-items: center;
+}
+
+.readlistList {
+    display: none;
+    position: absolute;
+    top: 90px;
+    left: 190px;
+    width: max-content;
+    z-index: 222;
+    background-color: #218838;
+    border-radius: 10px;
+}
+
+.readlistList td {
+    border-top: none;
+    color: white;
+}
+
+.borderB {
+    border-bottom: 1px solid white;
+    font-size: 1.4rem;
+}
+
+.color-black {
+    color: black;
+}
+
+.hover-orange:hover {
+    color: #FE5722;
+}
+
+.accordion .card .card-header {
+    background-color: blanchedalmond;
 }
