@@ -8,7 +8,9 @@
             <div>
                 <p class="bookh3Title m-0">{{ books[0][5] }} ({{ length }} Books)</p>
             </div>
-            <a href="/books" class="ml-auto btn btn-sm btn-primary">Add Book</a>
+            {% if session["logged_in"] and session["userId"] == books[0][0] %}
+
+            <a href="/books" class="ml-auto btn btn-sm btn-primary">Add Book</a> {% else %} {% endif %}
         </div>
     </div>
 
@@ -37,13 +39,19 @@
                                 <td> Page: {{ book[9] }}</td>
                                 <td> Rate: {{ book[12] }} </td>
                                 <td><a href="/authors/{{ book[16] }}">{{ book[17] }}</a></td>
+
+                                {% if session["logged_in"] and session["userId"] == book[0] %}
+
                                 <td>
                                     <form action="" method="post">
                                         <button name="bookId" value="{{ book[7] }}" type="submit" class="btn">
-                                                <i class="fas fa-times"></i>
+                                                    <i class="fas fa-times"></i>
                                             </button>
                                     </form>
                                 </td>
+
+                                {% else %} {% endif %}
+
                             </tr>
 
                             {% endfor %}

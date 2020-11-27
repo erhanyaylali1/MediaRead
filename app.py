@@ -520,6 +520,9 @@ def user(user_id):
     """
     db.cursor.execute(sorgu+str(user_id)+" ORDER BY mediaread.user_review_book.time DESC")
     reviews = db.cursor.fetchall()
+    length4 = 1
+    if reviews[0][5] is None:
+        length4 = 0
 
     sorgu = """ 
         SELECT * 
@@ -534,6 +537,9 @@ def user(user_id):
     """
     db.cursor.execute(sorgu+str(user_id)+" ORDER BY mediaread.quote.time DESC")
     quotes = db.cursor.fetchall()
+    checkQ = 0
+    if quotes[0][5] is None:
+        checkQ = 1
 
     sorgu = """ 
         SELECT * 
@@ -548,6 +554,9 @@ def user(user_id):
     """
     db.cursor.execute(sorgu+str(user_id)+" ORDER BY mediaread.book.bookName ASC")
     books = db.cursor.fetchall()
+    length6 = 1
+    if books[0][5] is None:
+        length6 = 0
 
     sorgu = """ 
         SELECT * 
@@ -562,8 +571,21 @@ def user(user_id):
     """
     db.cursor.execute(sorgu+str(user_id)+" ORDER BY mediaread.book.bookName ASC")
     read = db.cursor.fetchall()
+    length5 = 1
+    if quotes[0][5] is None:
+        length5 = 0
+
+    sorgu = """ 
+        SELECT *
+        FROM mediaread.user_has_readlist
+        LEFT JOIN mediaread.readlist
+        ON mediaread.user_has_readlist.readlist_idreadlist = mediaread.readlist.idreadlist
+        WHERE mediaread.user_has_readlist.user_idUser = """ + str(user_id) + """ GROUP BY mediaread.user_has_readlist.readlist_idreadlist"""
+    db.cursor.execute(sorgu)
+    lists = db.cursor.fetchall()
+    length3 = len(lists)
     
-    return render_template("user.html", reviews=reviews, quotes=quotes, len3=len(quotes), books=books, len=len(books), read=read, len2=len(read))
+    return render_template("user.html", reviews=reviews, quotes=quotes, checkQ=checkQ, len3=len(quotes), books=books, len=len(books), read=read, len2=len(read), length3=length3, length4=length4, length5=length5, length6=length6)
 
 
 
@@ -641,7 +663,15 @@ def statistics(user_id):
     db.cursor.execute(sorgu+str(user_id))
     lastYear = db.cursor.fetchone()
 
-    return render_template("statistic.html",ratedBooks=ratedBooks,check1=check1, sum1=sum1, bookpage=bookpage, categories=categories, length=length, authors=authors, lastYear=lastYear[0])
+    sorgu = "SELECT COUNT(*) FROM mediaread.user_review_book WHERE user_id = " + str(user_id)
+    db.cursor.execute(sorgu)
+    reviewCount = db.cursor.fetchone()    
+
+    sorgu = "SELECT COUNT(*) FROM mediaread.quote WHERE user_id = " + str(user_id)
+    db.cursor.execute(sorgu)
+    quoteCount = db.cursor.fetchone()
+
+    return render_template("statistic.html",ratedBooks=ratedBooks,check1=check1, sum1=sum1, bookpage=bookpage, categories=categories, length=length, authors=authors, lastYear=lastYear[0],reviewNum=reviewCount[0], quoteNum=quoteCount[0])
     
 
 

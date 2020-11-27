@@ -28,6 +28,14 @@
                         <td> {{ bookpage }} </td>
                     </tr>
                     <tr>
+                        <td><b>Quote Count:</b></td>
+                        <td> {{ quoteNum }} </td>
+                    </tr>
+                    <tr>
+                        <td><b>Review Count:</b></td>
+                        <td> {{ reviewNum }} </td>
+                    </tr>
+                    <tr>
                         <td><b>Total Read Page:</b></td>
                         <td> {{ sum1 }} </td>
                     </tr>
@@ -46,7 +54,13 @@
             <div class="statisticRate my-5">
 
                 <h3 class="ml-5 my-5">Highest Rated Books by You</h3>
-                {% if sum1 == 0%} Hiç Kitap Yok {% else %}
+                {% if sum1 == 0%}
+                <div class="col-10 mx-auto mt-4">
+                    <div class="card py-2 px-5">
+                        No Read Book Yet.
+                    </div>
+                </div>
+                {% else %}
                 <table class="ml-5 table table-striped table-hover authorBooksTable">
 
                     <thead style="background-color: #C7935B; color:white;">
@@ -80,9 +94,15 @@
 
             <div class="statisticCategories my-5">
                 <h3 class="ml-5 my-5">Most Read Categories by You</h3>
-                {% if sum1 == 0%} Hiç Kitap Yok {% else %}
+                {% if sum1 == 0%}
+                <div class="col-10 mx-auto mt-4">
+                    <div class="card py-2 px-5">
+                        No Read Book Yet.
+                    </div>
+                </div>
+                {% else %}
                 <table class="table table-hover my-5 ml-5">
-                    <thead  style="background-color: #C7935B; color:white;">
+                    <thead style="background-color: #C7935B; color:white;">
                         <tr>
                             <th>Category Name</th>
                             <th>Number of Read Book</th>
@@ -109,9 +129,15 @@
 
             <div class="statisticAuthors my-5">
                 <h3 class="ml-5 my-5">Most Read Authors by You</h3>
-                {% if sum1 == 0%} Hiç Kitap Yok {% else %}
+                {% if sum1 == 0%}
+                <div class="col-10 mx-auto mt-4">
+                    <div class="card py-2 px-5">
+                        No Read Book Yet.
+                    </div>
+                </div>
+                {% else %}
                 <table class="table table-hover my-5 ml-5">
-                    <thead  style="background-color: #C7935B; color:white;">
+                    <thead style="background-color: #C7935B; color:white;">
                         <tr>
                             <th>Author Name</th>
                             <th>Number of Read Book</th>
