@@ -103,10 +103,19 @@ $(document).ready(function() {
 
     $(document).mouseup(function(e) {
         var reviewBox = $("#addBookFormId");
+        var readlistList = $(".readlistList");
         if (!reviewBox.is(e.target) && reviewBox.has(e.target).length === 0) {
             reviewBox.hide();
             reviewBox.parent().css("box-shadow", "none");
         }
+        if (!readlistList.is(e.target) && readlistList.has(e.target).length === 0) {
+            readlistList.hide();
+        }
+    });
+
+    $(".addtoreadlist").click(function() {
+        console.log("helloo");
+        $(this).next().children(":first-child").show();
     })
 
 });
