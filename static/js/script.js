@@ -104,6 +104,7 @@ $(document).ready(function() {
     $(document).mouseup(function(e) {
         var reviewBox = $("#addBookFormId");
         var readlistList = $(".readlistList");
+
         if (!reviewBox.is(e.target) && reviewBox.has(e.target).length === 0) {
             reviewBox.hide();
             reviewBox.parent().css("box-shadow", "none");
@@ -114,8 +115,18 @@ $(document).ready(function() {
     });
 
     $(".addtoreadlist").click(function() {
-        console.log("helloo");
         $(this).next().children(":first-child").show();
+    })
+    $(".addQuoteButton").click(function() {
+        $(this).next().show();
+    })
+
+    $(".dotdiv").click(function(){
+        console.log("deneme");
+        let x = 90
+        $(this).toggleClass("turn90");
+        $(this).next().children().toggle(500);
+        $(this).next().next().toggle(500);
     })
 
 });

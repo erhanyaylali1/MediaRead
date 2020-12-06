@@ -14,7 +14,7 @@ db.check = 0
 def home_page():
 
     userInfo = ""
-    if session["username"] != "":
+    if "username" in session:
 
         db.cursor.execute("SELECT idUser, fullName from mediaread.user where username = \"" + str(session["username"]) + "\"")
         userInfo = db.cursor.fetchone()
@@ -470,8 +470,7 @@ def readbook_page(user_id):
         ids = request.form.get("quoteVal")
         quote = request.form.get("quote")
         readlistId = request.form.getlist("readlist")
-
-        if readlistId is None:
+        if quote is not None:
 
             idler = ids.split("-")
             bookId = idler[0]
@@ -504,88 +503,122 @@ def readbook_page(user_id):
 
 
 
-@app.route('/users/<int:user_id>')
+@app.route('/users/<int:user_id>', methods=["GET", "POST"])
 def user(user_id):
 
-    sorgu = """ 
-        SELECT * 
-        FROM mediaread.user
-        LEFT JOIN mediaread.user_review_book
-        ON mediaread.user.idUser = mediaread.user_review_book.user_id
-        LEFT JOIN mediaread.book
-        ON mediaread.book.idbook = mediaread.user_review_book.book_id
-        LEFT JOIN mediaread.author
-        ON mediaread.author.idAuthor = mediaread.user_review_book.author_id
-        WHERE mediaread.user.idUser = 
-    """
-    db.cursor.execute(sorgu+str(user_id)+" ORDER BY mediaread.user_review_book.time DESC")
-    reviews = db.cursor.fetchall()
-    length4 = 1
-    if reviews[0][5] is None:
-        length4 = 0
+    if request.method == "GET":
+        sorgu = """ 
+            SELECT * 
+            FROM mediaread.user
+            LEFT JOIN mediaread.user_review_book
+            ON mediaread.user.idUser = mediaread.user_review_book.user_id
+            LEFT JOIN mediaread.book
+            ON mediaread.book.idbook = mediaread.user_review_book.book_id
+            LEFT JOIN mediaread.author
+            ON mediaread.author.idAuthor = mediaread.user_review_book.author_id
+            WHERE mediaread.user.idUser = 
+        """
+        db.cursor.execute(sorgu+str(user_id)+" ORDER BY mediaread.user_review_book.time DESC")
+        reviews = db.cursor.fetchall()
+        length4 = 1
+        if reviews[0][5] is None:
+            length4 = 0
 
-    sorgu = """ 
-        SELECT * 
-        FROM mediaread.user
-        LEFT JOIN mediaread.quote
-        ON mediaread.user.idUser = mediaread.quote.user_id
-        LEFT JOIN mediaread.book
-        ON mediaread.book.idbook = mediaread.quote.book_id
-        LEFT JOIN mediaread.author
-        ON mediaread.author.idAuthor = mediaread.quote.author_id
-        WHERE mediaread.user.idUser = 
-    """
-    db.cursor.execute(sorgu+str(user_id)+" ORDER BY mediaread.quote.time DESC")
-    quotes = db.cursor.fetchall()
-    checkQ = 0
-    if quotes[0][5] is None:
-        checkQ = 1
+        sorgu = """ 
+            SELECT * 
+            FROM mediaread.user
+            LEFT JOIN mediaread.quote
+            ON mediaread.user.idUser = mediaread.quote.user_id
+            LEFT JOIN mediaread.book
+            ON mediaread.book.idbook = mediaread.quote.book_id
+            LEFT JOIN mediaread.author
+            ON mediaread.author.idAuthor = mediaread.quote.author_id
+            WHERE mediaread.user.idUser = 
+        """
+        db.cursor.execute(sorgu+str(user_id)+" ORDER BY mediaread.quote.time DESC")
+        quotes = db.cursor.fetchall()
+        checkQ = 0
+        if quotes[0][5] is None:
+            checkQ = 1
 
-    sorgu = """ 
-        SELECT * 
-        FROM mediaread.user
-        LEFT JOIN mediaread.user_has_book
-        ON mediaread.user.idUser = mediaread.user_has_book.user_id
-        LEFT JOIN mediaread.book
-        ON mediaread.book.idbook = mediaread.user_has_book.book_id
-        LEFT JOIN mediaread.author
-        ON mediaread.author.idAuthor = mediaread.user_has_book.author_id
-        WHERE mediaread.user.idUser = 
-    """
-    db.cursor.execute(sorgu+str(user_id)+" ORDER BY mediaread.book.bookName ASC")
-    books = db.cursor.fetchall()
-    length6 = 1
-    if books[0][5] is None:
-        length6 = 0
+        sorgu = """ 
+            SELECT * 
+            FROM mediaread.user
+            LEFT JOIN mediaread.user_has_book
+            ON mediaread.user.idUser = mediaread.user_has_book.user_id
+            LEFT JOIN mediaread.book
+            ON mediaread.book.idbook = mediaread.user_has_book.book_id
+            LEFT JOIN mediaread.author
+            ON mediaread.author.idAuthor = mediaread.user_has_book.author_id
+            WHERE mediaread.user.idUser = 
+        """
+        db.cursor.execute(sorgu+str(user_id)+" ORDER BY mediaread.book.bookName ASC")
+        books = db.cursor.fetchall()
+        length6 = 1
+        if books[0][5] is None:
+            length6 = 0
 
-    sorgu = """ 
-        SELECT * 
-        FROM mediaread.user
-        LEFT JOIN mediaread.user_read_book
-        ON mediaread.user.idUser = mediaread.user_read_book.user_id
-        LEFT JOIN mediaread.book
-        ON mediaread.book.idbook = mediaread.user_read_book.book_id
-        LEFT JOIN mediaread.author
-        ON mediaread.author.idAuthor = mediaread.user_read_book.author_id
-        WHERE mediaread.user.idUser = 
-    """
-    db.cursor.execute(sorgu+str(user_id)+" ORDER BY mediaread.book.bookName ASC")
-    read = db.cursor.fetchall()
-    length5 = 1
-    if quotes[0][5] is None:
-        length5 = 0
+        sorgu = """ 
+            SELECT * 
+            FROM mediaread.user
+            LEFT JOIN mediaread.user_read_book
+            ON mediaread.user.idUser = mediaread.user_read_book.user_id
+            LEFT JOIN mediaread.book
+            ON mediaread.book.idbook = mediaread.user_read_book.book_id
+            LEFT JOIN mediaread.author
+            ON mediaread.author.idAuthor = mediaread.user_read_book.author_id
+            WHERE mediaread.user.idUser = 
+        """
+        db.cursor.execute(sorgu+str(user_id)+" ORDER BY mediaread.book.bookName ASC")
+        read = db.cursor.fetchall()
+        length5 = 1
+        if quotes[0][5] is None:
+            length5 = 0
 
-    sorgu = """ 
-        SELECT *
-        FROM mediaread.user_has_readlist
-        LEFT JOIN mediaread.readlist
-        ON mediaread.user_has_readlist.readlist_idreadlist = mediaread.readlist.idreadlist
-        WHERE mediaread.user_has_readlist.user_idUser = """ + str(user_id) + """ GROUP BY mediaread.user_has_readlist.readlist_idreadlist"""
-    db.cursor.execute(sorgu)
-    lists = db.cursor.fetchall()
-    length3 = len(lists)
-    
-    return render_template("user.html", reviews=reviews, quotes=quotes, checkQ=checkQ, len3=len(quotes), books=books, len=len(books), read=read, len2=len(read), length3=length3, length4=length4, length5=length5, length6=length6)
+        sorgu = """ 
+            SELECT *
+            FROM mediaread.user_has_readlist
+            LEFT JOIN mediaread.readlist
+            ON mediaread.user_has_readlist.readlist_idreadlist = mediaread.readlist.idreadlist
+            WHERE mediaread.user_has_readlist.user_idUser = """ + str(user_id) + """ GROUP BY mediaread.user_has_readlist.readlist_idreadlist"""
+        db.cursor.execute(sorgu)
+        lists = db.cursor.fetchall()
+        length3 = len(lists)
+        check8 = False
+        if session["userId"] != user_id:
+
+            sorgu = "SELECT * FROM mediaread.user_has_friend where userId = " + str(session["userId"]) + " and friendId = " + str(user_id)
+            db.cursor.execute(sorgu)
+            checkFriend = db.cursor.fetchone()
+
+            if checkFriend is not None:
+                check8 = True
+        
+
+        sorgu = """SELECT * FROM mediaread.user_has_friend 
+        LEFT JOIN mediaread.user
+        ON mediaread.user_has_friend.userId = mediaread.user.idUser
+        where userId = """ + str(user_id)
+        db.cursor.execute(sorgu)
+        friends = db.cursor.fetchall()
+        friendsLen = len(friends)
+
+
+
+        
+        return render_template("user.html", reviews=reviews, quotes=quotes, checkQ=checkQ, len3=len(quotes), books=books, len=len(books), read=read, len2=len(read), length3=length3, length4=length4, length5=length5, length6=length6, user_id=user_id, check8=check8, friends=friends,friendsLen=friendsLen)
+
+    else:
+
+        follower = session["userId"]
+        follows = user_id
+        
+        sorgu = "INSERT INTO mediaread.user_has_friend (userId, friendId) VALUES (" + str(follower) + ", " + str(follows) + ")"
+        print(sorgu)
+        db.cursor.execute(sorgu)
+        db.con.commit()
+
+        return redirect(url_for("user",user_id=follower))
 
 
 

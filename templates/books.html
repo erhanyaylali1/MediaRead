@@ -30,9 +30,11 @@
         {%for i in range(0, length)%}
 
         <div class="card">
-
-            {% if session["logged_in"] %}
             
+            
+            {% if session["logged_in"] %}
+
+                <div class="dotdiv bg-danger"><i class="fas fa-ellipsis-v dots"></i></div>
                 <form action="" method="post">
                     <button name="bookId" value="{{allData[i][0]}}-{{allData[i][7]}}" type="submit" class="addToLibrary btn btn-primary"><span class="mr-2">Add to Library</span><i class="far fa-plus-square"></i></button>
                 </form>

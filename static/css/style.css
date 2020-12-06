@@ -25,36 +25,6 @@ body {
 }
 
 
-/*
-.cardRenkleri .card-body {
-    background-color: #C5C6C8;
-    color: black;
-}
-.card-header {
-    background-color: #C7935B;
-    color: white;
-}
-.cardRenkleri .card-header a {
-    color: white;
-}
-.cardRenkleri .card-header a:hover {
-    color: #333333;
-}
-.cardRenkleri .card-footer {
-    background-color: white;
-    color: black;
-}
-.cardRenkleri .card-footer a {
-    color: white;
-}
-.cardRenkleri .card-footer span {
-    color: white;
-}
-.cardRenkleri .card-footer a:hover {
-    color: #C5C6C8;
-}
-*/
-
 .profileInfo {
     position: fixed;
     top: 170px;
@@ -109,12 +79,12 @@ body {
 }
 
 .part1 {
-    width: 15%;
+    width: 20%;
     align-items: center;
 }
 
 .part2 {
-    width: 55%;
+    width: 44%;
 }
 
 .part2 .searchDiv {
@@ -150,11 +120,15 @@ body {
 .part3 {
     justify-self: flex-end;
     justify-content: flex-end;
-    width: 30%;
+    width: 36%;
 }
 
 .part3 a.nav-link:hover {
-    color: #148D8D;
+    color: #FE5722;
+}
+
+.part3 a.nav-link {
+    padding: 0.5rem 0.6rem;
 }
 
 .profileBox {
@@ -343,13 +317,13 @@ body {
 }
 
 .verticalLine {
-    margin-top: 70px;
+    margin: 70px 0px 0px 60px;
     border-left: 4px solid #148D8D;
     height: 600px;
 }
 
 .verticalLine2 {
-    margin-top: 70px;
+    margin: 70px 0px 0 40px;
     border-left: 4px solid #148D8D;
     height: 500px;
 }
@@ -363,7 +337,7 @@ body {
 }
 
 .container3 .display-4 {
-    margin-left: 170px;
+    margin-left: 80px;
     margin-bottom: 60px;
 }
 
@@ -373,7 +347,7 @@ body {
 
 .container3 p {
     font-size: 30px;
-    margin-left: 100px;
+    margin-left: 40px;
 }
 
 
@@ -432,6 +406,27 @@ body {
     bottom: auto;
 }
 
+.dotdiv {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 20px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    transition: .5s ease;
+}
+
+.dotdiv i {
+    color: white;   
+}
+
+.dotdiv:hover{ 
+    cursor: pointer;
+}
+
 
 /*  
 =============================================================================================================================================================
@@ -465,8 +460,9 @@ body {
 }
 
 .booksContainer .cardDeck .card button.addToLibrary {
+    display: none;
     position: absolute;
-    top: 10px;
+    top: 50px;
     right: 10px;
     padding: 1px 6px;
     background-color: #148D8D;
@@ -490,10 +486,15 @@ body {
 }
 
 .addtoreadlist {
+    display: none;
     position: absolute;
-    top: 50px;
+    top: 90px;
     right: 10px;
     padding: 1px 6px;
+}
+
+.turn90{
+    transform: rotate(90deg);
 }
 
 .addtoreadlist2 {

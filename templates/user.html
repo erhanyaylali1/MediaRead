@@ -4,7 +4,29 @@
     <div class="row align-items-start mr-5 pr-5 mb-4">
         <div class="col-5">
             <div class="userPart">
-                <p class="display-4 ml-2">{{ reviews[0][2] }}</p>
+                <p class="display-4 ml-2">{{ reviews[0][2] }}<                {% if "logged_in" in session %}
+                    
+                    {% if session["logged_in"] %}
+
+                        {% if session["userId"] != user_id and check8 == False %}
+
+                            <form action="" method="post" name="follow">
+                                <button type="submit">Follow</button>
+                            </form>
+
+                        {% elif session["userId"] != user_id and check8 == True %}
+                            <p> You are friend </p>
+
+                        {% else %}
+                            <p> Edit </p>
+                        {% endif %}
+                        
+
+                    {% else %}
+                    {% endif %}
+
+                {% else %}
+                {% endif %}
                 <table class="table table-hover mt-5">
                     <tbody>
                         <tr>
@@ -18,6 +40,10 @@
                         <tr>
                             <td><b>Readlist Number</b></td>
                             <td> {{ length3 }}</td>
+                        </tr>
+                        <tr>
+                            <td><b> Follows </b></td>
+                            <td> {{ friendsLen }}</td>
                         </tr>
                     </tbody>
                 </table>
