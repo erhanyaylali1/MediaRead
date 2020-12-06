@@ -4,21 +4,22 @@
     <div class="row align-items-start mr-5 pr-5 mb-4">
         <div class="col-5">
             <div class="userPart">
-                <p class="display-4 ml-2">{{ reviews[0][2] }}<                {% if "logged_in" in session %}
+                <p class="display-4 ml-2">{{ reviews[0][2] }}          
+                
+                {% if "logged_in" in session %}
                     
                     {% if session["logged_in"] %}
 
                         {% if session["userId"] != user_id and check8 == False %}
 
                             <form action="" method="post" name="follow">
-                                <button type="submit">Follow</button>
+                                <button type="submit" class="btn btn-outline-dark">Follow</button>
                             </form>
 
                         {% elif session["userId"] != user_id and check8 == True %}
-                            <p> You are friend </p>
+                            <p> Following </p>
 
                         {% else %}
-                            <p> Edit </p>
                         {% endif %}
                         
 
@@ -27,7 +28,7 @@
 
                 {% else %}
                 {% endif %}
-                <table class="table table-hover mt-5">
+                <table class="table table-hover mt-4">
                     <tbody>
                         <tr>
                             <td><b>Book Number in Library</b></td>
@@ -43,7 +44,11 @@
                         </tr>
                         <tr>
                             <td><b> Follows </b></td>
-                            <td> {{ friendsLen }}</td>
+                            <td> {{ followLen }}</td>
+                        </tr>
+                        <tr>
+                            <td><b> Followers </b></td>
+                            <td> {{ followerLen }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -56,6 +61,8 @@
                 <a type="button" class="btn btn-dark text-white" id="readPart">Read Books</a>
                 <a type="button" class="btn btn-dark text-white" id="reviewPart">Reviews</a>
                 <a type="button" class="btn btn-dark text-white" id="quotePart">Quotes</a>
+                <a type="button" class="btn btn-dark text-white" id="follows">Following</a>
+                <a type="button" class="btn btn-dark text-white" id="followers">Followers</a>
             </div>
 
 
@@ -248,6 +255,72 @@
 
                 </div>
 
+                <div class="followsPart">
+
+                    <h3 class="mb-4 text-center mr-5"> Following</h3>
+                    <div class="cardlistesi">
+                    {% if followLen > 0 %}
+                        
+                                {% for fl in follow %}
+                                <div class="card mb-3 py-3 px-4">
+                                
+                                    <div>
+                                        <img src="https://i.stack.imgur.com/l60Hf.png">
+                                    </div>
+                                    <a href="{{ fl[2]}}" class="ml-3">
+                                        <div>
+                                            <span> {{ fl[4]}} </span> 
+                                        </div>
+                                        <span class="ml-3"><i>@{{ fl[3]}}</i></span>                           
+                                    </a>
+                                    {% if "logged_in" in session %}
+                                        {% if session["userId"] == user_id %}
+                                            <form action="" method="post" class="ml-auto">
+                                                <button class="btn btn-outline-danger" name="unfollow" value="{{ fl[2] }}">Unfollow</button>
+                                            </form>
+                                        {% else %}
+                                        {% endif %}                                    
+                                    {% else %}
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+                    {% else %}
+                                <div class="card mb-3 py-2 px-3">
+                                     
+                                        <span> No Following</span>                           
+                                    
+                                </div>
+                    {% endif %}
+                    </div>
+                </div>
+
+                <div class="followersPart">
+                    <h3 class="mb-4 text-center mr-5"> Followers</h3>
+                    <div class="cardlistesi">
+                    {% if followerLen > 0 %}
+                        
+                                {% for fl in follower %}
+                                <div class="card mb-3 py-3 px-4">
+                                    <div>
+                                        <img src="https://i.stack.imgur.com/l60Hf.png">
+                                    </div>
+                                    <a href="{{ fl[2]}}" class="ml-3">
+                                        <div>
+                                            <span> {{ fl[4]}} </span> 
+                                        </div>
+                                        <span class="ml-3"><i>@{{ fl[3]}}</i></span>                           
+                                    </a>
+                                </div>
+                                {% endfor %}
+                    {% else %}
+                                <div class="card mb-3 py-2 px-3">
+                                     
+                                        <span> No Following</span>                           
+                                    
+                                </div>
+                    {% endif %}
+                    </div>
+                </div>
             </div>
 
         </div>

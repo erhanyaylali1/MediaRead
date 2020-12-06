@@ -585,40 +585,65 @@ def user(user_id):
         lists = db.cursor.fetchall()
         length3 = len(lists)
         check8 = False
-        if session["userId"] != user_id:
 
-            sorgu = "SELECT * FROM mediaread.user_has_friend where userId = " + str(session["userId"]) + " and friendId = " + str(user_id)
-            db.cursor.execute(sorgu)
-            checkFriend = db.cursor.fetchone()
+        if "userId" in session:
 
-            if checkFriend is not None:
-                check8 = True
+            if session["userId"]:
+
+                if session["userId"] != user_id:
+
+                    sorgu = "SELECT * FROM mediaread.user_has_friend where userId = " + str(session["userId"]) + " and friendId = " + str(user_id)
+                    db.cursor.execute(sorgu)
+                    checkFriend = db.cursor.fetchone()
+
+                    if checkFriend is not None:
+                        check8 = True
+            
         
 
         sorgu = """SELECT * FROM mediaread.user_has_friend 
         LEFT JOIN mediaread.user
-        ON mediaread.user_has_friend.userId = mediaread.user.idUser
-        where userId = """ + str(user_id)
+        ON mediaread.user_has_friend.friendId = mediaread.user.idUser
+        where mediaread.user_has_friend.userId = """ + str(user_id)
         db.cursor.execute(sorgu)
-        friends = db.cursor.fetchall()
-        friendsLen = len(friends)
+        follow = db.cursor.fetchall()
+        followLen = len(follow)
 
-
+        sorgu = """SELECT * FROM mediaread.user_has_friend 
+        LEFT JOIN mediaread.user
+        ON mediaread.user_has_friend.userId = mediaread.user.idUser
+        where mediaread.user_has_friend.friendId = """ + str(user_id)
+        db.cursor.execute(sorgu)
+        follower = db.cursor.fetchall()
+        followerLen = len(follower)
 
         
-        return render_template("user.html", reviews=reviews, quotes=quotes, checkQ=checkQ, len3=len(quotes), books=books, len=len(books), read=read, len2=len(read), length3=length3, length4=length4, length5=length5, length6=length6, user_id=user_id, check8=check8, friends=friends,friendsLen=friendsLen)
+        return render_template("user.html", reviews=reviews, quotes=quotes, checkQ=checkQ, len3=len(quotes), 
+        books=books, len=len(books), read=read, len2=len(read), length3=length3, length4=length4, 
+        length5=length5, length6=length6, user_id=user_id, check8=check8, follower=follower, followerLen=followerLen,
+        follow=follow, followLen=followLen)
 
     else:
 
-        follower = session["userId"]
-        follows = user_id
-        
-        sorgu = "INSERT INTO mediaread.user_has_friend (userId, friendId) VALUES (" + str(follower) + ", " + str(follows) + ")"
-        print(sorgu)
-        db.cursor.execute(sorgu)
-        db.con.commit()
+        unfollow = request.form.get("unfollow")
+        if unfollow is not None:
 
-        return redirect(url_for("user",user_id=follower))
+            sorgu = "DELETE FROM mediaread.user_has_friend WHERE userId = " + str(user_id) + " and friendId = " + str(unfollow)
+            db.cursor.execute(sorgu)
+            db.con.commit()
+            return redirect(request.url)
+
+        else:
+
+            follower = session["userId"]
+            follows = user_id
+            if(follower != follows):
+                sorgu = "INSERT INTO mediaread.user_has_friend (userId, friendId) VALUES (" + str(follower) + ", " + str(follows) + ")"
+                print(sorgu)
+                db.cursor.execute(sorgu)
+                db.con.commit()
+
+            return redirect(request.url)
 
 
 
@@ -874,8 +899,8 @@ def login_page():
 def logout_page():
 
     session["logged_in"] = False
-    session["username"] = ""
-    session["userId"] = ""
+    session["username"] = False
+    session["userId"] = False
     flash("LOGGED OUT SUCCESSFULLY","success")
     return redirect(url_for("home_page"))
 

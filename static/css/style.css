@@ -769,7 +769,6 @@ body {
 }
 
 .userContainer .row .col-7 .btn-group {
-    width: 70%;
     align-self: flex-end;
 }
 
@@ -789,6 +788,46 @@ body {
 ============================================================== Statistics Page ==================================================================================
 =============================================================================================================================================================
 */
+
+.cardlistesi {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.followsPart, .followersPart {
+    display: none;
+}
+
+.cardlistesi .card {
+    border-radius: 5px;
+    width: 80%;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.cardlistesi .card button {
+    height: min-content;
+}
+
+.cardlistesi .card a {
+    display: flex;
+    flex-direction: column;
+}
+
+.cardlistesi .card a div span{
+    font-size: 1.4rem;
+}
+
+.cardlistesi .card div img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50px;
+
+}
 
 .statisticCategories,
 .statisticAuthors {

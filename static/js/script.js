@@ -71,6 +71,16 @@ $(document).ready(function() {
         $(".col-7 .cardGroup12").children(":nth-child(2)").show();
     });
 
+    $("#follows").click(function() {
+        $(".col-7 .cardGroup12").children().not(":nth-child(5)").hide();
+        $(".col-7 .cardGroup12").children(":nth-child(5)").show();
+    });
+
+    $("#followers").click(function() {
+        $(".col-7 .cardGroup12").children().not(":nth-child(6)").hide();
+        $(".col-7 .cardGroup12").children(":nth-child(6)").show();
+    });
+
     $(".searchButton").click(function() {
         let val = $(".searchInput").val();
     });
