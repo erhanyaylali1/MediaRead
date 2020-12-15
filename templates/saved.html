@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container booksContainer" style="margin-top: 70px;">
+    <div class="card mb-5">
+        <div class="card-body pl-5 d-flex flex-row align-items-center">
+            <div>
+                {% if length == 0 %}
+                <p class="bookh3Title m-0">No Saved Book</p>
+                {% else %}
+                <p class="bookh3Title m-0">Saved Book (Total: {{length}} Books)</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="cardDeck px-4 mb-5">
+
+        {% for book in books  %}
+            <div class="card">
+                <form action="" method="post">
+                        <button name="deletefromsaved" value="{{book[1]}}" type="submit" class="addToLibrary btn btn-primary" style="display: inline; top: 10px;"><span class="mr-2">Delete</span><i class="fas fa-trash-alt"></i></button>
+                </form>
+                <a href="/books/{{book[1]}}">
+                    <img src="{{book[8]}}" alt="">
+                </a>
+                <div class="card-body">
+                    <p>
+                        <a href="/books/{{book[1]}}">{{ book[3] }}</a>
+                    </p>
+                    <p class="card-text">
+                        <a href="/authors/{{book[11]}}">{{book[12]}}</a>
+                    </p>
+                    <p class="card-text text-right">
+                        <small>Rate: {{ book[7] }}</small>
+                    </p>
+                </div>
+                
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}

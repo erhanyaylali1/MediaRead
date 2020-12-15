@@ -3,162 +3,101 @@
 
 <div class="container py-5">
 
-    <div class="row pt-5">
+    <div class="row pt-2">
 
+        
         <div class="col-3 profileInfo">
+            <div class="card pt-1 mb-5">
+                <h4 class="text-center mt-2 mb-0"><a href="/trends">Trends</a></h4>
+                <hr>
+                <div class="trendPart">
+                    <div class="mx-3">
+                        <p><b>Book of the Month #1</b></p>
+                        <a href="/books/{{book[0]}}">{{book[1]}}</a>
+                    </div>
+                    <div class="mx-3 mt-3 mb-0">
+                        <p><b>Author of the Month #1</b></p>
+                        <a href="/authors/{{auth[0]}}">{{auth[1]}}</a>
+                    </div>
+                </div>
+                <small class="text-right mr-2 mb-1"><a href="/trends">Click for Other Trends</a></small>
+            </div>
+
             {% if session["logged_in"] %}
             <a href="users/{{ userInfo[0] }}" class="display-4">{{ userInfo[1] }}</a>
-            <ul class="mt-5 profileList">
+            <ul class="mt-4 profileList">
 
                 <li><a href="users/{{ userInfo[0] }}/myLibrary">My Library</a></li>
                 <li><a href="users/{{ userInfo[0] }}/readBooks">Read Books</a></li>
                 <li><a href="users/{{ userInfo[0] }}/readlists">My Read Lists</a></li>
                 <li><a href="users/{{ userInfo[0] }}/statistics">Statistics</a></li>
-
+                <li><a href="users/{{ userInfo[0] }}/saved">Saved</a></li>
+            
             </ul>
+
             {% else %} {% endif %}
+            
         </div>
+        
         <div class="col-8 ml-auto cardRenkleri2 cardRenkleri">
-            <div class="card mb-4">
-                <div class="card-header">
-                    <a href="">Erhan Yaylalı</a> add a review
-                    <span class="float-right">
-                                2 days ago
-                            </span>
-                </div>
-                <div class="card-body">
-                    <p class="card-text">
-                        I refuse to write a review for one of the best books ever written. Asking a serious fantasy fan to write a review for Lord of the Rings is like asking a Christian to write a review for The Bible.
-                    </p>
-                </div>
-                <div class="card-footer py-2 px-3">
-                    <cite title="Source Title"><a href="">Yüzüklerin Efendisi I - Yüzük Kardeşliği </a></cite>
-                    <cite title="Source Title">by <a href="">  J. R. R. Tolkien</a></cite>
-                    <span class="float-right">Rate: 8/10</span>
-                </div>
-            </div>
-            <div class="card mb-4">
-                <div class="card-header">
-                    <a href="">Erhan Yaylalı</a> add a qoute
-                    <span class="float-right">
-                                2 days ago
-                            </span>
-                </div>
-                <div class="card-body">
-                    <p class="card-text">
-                        I refuse to write a review for one of the best books ever written. Asking a serious fantasy fan to write a review for Lord of the Rings is like asking a Christian to write a review for The Bible.
-                    </p>
-                </div>
-                <div class="card-footer py-2 px-3">
-                    <cite title="Source Title"><a href="">Yüzüklerin Efendisi I - Yüzük Kardeşliği </a></cite>
-                    <cite title="Source Title">by <a href="">  J. R. R. Tolkien</a></cite>
-                </div>
-            </div>
-            <div class="card mb-4">
-                <div class="card-header">
-                    <a href="">Erhan Yaylalı</a> add a review
-                    <span class="float-right">
-                                2 days ago
-                            </span>
-                </div>
-                <div class="card-body">
-                    <p class="card-text">
-                        I refuse to write a review for one of the best books ever written. Asking a serious fantasy fan to write a review for Lord of the Rings is like asking a Christian to write a review for The Bible.
-                    </p>
-                </div>
-                <div class="card-footer py-2 px-3">
-                    <cite title="Source Title"><a href="">Yüzüklerin Efendisi I - Yüzük Kardeşliği </a></cite>
-                    <cite title="Source Title">by <a href="">  J. R. R. Tolkien</a></cite>
-                    <span class="float-right">Rate: 8/10</span>
-                </div>
-            </div>
-            <div class="card mb-4">
-                <div class="card-header">
-                    <a href="">Erhan Yaylalı</a> add a qoute
-                    <span class="float-right">
-                                2 days ago
-                            </span>
-                </div>
-                <div class="card-body">
-                    <p class="card-text">
-                        I refuse to write a review for one of the best books ever written. Asking a serious fantasy fan to write a review for Lord of the Rings is like asking a Christian to write a review for The Bible.
-                    </p>
-                </div>
-                <div class="card-footer py-2 px-3">
-                    <cite title="Source Title"><a href="">Yüzüklerin Efendisi I - Yüzük Kardeşliği </a></cite>
-                    <cite title="Source Title">by <a href="">  J. R. R. Tolkien</a></cite>
-                </div>
-            </div>
-            <div class="card mb-4">
-                <div class="card-header">
-                    <a href="">Erhan Yaylalı</a> add a review
-                    <span class="float-right">
-                                2 days ago
-                            </span>
-                </div>
-                <div class="card-body">
-                    <p class="card-text">
-                        I refuse to write a review for one of the best books ever written. Asking a serious fantasy fan to write a review for Lord of the Rings is like asking a Christian to write a review for The Bible.
-                    </p>
-                </div>
-                <div class="card-footer py-2 px-3">
-                    <cite title="Source Title"><a href="">Yüzüklerin Efendisi I - Yüzük Kardeşliği </a></cite>
-                    <cite title="Source Title">by <a href="">  J. R. R. Tolkien</a></cite>
-                    <span class="float-right">Rate: 8/10</span>
-                </div>
-            </div>
-            <div class="card mb-4">
-                <div class="card-header">
-                    <a href="">Erhan Yaylalı</a> add a qoute
-                    <span class="float-right">
-                                2 days ago
-                            </span>
-                </div>
-                <div class="card-body">
-                    <p class="card-text">
-                        I refuse to write a review for one of the best books ever written. Asking a serious fantasy fan to write a review for Lord of the Rings is like asking a Christian to write a review for The Bible.
-                    </p>
-                </div>
-                <div class="card-footer py-2 px-3">
-                    <cite title="Source Title"><a href="">Yüzüklerin Efendisi I - Yüzük Kardeşliği </a></cite>
-                    <cite title="Source Title">by <a href="">  J. R. R. Tolkien</a></cite>
-                </div>
-            </div>
-            <div class="card mb-4">
-                <div class="card-header">
-                    <a href="">Erhan Yaylalı</a> add a review
-                    <span class="float-right">
-                                2 days ago
-                            </span>
-                </div>
-                <div class="card-body">
-                    <p class="card-text">
-                        I refuse to write a review for one of the best books ever written. Asking a serious fantasy fan to write a review for Lord of the Rings is like asking a Christian to write a review for The Bible.
-                    </p>
-                </div>
-                <div class="card-footer py-2 px-3">
-                    <cite title="Source Title"><a href="">Yüzüklerin Efendisi I - Yüzük Kardeşliği </a></cite>
-                    <cite title="Source Title">by <a href="">  J. R. R. Tolkien</a></cite>
-                    <span class="float-right">Rate: 8/10</span>
-                </div>
-            </div>
-            <div class="card mb-4">
-                <div class="card-header">
-                    <a href="">Erhan Yaylalı</a> add a qoute
-                    <span class="float-right">
-                                2 days ago
-                            </span>
-                </div>
-                <div class="card-body">
-                    <p class="card-text">
-                        I refuse to write a review for one of the best books ever written. Asking a serious fantasy fan to write a review for Lord of the Rings is like asking a Christian to write a review for The Bible.
-                    </p>
-                </div>
-                <div class="card-footer py-2 px-3">
-                    <cite title="Source Title"><a href="">Yüzüklerin Efendisi I - Yüzük Kardeşliği </a></cite>
-                    <cite title="Source Title">by <a href="">  J. R. R. Tolkien</a></cite>
-                </div>
-            </div>
+            
+            {% if "logged_in" in session %}
+
+                {% if session["logged_in"] %}
+
+                    {% for i in range(length)  %}
+
+                        {% if ayr[i] == 0 %}
+                        
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <a href="/users/{{ final[i][3] }}"><b>{{ final[i][2] }}</b></a> add a review
+                                    <span class="float-right">
+                                                {{ final[i][0] }}
+                                    </span>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        {{ final[i][1] }}    
+                                    </p>
+                                </div>
+                                <div class="card-footer py-2 px-3">
+                                    <cite title="Source Title"><a href="/books/{{ final[i][4] }}">{{ final[i][5] }}</a></cite>
+                                    <cite title="Source Title">by <a href="/authors/{{ final[i][6] }}"><b>{{ final[i][8] }}</b></a></cite>
+                                    <span class="float-right">Rate: {{ final[i][7] }}</span>
+                                </div>
+                            </div>
+
+                        {% else %}
+
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <a href="/users/{{ final[i][3] }}"><b>{{ final[i][2] }}</b></a> add a qoute
+                                    <span class="float-right">
+                                                {{ final[i][0] }}
+                                    </span>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        {{ final[i][1] }}   
+                                    </p>
+                                </div>
+                                <div class="card-footer py-2 px-3">
+                                    <cite title="Source Title"><a href="/books/{{ final[i][4] }}">{{ final[i][5] }}</a></cite>
+                                    <cite title="Source Title">by <a href="/authors/{{ final[i][6] }}"><b>{{ final[i][7] }}</b></a></cite>
+                                </div>
+                            </div>
+
+                        {% endif %}
+                    
+                    {% endfor %}
+                
+                {% else %}
+                {% endif %}
+            
+            {% else %}
+            {% endif %}
+            
         </div>
     </div>
 </div>

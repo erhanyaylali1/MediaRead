@@ -27,7 +27,7 @@ body {
 
 .profileInfo {
     position: fixed;
-    top: 170px;
+    top: 100px;
 }
 
 .profileList {
@@ -606,6 +606,20 @@ body {
     color: white;
 }
 
+.saveButton {
+    position: absolute;
+    right: 100px;
+    top: 96px;
+}
+
+.fa-bookmark{
+    font-size: 1.2rem;
+}
+
+.fa-bookmark:hover {
+    color: #138496;
+    cursor: pointer;
+}
 
 /*  
 =============================================================================================================================================================
@@ -829,6 +843,10 @@ body {
 
 }
 
+#followNum, #followerNum {
+    cursor: pointer;
+}
+
 .statisticCategories,
 .statisticAuthors {
     display: none;
@@ -951,4 +969,45 @@ body {
 
 .accordion .card .card-header {
     background-color: blanchedalmond;
+}
+
+.trendPart {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-block-start: 0;
+    padding-inline-start: 0;
+    margin-left: 0;
+}
+
+.trendPart p {
+    margin-bottom: 3px;
+}
+
+.trendContainer {
+    margin-top: 80px;
+}
+
+.trendContainer .row {
+    border-radius: 20px;
+    justify-content: center;
+}
+
+.authorCards {
+    height: 310px;
+}
+
+.trendchoice:hover {
+    cursor: pointer;
+    color: #138496;
+}
+
+.trendauthors{
+    display: none;
+}
+
+.tablePart .cardDeck {
+    width: 60%;
+    margin: 80px auto;
 }

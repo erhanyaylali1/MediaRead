@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container">
+    
+    <div class="trendContainer mx-auto">
+
+        <div class="row ">
+            <div class="col-4 card py-3 px-5 text-center trendchoice">
+                Most Read Books for Last Month
+            </div>
+            <div class="col-4 card py-3 px-5 ml-5 text-center trendchoice">
+                Most Read Authors for Last Month
+            </div>
+        </div>
+
+    </div>
+    
+
+    <div class="tablePart booksContainer mt-5">
+        <div class="cardDeck">
+            {% for trendbook in trendbooks %}
+                <div class="trendbooks">
+                    <div class="card">
+                        <a href="/books/{{ trendbook[0] }}"> <img src="{{ trendbook[4] }}" alt=""></a>
+                        <div class="card-body">
+                            <p>
+                                <a href="/books/{{ trendbook[0] }}">{{ trendbook[3] }}</a>
+                            </p>
+                            <p>
+                                <a href="/authors/{{ trendbook[1] }}">{{ trendbook[5] }}</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+            {% for trendauthor in trendauthors %}
+            <div class="trendauthors">
+                <div class="card authorCards">
+                    <a href="/books/{{ trendauthor[0] }}"> <img src="{{ trendauthor[3] }}" alt=""></a>
+                    <div class="card-body">
+                        <p>
+                            <a href="/authors/{{ trendauthor[0] }}">{{ trendauthor[2] }}</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+        </div>
+    </div>
+
+
+</div>
+
+
+{% endblock %}

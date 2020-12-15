@@ -77,29 +77,45 @@
 
         <div class="col-7 mb-5">
             <div class="row mb-3">
+                {% if "logged_in" in session %}
+                    {% if session["logged_in"] %}
+
+                        <form action="" method="post" class="saveButton">
+                            <button type="submit" name="savedbook" class="btn" value="{{session['userId']}}-{{book[0][0]}}">
+                                <i class="far fa-bookmark" data-toggle="tooltip" data-placement="top" title="Save"></i>
+                            </button>
+                        </form>
+
+                    {% else %}
+                    {% endif %}
+                
+                {% else %}
+                {% endif %}
                 <div class="col-6">
                     <div class="card bookCard">
                         <div class="card-header text-center" id="reviewButton">
                             Reviews
                         </div>
-                        {% if session["logged_in"] %}
-                        <button name="addReview" type="submit" class="addToReadBook btn btn-info"><i class="far fa-plus-square"></i><span class="ml-2">Add a Review</span></button>
-                        <div class="addReview">
-                            <form method="post" name="new_review">
-                                <div class="readBookForm">
-                                    <h3 class="">Add Review</h3>
-                                    <div class="con-input">
-                                        <input type="text" name="rate" , placeholder="Rate out of 10" required="required">
-                                    </div>
-                                    <div class="con-input ">
+                        {% if "logged_in" in session %}
+                            {% if session["logged_in"] %}
+                            <button name="addReview" type="submit" class="addToReadBook btn btn-info"><i class="far fa-plus-square"></i><span class="ml-2">Add a Review</span></button>
+                            <div class="addReview">
+                                <form method="post" name="new_review">
+                                    <div class="readBookForm">
+                                        <h3 class="">Add Review</h3>
+                                        <div class="con-input">
+                                            <input type="text" name="rate" , placeholder="Rate out of 10" required="required">
+                                        </div>
+                                        <div class="con-input ">
 
-                                        <textarea class="text-white " rows="5 " name="review" placeholder="Review for Book" required="required "></textarea>
+                                            <textarea class="text-white " rows="5 " name="review" placeholder="Review for Book" required="required "></textarea>
 
+                                        </div>
+                                        <button type="submit " name="addReviewButton" value='{{ session["userId"] }}-{{ book[0][9] }}' class="btn formButton ">Add</button>
                                     </div>
-                                    <button type="submit " name="addReviewButton" value='{{ session["userId"] }}-{{ book[0][9] }}' class="btn formButton ">Add</button>
-                                </div>
-                            </form>
-                        </div>
+                                </form>
+                            </div>
+                            {% else %} {% endif %}
                         {% else %} {% endif %}
 
                     </div>
@@ -109,21 +125,23 @@
                         <div class="card-header text-center" id="quoteButton">
                             Quotes
                         </div>
-                        {% if session["logged_in"] %}
-                        <button name="addQuote" type="submit" class="addToReadBook btn btn-info"><i class="far fa-plus-square"></i><span class="ml-2">Add a Quote</span></button>
-                        <div class="addReview">
-                            <form method="post" name="new_quote">
-                                <div class="readBookForm">
-                                    <h3 class=" ">Add Quote</h3>
-                                    <div class="con-input ">
+                        {% if "logged_in" in session %}
+                            {% if session["logged_in"] %}
+                            <button name="addQuote" type="submit" class="addToReadBook btn btn-info"><i class="far fa-plus-square"></i><span class="ml-2">Add a Quote</span></button>
+                            <div class="addReview">
+                                <form method="post" name="new_quote">
+                                    <div class="readBookForm">
+                                        <h3 class=" ">Add Quote</h3>
+                                        <div class="con-input ">
 
-                                        <textarea class="text-white " rows="5 " name="quote" placeholder="Quote from Book" required="required "></textarea>
+                                            <textarea class="text-white " rows="5 " name="quote" placeholder="Quote from Book" required="required "></textarea>
 
+                                        </div>
+                                        <button type="submit " name="addQuoteButton" value='{{ session["userId"] }}-{{ book[0][9] }}' class="btn formButton ">Add</button>
                                     </div>
-                                    <button type="submit " name="addQuoteButton" value='{{ session["userId"] }}-{{ book[0][9] }}' class="btn formButton ">Add</button>
-                                </div>
-                            </form>
-                        </div>
+                                </form>
+                            </div>
+                            {% else %} {% endif %}
                         {% else %} {% endif %}
                     </div>
                 </div>
@@ -131,6 +149,7 @@
 
             <div id="reviews" class="row">
                 <h3 class="text-center bookh3Title">Reviews</h3>
+                
                 {% if check2 == 1 %}
                 <div class="col-10 mx-auto mt-4">
                     <div class="card py-2 px-5">

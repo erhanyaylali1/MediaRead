@@ -31,43 +31,45 @@
 
         <div class="card">
             
-            
-            {% if session["logged_in"] %}
-
-                <div class="dotdiv bg-danger"><i class="fas fa-ellipsis-v dots"></i></div>
-                <form action="" method="post">
-                    <button name="bookId" value="{{allData[i][0]}}-{{allData[i][7]}}" type="submit" class="addToLibrary btn btn-primary"><span class="mr-2">Add to Library</span><i class="far fa-plus-square"></i></button>
-                </form>
-                <button class="addtoreadlist btn btn-primary"><span class="mr-2">Add to Readlist</span><i class="far fa-plus"></i></button>
-                <form action="" method="post">
+            {% if "logged_in" in session and session["logged_in"] == True %}
                 
-                    <div class="readlistList pt-2 px-3">
-                        <fieldset id="">      
-                            <legend class="text-white borderB pb-2 px-4">Select Playlist</legend>
-                            <table class="table table-hover authorBooksTable mb-0">
-                                <tbody>
 
-                                    {% for readlist in readlists %}
-
-                                        <tr>
-                                            <td><input type="checkbox" name="readlist" value="{{allData[i][0]}}-{{allData[i][7]}}-{{readlist[4]}}"></td>
-                                            <td> {{ readlist[5] }} </td>
-                                        </tr>
-
-                                    {% endfor %}
-                                    
-                                </tbody>
-                            </table>    
-                        </fieldset>       
-                        
-                        <button class="btn btn-primary btn-sm mb-2 mt-1 float-right addlistbut">Add</button>
-                    </div>
-
-                </form>
+                    <div class="dotdiv bg-danger"><i class="fas fa-ellipsis-v dots"></i></div>
+                    <form action="" method="post">
+                        <button name="bookId" value="{{allData[i][0]}}-{{allData[i][7]}}" type="submit" class="addToLibrary btn btn-primary"><span class="mr-2">Add to Library</span><i class="far fa-plus-square"></i></button>
+                    </form>
+                    <button class="addtoreadlist btn btn-primary"><span class="mr-2">Add to Readlist</span><i class="far fa-plus"></i></button>
+                    <form action="" method="post">
                     
+                        <div class="readlistList pt-2 px-3">
+                            <fieldset id="">      
+                                <legend class="text-white borderB pb-2 px-4">Select Playlist</legend>
+                                <table class="table table-hover authorBooksTable mb-0">
+                                    <tbody>
+
+                                        {% for readlist in readlists %}
+
+                                            <tr>
+                                                <td><input type="checkbox" name="readlist" value="{{allData[i][0]}}-{{allData[i][7]}}-{{readlist[4]}}"></td>
+                                                <td> {{ readlist[5] }} </td>
+                                            </tr>
+
+                                        {% endfor %}
+                                        
+                                    </tbody>
+                                </table>    
+                            </fieldset>       
+                            
+                            <button class="btn btn-primary btn-sm mb-2 mt-1 float-right addlistbut">Add</button>
+                        </div>
+
+                    </form>
+                        
+            
+            
             {% else %}
             {% endif %}
-            
+
             <a href="/books/{{ allData[i][0] }}"><img class="card-img-top" src="{{ allData[i][6] }}" alt="Book Card Image"></a>
             <div class="card-body">
                 <p><a href="/books/{{ allData[i][0] }}">{{ allData[i][1] }}</a></p>

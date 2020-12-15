@@ -76,7 +76,17 @@ $(document).ready(function() {
         $(".col-7 .cardGroup12").children(":nth-child(5)").show();
     });
 
+    $("#followNum").click(function() {
+        $(".col-7 .cardGroup12").children().not(":nth-child(5)").hide();
+        $(".col-7 .cardGroup12").children(":nth-child(5)").show();
+    });
+
     $("#followers").click(function() {
+        $(".col-7 .cardGroup12").children().not(":nth-child(6)").hide();
+        $(".col-7 .cardGroup12").children(":nth-child(6)").show();
+    });
+
+    $("#followerNum").click(function() {
         $(".col-7 .cardGroup12").children().not(":nth-child(6)").hide();
         $(".col-7 .cardGroup12").children(":nth-child(6)").show();
     });
@@ -139,4 +149,13 @@ $(document).ready(function() {
         $(this).next().next().toggle(500);
     })
 
+    $(".trendchoice:first-child").click(function(){
+        $(".trendbooks").show();
+        $(".trendauthors").hide();
+    })
+
+    $(".trendchoice:nth-child(2)").click(function(){
+        $(".trendbooks").hide();
+        $(".trendauthors").show();
+    })
 });
