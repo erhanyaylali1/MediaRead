@@ -89,6 +89,7 @@ body {
 
 .part2 .searchDiv {
     width: 100%;
+    position: relative;
 }
 
 .part2 .searchDiv .searchInput {
@@ -1010,4 +1011,28 @@ body {
 .tablePart .cardDeck {
     width: 60%;
     margin: 80px auto;
+}
+
+.searchresults {
+    position: absolute;
+    width: 82%;
+    top: 40px;
+    z-index: 111;
+    padding: 10px 20px;
+    display: none;
+}
+
+.searchresults li {
+    margin-bottom: 5px;
+    list-style: none;
+}
+
+.searchresults li a {
+    font-size: 1.1rem;
+}
+
+.alert-success {
+    width: 51%;
+    position: absolute;
+    right: 159px;
 }

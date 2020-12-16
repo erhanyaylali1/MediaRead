@@ -158,4 +158,27 @@ $(document).ready(function() {
         $(".trendbooks").hide();
         $(".trendauthors").show();
     })
+
+
+    $("#searchId").on("input", function(e){
+        textInput = $("#searchId").val();
+        $.ajax({
+            method: "post",
+            url: "/livesearch",
+            data: {text: textInput},
+            success: function(res){
+                    var data = "";
+                    $.each(res,function(index,value){
+                        if(value[3] == 0){
+                            data += "<li><a href='/books/"+value[0]+"'>"+value[1]+"</a></li>";  
+                        } else {
+                            data += "<li><a href='/authors/"+value[0]+"'>"+value[1]+"</a></li>";  
+                        }
+                    });
+                    console.log(data);
+                    $(".searchresults").css("display","inherit");
+                    $(".searchresults").html(data);
+            }
+        })
+    })
 });

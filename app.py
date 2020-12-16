@@ -1,4 +1,4 @@
-from flask import Flask, render_template, current_app, abort, url_for, request, render_template, redirect, session, flash
+from flask import Flask, render_template, current_app, abort, url_for, request, render_template, redirect, session, flash, jsonify
 from flask_mysqldb import MySQL
 from database import Database
 from MySQLdb import IntegrityError
@@ -106,6 +106,26 @@ def home_page():
     db.cursor.execute(sorgu)
     book = db.cursor.fetchone()
     return render_template("index.html", userInfo=userInfo, final=final, ayr=ayr, length=length, book=book, auth=auth)
+
+
+@app.route("/livesearch",methods=["POST","GET"])
+def livesearch():
+
+    key = request.form.get("text")
+    print(key)
+    sorgu = """
+    SELECT mediaread.book.idbook, mediaread.book.bookName, mediaread.book.bookImage, 0 FROM mediaread.book 
+    WHERE mediaread.book.bookName LIKE '%"""+key+"""%'
+    UNION
+    SELECT mediaread.author.idAuthor,mediaread.author.fullName,mediaread.author.authorImage, 1 FROM mediaread.author 
+    WHERE mediaread.author.fullName LIKE '%"""+key+"""%'
+    limit 10
+    """
+    db.cursor.execute(sorgu)
+    results = db.cursor.fetchall()
+    return jsonify(results)
+    
+
 
 
 
