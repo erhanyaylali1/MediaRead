@@ -73,17 +73,16 @@ body {
     max-width: 1400px;
 }
 
-.navbar .container div.parts {
+.part1 {
+    width: 20%;
+    align-items: center;
     display: flex;
     flex-direction: row;
 }
 
-.part1 {
-    width: 20%;
-    align-items: center;
-}
-
 .part2 {
+    display: flex;
+    flex-direction: row;
     width: 44%;
 }
 
@@ -93,7 +92,7 @@ body {
 }
 
 .part2 .searchDiv .searchInput {
-    width: 85%;
+    width: 80%;
     border-radius: 15px;
     border: 1px solid #CBCBCB;
 }
@@ -122,6 +121,8 @@ body {
     justify-self: flex-end;
     justify-content: flex-end;
     width: 36%;
+    display: flex;
+    flex-direction: row;
 }
 
 .part3 a.nav-link:hover {
@@ -1017,7 +1018,7 @@ body {
     position: absolute;
     width: 82%;
     top: 40px;
-    z-index: 111;
+    z-index: 1111;
     padding: 10px 20px;
     display: none;
 }
@@ -1225,3 +1226,207 @@ body {
     padding-right: 6px;
 }
 
+.burger{
+    display: none;
+}
+
+.flex2 {
+    display: flex!important;
+}
+
+@media screen and (max-width: 450px) {
+    
+    p, a, div    {
+        font-size: 12px;
+    }
+    .navbar .part2{
+        display: none;
+        width: 100%;
+        margin-top: 1rem;
+    }
+
+    .trendtitle a{
+        font-size: 25px;
+    }
+
+    .navbar .part3 {
+        display: none;
+        justify-content: inherit;
+        margin-top: .6rem;
+    }
+    
+    .navbar .container {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 90%;
+    }
+    
+    .part2 .searchDiv .searchInput {
+        width: 70%;
+    }
+    
+    .profileText {
+        width: max-content;
+    }
+
+    .burger{
+        display: block;
+        position: absolute;
+        right: 1.1rem;
+    }
+
+    .burger i {
+        font-size: 1.2rem;
+        color: #138496;
+    }
+
+    .profileExtension{
+        left: -50px;
+    }
+
+    .profileInfo{
+        position: initial;
+    }
+
+    .row-tf {
+        flex-direction: column;
+    }
+
+    .row-tf .col-3 {
+        width: 90%;
+        max-width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .row-tf .col-8 {
+        width: 90%;
+        margin-right: auto;
+        max-width: 90%;
+    }
+
+    .left-footer {
+        position: relative;
+        left: 0px;
+        overflow: hidden;
+        border-bottom-left-radius: 10px;
+        height: inherit;
+        width: 14rem;
+        max-width: 14rem;
+    }
+    
+    .myshape {
+        position: absolute;
+        border-bottom: 25px solid slategrey;
+        width: 14rem;
+        border-left: none;
+    }
+
+    .shapetext {
+        position: relative;
+        left: 10px;
+        max-width: 13rem;
+    }
+
+    .shapetext cite:nth-child(2){
+        display: none;
+    }
+
+    .headerIndex, .cardIndex .card-body {
+        padding: 6px 15px;
+    }
+
+    .indexFooter {
+        align-self: flex-start;
+        justify-self: end;
+        margin-top: 0px;
+        padding: 0px!important;
+        height: 23px;
+    }
+    
+    .searchresults {
+        width: 70%;
+    }
+
+    .showprofileicon{
+        display: none;
+    }
+
+    .indexContainer {
+        padding-top: 100px!important;
+    }
+
+    .navbar {
+        position: fixed;
+        width: 100%;
+        z-index: 99999;
+    }
+
+    .notification {
+        position: fixed;
+        top: 20px;
+        left: auto;
+        z-index: 999999;
+        right: 60px;
+        bottom: auto;
+    }
+
+    .notification i {
+        font-size: 1rem;
+    }
+
+    .notificationdiv{
+        position: fixed;
+        top: 4.7rem;
+        right: 3.7rem;;
+        width: 15rem;
+        z-index: 1111;
+        background-color: white;
+        height: fit-content;
+    }
+
+    .notificationdiv ul li a {
+        font-size: 1.1rem;
+    }
+
+    .backtotop {
+        font-size: 15px;
+        padding: 1px 4px;
+    }
+    
+    .booksContainer {
+        margin-top: auto;
+        padding-top: 100px;
+    }
+
+    .pl-5 .bookh3Title {
+        font-size: 1rem;
+    }
+
+    .btnSmall {
+        font-size: 0.7rem;
+    }
+
+    .titlecard {
+        width: 85%;
+        margin: 0 auto;
+        border-radius: 10px;
+    }
+
+    .titlecard .card-body {
+        padding: 0.5rem 1rem 0.5rem 1rem!important;
+    }
+
+    .titlecard .dropdown-menu {
+        left: -4rem!important;
+        top: 0.5rem!important;
+        min-width: auto;
+    }
+
+    .ml-auto .btn-group .dropdown-menu a {
+        width: 8rem;
+        color: white;
+        font-size: .8rem;
+    }
+
+}

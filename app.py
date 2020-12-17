@@ -118,6 +118,9 @@ def livesearch():
     UNION
     SELECT mediaread.author.idAuthor,mediaread.author.fullName,mediaread.author.authorImage, 1 FROM mediaread.author 
     WHERE mediaread.author.fullName LIKE '%"""+key+"""%'
+    UNION
+    SELECT mediaread.user.idUser,mediaread.user.fullName,mediaread.user.username, 2 FROM mediaread.user 
+    WHERE mediaread.user.fullName LIKE '%"""+key+"""%'
     limit 10
     """
     db.cursor.execute(sorgu)

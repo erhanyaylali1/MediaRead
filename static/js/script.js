@@ -183,6 +183,8 @@ $(document).ready(function() {
                     $.each(res,function(index,value){
                         if(value[3] == 0){
                             data += "<li><a href='/books/"+value[0]+"'>"+value[1]+"</a></li>";  
+                        } else if (value[3] == 2) {
+                            data += "<li><a href='/users/"+value[0]+"'>"+value[1]+"</a></li>";  
                         } else {
                             data += "<li><a href='/authors/"+value[0]+"'>"+value[1]+"</a></li>";  
                         }
@@ -233,6 +235,14 @@ $(document).ready(function() {
         })
     })
 
+
+    $(".burger").click(function(){
+        $(this).toggleClass("rotate180deg")
+        $(".navbar .part3").toggleClass("flex2");
+        $(".navbar .part2").toggleClass("flex2");
+    })
+
+
     function yourFunction(){
         
         $.ajax({
@@ -255,6 +265,6 @@ $(document).ready(function() {
     
     yourFunction();
 
-
+    
 
 });
