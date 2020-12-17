@@ -1,6 +1,6 @@
 {% extends "layout.html" %} {% block title %} My Library {% endblock %} {% block content %}
 
-<div class="container booksContainer">
+<div class="container titlecard booksContainer">
 
     <div class="card mb-5">
         <div class="card-body pl-5 d-flex flex-row align-items-center">
@@ -13,7 +13,7 @@
             </div>
         </div>
     </div>
-    <div class="cardDeck px-4 mb-5">
+    <div class="cardDeck readbookdeck px-4 mb-5">
 
         {% if empty == 1 %} {% else %} {%for i in range(0, length)%}
 
@@ -28,11 +28,11 @@
                             <textarea class="text-white " rows="5 " name="quote" placeholder="Quote from Book" required="required "></textarea>
 
                         </div>
-                        <button type="submit " name="quoteVal" value="{{books[i][9]}}-{{books[i][16]}}" class="btn formButton ">Add</button>
+                        <button type="submit " name="quoteVal" value="{{books[i][9]}}-{{books[i][16]}}" class="btn btnSmall formButton ">Add</button>
                     </div>
                 </form>
             </div>
-            <button class="addtoreadlist btn btn-primary"><span class="mr-2">Add to Readlist</span><i class="far fa-plus"></i></button>
+            <button class="addtoreadlist add2 btn btn-primary"><span class="mr-2">Add to Readlist</span><i class="far fa-plus"></i></button>
             <form action="" method="post">
 
                 <div class="readlistList pt-2 px-3">
@@ -54,7 +54,7 @@
                         </table>
                     </fieldset>
 
-                    <button class="btn btn-primary btn-sm mb-2 mt-1 float-right addlistbut">Add</button>
+                    <button class="btn btn-primary btn-sm mb-2 mt-1 float-right addlistbut btnSmall">Add</button>
                 </div>
 
             </form>

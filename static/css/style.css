@@ -488,7 +488,6 @@ body {
 }
 
 .addtoreadlist {
-    display: none;
     position: absolute;
     top: 90px;
     right: 10px;
@@ -707,7 +706,7 @@ body {
 */
 
 .categoriesContainer {
-    margin-top: 125px;
+    margin-top: 100px;
     margin-bottom: 100px;
 }
 
@@ -1429,4 +1428,189 @@ body {
         font-size: .8rem;
     }
 
+    .booksContainer .cardDeck .card img {
+        height: 150px;
+        width: 100px;
+    }
+
+    .booksContainer .cardDeck .card .card-body {
+        width: 100px;
+        padding: 0.5rem!important;
+    }
+
+    .dotdiv{
+        width: 10px;
+        height: 20px;
+    }
+    
+    .booksContainer .cardDeck .card {
+        width: 100px;
+    }
+
+    .booksContainer .cardDeck .card a{
+        overflow: hidden;
+    }
+
+    .booksContainer .cardDeck .card p{
+        margin-bottom: 10px;
+    }
+
+    .booksContainer .cardDeck .card p.text-right{
+        margin-bottom: 0px;
+    }
+
+    .booksContainer .cardDeck {
+        justify-content: center;
+    }
+
+    .addAuthorpart {
+        float: none!important;
+        text-align: center;
+        margin-bottom: 40px!important;
+    }
+
+    .authorscardtitle {
+        margin-bottom: 20px!important;
+    }
+
+    .authorscardtitle div{
+        width: 100%;
+        text-align: center;
+    }
+
+    .categoriesContainer {
+        margin-top: auto;
+        padding-top: 100px;
+    }
+
+    .categoriesContainer .cardDeck .card {
+        height: 50px;
+        width: 200px;
+    }
+
+    .categoriesContainer .cardDeck .card a {
+        font-size: 1.2rem;
+    }
+
+    .card .fa-window-close {
+        font-size: 0.6rem;
+        position: absolute;
+        top: 2.5px;
+        left: 1.5px;
+    }
+
+    .card .fa-plus-square {
+        font-size: 0.6rem;
+        position: absolute;
+        top: 2.4px;
+        left: 2.5px;
+    }
+
+    .card .fa-plus {
+        font-size: 0.6rem;
+        position: absolute;
+        top: 2px;
+        left: 3.5px;
+    }
+
+    .addToReadBook{
+        top: 35px;
+    }
+
+    .addToReadBook:hover span {
+        display: none;
+    }
+    
+    .deletefromLibrary:hover span {
+        display: none;
+    }
+
+    .addQuoteButton:hover span {
+        display: none;
+    }
+
+    .addtoreadlist:hover span {
+        display: none;
+    }
+
+    .addtoreadlist {
+        top: 60px!important;
+    }
+
+    .deletefromLibrary, .addToReadBook, .addQuoteButton, .addtoreadlist {
+        height: 15px;
+        width: 15px;
+    }
+
+    .addReview{
+        left: -20px;
+        padding: 5px 10px;
+    }
+
+    .con-input{
+        width: 150px!important;
+        margin-top: 10px;
+    }
+
+    .con-input input, .con-input textarea {
+        height: auto;
+        font-size: 0.7rem!important;
+        padding: 2px 2px;
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+
+    .addReview .formButton {
+        margin-left: 100px;
+    }
+
+    .readBookForm h3{
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+    }
+
+    .readbookdeck{
+        padding-left: 0!important;
+        padding-right: 0!important;
+    }
+
+    .readlistList {
+        padding: 5px 5px!important;
+        left: -20px;
+    }
+
+    .borderB{
+        font-size: 1.1rem;
+    }
+
+    .authorBooksTable{
+        max-height: 200px;
+        overflow-y: scroll;
+    }
+
+    .addlistbut{
+        margin-bottom: 3px!important;
+    }
+
+    .add2 {
+        top: 35px!important;
+    }
+
+    .addread2 {
+        display: none;
+    }
+
+    .booksContainer .cardDeck .card button.addToLibrary  {
+        top: 35px;
+        height: 15px;
+        width: 15px;
+    }
+
+    .addToLibrary:hover span{
+        display: none;
+    }
+
+    .msgInfo {
+        padding-top: 80px;
+    }
 }

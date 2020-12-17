@@ -2,14 +2,14 @@
 
 <div class="container booksContainer">
 
-    <div class="card mb-5">
+    <div class="card titlecard mb-5">
         <div class="card-body pl-5 d-flex flex-row align-items-center">
             <div>
                 <p class="bookh3Title m-0">My Library (Total: {{length}} Books)</p>
             </div>
             <div class="ml-auto">
                 <div class="btn-group">
-                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button type="button" class="btn btn-info dropdown-toggle btnSmall" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Sort
                     </button>
                     <div class="dropdown-menu bg-info">
@@ -34,7 +34,7 @@
             <div class="addReview">
                 <form class="" action="" method="post" name="readBook" autocomplete="off">
                     <div class="readBookForm">
-                        <h3 class=""> Read Book ?</h3>
+                        <h3> Read Book ?</h3>
                         <div class="con-input">
 
                             <input type="text" name="rate" placeholder="Rate to Book Out of 10" required="required">
@@ -45,7 +45,7 @@
                             <textarea class="text-white" rows="5" name="review" placeholder="Book Review" required="required"></textarea>
 
                         </div>
-                        <button type="submit" name="bookauthor_id" value="{{datas[i][1]}}-{{datas[i][2]}}" class="btn formButton">Add</button>
+                        <button type="submit" name="bookauthor_id" value="{{datas[i][1]}}-{{datas[i][2]}}" class="btn btnSmall formButton">Add</button>
                     </div>
                 </form>
             </div>
@@ -71,7 +71,7 @@
                         </table>
                     </fieldset>
 
-                    <button class="btn btn-primary btn-sm mb-2 mt-1 float-right addlistbut">Add</button>
+                    <button class="btn btn-primary btn-sm mb-2 mt-1 btnSmall float-right addlistbut">Add</button>
                 </div>
 
             </form>
