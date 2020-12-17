@@ -1036,3 +1036,192 @@ body {
     position: absolute;
     right: 159px;
 }
+
+.cardIndex {
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.4);
+}
+
+.cardRate {
+    background-color: slategrey;
+    color: white;
+    padding: 3px 10px;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;   
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+}
+
+.headerIndex {
+    background-color: #138496;
+    border-radius: none;
+    border-top-left-radius: 10px!important;
+    border-top-right-radius: 10px!important;
+    border-bottom: none;
+    color: white;
+}
+
+.headerIndex a {
+    color: white;
+}
+
+.indexFooter {
+    background-color: white;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+.profileInfo .card {
+    -webkit-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.75);
+    border-radius: 10px;
+}
+
+.myshape {
+    position: relative;
+    border-bottom: 31px solid slategrey;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    height: 0;
+    width: 500px;
+}
+
+.shapetext {
+    position: absolute;
+    top: 3px;
+    left: 50px;
+    color: white;
+    max-width: 450px;
+}
+
+.shapetext a {
+    color: white;
+}
+
+.left-footer {
+    position: absolute;
+    bottom: 0px;
+    left: 50px;
+}
+
+.userIcon {
+    font-size: 1.7rem;
+}
+
+.profCard {
+    margin-top: 150px;
+    transition: 0.3s ease;
+    display: none;
+}
+
+.showprofileicon{
+    width: max-content;
+    padding: 6px 10px;
+    position: relative;
+    border-radius: 20px;
+}
+
+.showprofileicon a {
+    margin-right: 30px;
+}
+
+.fa-chevron-circle-up {
+    position: absolute;
+    top: 22px;
+    right: 10px;
+    transition: 0.3s ease;
+}
+
+.fa-chevron-circle-up:hover{
+    cursor: pointer;
+}
+
+.showprofileicon2 {
+    position: fixed;
+    bottom: 15px;
+    transition: 0.3s ease;
+}
+
+.bottom380 {
+    bottom: 380px;
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: show!important;
+}
+
+.notification {
+    position: fixed;
+    bottom: 26px;
+    left: 100px;
+}
+
+.notification i{
+    font-size: 1.2rem;
+}
+
+.notificationdiv {
+    display: none;
+    position: fixed;
+    bottom: 80px;
+    width: 300px;
+}
+
+.notificationdiv ul {
+    border: 2px solid black;
+    border-radius: 5px;
+    padding-inline-start: 0px;
+    margin-block-start: 0px;
+    padding: 0 0px;
+    height: max-content;
+    max-height: 350px;
+    overflow-y: scroll;
+}
+
+.notificationdiv ul li{
+    list-style: none;
+    padding: 25px 20px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+}
+
+.notificationdiv ul li a {
+    font-size: 1.2rem;
+}
+
+
+.notificationdiv ul li:hover{
+    background-color: #dddddd;
+}
+
+.fa-circle {
+    color: #138496;
+    font-size: 0.5rem;
+    margin-left: 10px;
+}
+
+.text-pas {
+    color: #222222;
+}
+
+.notification .fa-circle{
+    font-size: 0.4rem;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
+.notification2{
+    position: relative;
+    padding-right: 6px;
+}
+

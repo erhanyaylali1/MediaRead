@@ -267,16 +267,16 @@
                                     <div>
                                         <img src="https://i.stack.imgur.com/l60Hf.png">
                                     </div>
-                                    <a href="{{ fl[2]}}" class="ml-3">
+                                    <a href="{{ fl[4]}}" class="ml-3">
                                         <div>
-                                            <span> {{ fl[4]}} </span> 
+                                            <span> {{ fl[5]}} </span> 
                                         </div>
-                                        <span class="ml-3"><i>@{{ fl[3]}}</i></span>                           
+                                        <span class="ml-3"><i>@{{ fl[6]}}</i></span>                           
                                     </a>
                                     {% if "logged_in" in session %}
                                         {% if session["userId"] == user_id %}
                                             <form action="" method="post" class="ml-auto">
-                                                <button class="btn btn-outline-danger" name="unfollow" value="{{ fl[2] }}">Unfollow</button>
+                                                <button class="btn btn-outline-danger" name="unfollow" value="{{ fl[4] }}">Unfollow</button>
                                             </form>
                                         {% else %}
                                         {% endif %}                                    
@@ -304,11 +304,11 @@
                                     <div>
                                         <img src="https://i.stack.imgur.com/l60Hf.png">
                                     </div>
-                                    <a href="{{ fl[2]}}" class="ml-3">
+                                    <a href="{{ fl[4]}}" class="ml-3">
                                         <div>
-                                            <span> {{ fl[4]}} </span> 
+                                            <span> {{ fl[6]}} </span> 
                                         </div>
-                                        <span class="ml-3"><i>@{{ fl[3]}}</i></span>                           
+                                        <span class="ml-3"><i>@{{ fl[5]}}</i></span>                           
                                     </a>
                                 </div>
                                 {% endfor %}

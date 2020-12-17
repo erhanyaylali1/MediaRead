@@ -112,7 +112,6 @@ def home_page():
 def livesearch():
 
     key = request.form.get("text")
-    print(key)
     sorgu = """
     SELECT mediaread.book.idbook, mediaread.book.bookName, mediaread.book.bookImage, 0 FROM mediaread.book 
     WHERE mediaread.book.bookName LIKE '%"""+key+"""%'
@@ -127,6 +126,33 @@ def livesearch():
     
 
 
+@app.route("/getnotification", methods=["POST","GET"])
+def getnotification():
+    
+    sorgu = """
+    SELECT mediaread.user_has_friend.flag, mediaread.user.fullName, mediaread.user.idUser
+    FROM mediaread.user_has_friend
+    LEFT JOIN mediaread.user
+    ON mediaread.user_has_friend.userId = mediaread.user.idUser
+    WHERE mediaread.user_has_friend.friendId = """ + str(session["userId"]) + " ORDER BY mediaread.user_has_friend.time DESC"
+    db.cursor.execute(sorgu)
+    results = db.cursor.fetchall()
+    return jsonify(results)
+
+
+@app.route("/readnotification", methods=["POST","GET"])
+def readnotification():
+    
+    keys = request.form.getlist("text[]")
+    for key in keys:
+        sorgu = """
+            UPDATE mediaread.user_has_friend SET mediaread.user_has_friend.flag = 1
+            WHERE mediaread.user_has_friend.userId = """+str(key)+""" and mediaread.user_has_friend.friendId = """+str(session["userId"])
+        db.cursor.execute(sorgu)
+        print(sorgu)
+        db.con.commit()
+    
+    return "true"
 
 
 @app.route('/books', methods = ["GET","POST"])
@@ -759,7 +785,7 @@ def user(user_id):
             follower = session["userId"]
             follows = user_id
             if(follower != follows):
-                sorgu = "INSERT INTO mediaread.user_has_friend (userId, friendId) VALUES (" + str(follower) + ", " + str(follows) + ")"
+                sorgu = "INSERT INTO mediaread.user_has_friend (userId, friendId, time) VALUES (" + str(follower) + ", " + str(follows) + ", current_timestamp())"
                 print(sorgu)
                 db.cursor.execute(sorgu)
                 db.con.commit()

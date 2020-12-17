@@ -124,6 +124,9 @@ $(document).ready(function() {
     $(document).mouseup(function(e) {
         var reviewBox = $("#addBookFormId");
         var readlistList = $(".readlistList");
+        var searchresults = $(".searchresults");
+        var notif = $(".notificationdiv");
+        var notif2 = $(".notification");
 
         if (!reviewBox.is(e.target) && reviewBox.has(e.target).length === 0) {
             reviewBox.hide();
@@ -131,6 +134,15 @@ $(document).ready(function() {
         }
         if (!readlistList.is(e.target) && readlistList.has(e.target).length === 0) {
             readlistList.hide();
+        }
+        if (!searchresults.is(e.target) && searchresults.has(e.target).length === 0) {
+            searchresults.hide();
+        }
+        if (!notif.is(e.target) && notif.has(e.target).length === 0) {
+            if (!notif2.is(e.target) && notif2.has(e.target).length === 0)
+            {
+                notif.hide();
+            }
         }
     });
 
@@ -175,10 +187,74 @@ $(document).ready(function() {
                             data += "<li><a href='/authors/"+value[0]+"'>"+value[1]+"</a></li>";  
                         }
                     });
-                    console.log(data);
                     $(".searchresults").css("display","inherit");
                     $(".searchresults").html(data);
             }
         })
     })
+
+    $(".fa-chevron-circle-up").click(function(){
+
+        $(".notificationdiv").hide("fast");
+        $(this).parent().parent().toggleClass("bottom380");
+        $(this).toggleClass("rotate180deg");
+        setTimeout(() => {  $(".profCard").toggle(300); }, 300);
+        
+    })
+
+    $(".notification").click(function(){
+        $(".profCard").hide(300)
+        $(".fa-chevron-circle-up").parent().parent().removeClass("bottom380");
+        $(".fa-chevron-circle-up").removeClass("rotate180deg");
+        $(".notification2 .fa-circle").remove();
+        $.ajax({
+            method: "post",
+            url: "/getnotification",
+            success: function(res){
+                var data = "";
+                var ids = [];
+                $.each(res, function(index, value){
+                    if(value[0] == 0){
+                        data += "<li class='active'><a class='active' href='users/"+value[2]+"'>"+value[1]+"&nbsp;</a> follows you <i class='fas fa-circle'></i></li>";
+                        ids.push(value[2]);
+                    } else {
+                        data += "<li class='text-pas'><a class='text-pas' href='users/"+value[2]+"'>"+value[1]+"&nbsp;</a> follows you </li>";
+                    }
+                })
+                $(".notificationInDiv").html(data);
+                $(".notificationdiv").toggle("fast");
+                
+                $.ajax({
+                    method: "post",
+                    url: "/readnotification",
+                    data: {text: ids}
+                })
+            }
+        })
+    })
+
+    function yourFunction(){
+        
+        $.ajax({
+            method: "post",
+            url: "/getnotification",
+            success: function(res){
+                var check = 0;
+                $.each(res, function(index, value){
+                    if(value[0] == 0){
+                        check = 1;
+                    }
+                })
+                if(check == 1){
+                    $(".notification2").append("<i class='fas fa-circle'></i>")
+                }
+            }
+        })
+        setTimeout(yourFunction, 1000);
+    }
+    
+    yourFunction();
+
+
+
 });
