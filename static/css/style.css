@@ -499,14 +499,14 @@ body {
     position: absolute;
     top: 10px;
     right: 10px;
-    padding: 1px 6px;
+    padding: 1px 5px;
 }
 
 .addtoreadlist {
     position: absolute;
     top: 90px;
     right: 10px;
-    padding: 1px 6px;
+    padding: 1px 7px;
 }
 
 .add2 {
@@ -1473,8 +1473,12 @@ body {
     }
 
     .dotdiv{
-        width: 10px;
-        height: 20px;
+        width: 13px;
+        height: 25px;
+    }
+
+    .fa-ellipsis{
+        font-size: 0.9rem;
     }
     
     .booksContainer .cardDeck .card {
@@ -1527,28 +1531,28 @@ body {
     }
 
     .card .fa-window-close {
-        font-size: 0.6rem;
+        font-size: 0.9rem;
         position: absolute;
-        top: 2.5px;
-        left: 1.5px;
+        top: 2.6px;
+        left: 2.1px;
     }
 
     .card .fa-plus-square {
-        font-size: 0.6rem;
+        font-size: 0.9rem;
         position: absolute;
         top: 2.4px;
-        left: 2.5px;
+        left: 3px;
     }
 
     .card .fa-plus {
-        font-size: 0.6rem;
+        font-size: 0.9rem;
         position: absolute;
-        top: 2px;
-        left: 3.5px;
+        top: 2.9px;
+        left: 4px;
     }
 
     .addToReadBook{
-        top: 35px;
+        top: 40px;
     }
 
     .addToReadBook:hover span {
@@ -1568,12 +1572,12 @@ body {
     }
 
     .addtoreadlist {
-        top: 60px!important;
+        top: 70px!important;
     }
 
     .deletefromLibrary, .addToReadBook, .addQuoteButton, .addtoreadlist {
-        height: 15px;
-        width: 15px;
+        height: 20px;
+        width: 20px;
     }
 
     .addReview{
@@ -1627,7 +1631,7 @@ body {
     }
 
     .add2 {
-        top: 35px!important;
+        top: 40px!important;
     }
 
     .addread2 {
@@ -1635,9 +1639,9 @@ body {
     }
 
     .booksContainer .cardDeck .card button.addToLibrary  {
-        top: 35px;
-        height: 15px;
-        width: 15px;
+        top: 45px;
+        height: 20px;
+        width: 20px;
     }
 
     .addToLibrary:hover span{
