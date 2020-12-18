@@ -24,10 +24,17 @@ body {
     font-size: 1.2rem;
 }
 
+.loginrow {
+    padding-top: 100px;
+}
 
-.profileInfo {
-    position: fixed;
-    top: 100px;
+.msgInfo .alert {
+    margin-top: 20px;
+    z-index: 999999
+}
+
+.container2 {
+    margin-top: 0px!important;
 }
 
 .profileList {
@@ -502,6 +509,10 @@ body {
     padding: 1px 6px;
 }
 
+.add2 {
+    top: 50px!important;
+}
+
 .turn90{
     transform: rotate(90deg);
 }
@@ -756,7 +767,7 @@ body {
 .addReview {
     position: absolute;
     bottom: 0px;
-    left: 190px;
+    left: 50px;
     z-index: 22;
     background-color: white;
     display: none;
@@ -949,11 +960,11 @@ body {
 .readlistList {
     display: none;
     position: absolute;
-    top: 90px;
-    left: 190px;
+    top: 150px;
+    left: 50px;
     width: max-content;
     z-index: 222;
-    background-color: #218838;
+    background-color: rgba(47,79,79,.96);
     border-radius: 10px;
 }
 
@@ -1043,6 +1054,7 @@ body {
     width: 51%;
     position: absolute;
     right: 159px;
+    top: 60px
 }
 
 .cardIndex {
@@ -1119,9 +1131,9 @@ body {
     font-size: 1.7rem;
 }
 
-.profCard {
-    margin-top: 150px;
-    transition: 0.3s ease;
+.profCard {    
+    position: fixed;
+    top: 52%;
     display: none;
 }
 
@@ -1154,7 +1166,7 @@ body {
 }
 
 .bottom380 {
-    bottom: 380px;
+    bottom: 47%;
 }
 
 .hide {
@@ -1637,7 +1649,7 @@ body {
     }
 
     .container2 .display-4 {
-        margin-left: 20px;
+        margin-left: 0.5rem;
         margin-bottom: 30px;
         width: max-content;
     }
@@ -1843,7 +1855,6 @@ body {
 
     .booksContainer .ml-auto {
         margin-top: 10px;
-        margin-right: auto!important;
     }
     .booksContainer .ml-auto .btn-group a.btn-info {
         font-size: 0.6rem;
@@ -2087,4 +2098,9 @@ body {
         margin-left: 10%;
     }
      
+    .alert-success {
+        width: 90%;
+        top: 90px;
+        right: 20px;
+    }
 }

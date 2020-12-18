@@ -2,8 +2,9 @@ from flask import Flask, render_template, current_app, abort, url_for, request, 
 from flask_mysqldb import MySQL
 from werkzeug.utils import secure_filename
 from database import Database
-from MySQLdb import IntegrityError
 from operator import itemgetter
+import pymysql
+import mysql.connector
 
 app = Flask(__name__)
 app.secret_key = "MediaRead"
@@ -106,7 +107,9 @@ def home_page():
     """
     db.cursor.execute(sorgu)
     book = db.cursor.fetchone()
+    
     return render_template("index.html", userInfo=userInfo, final=final, ayr=ayr, length=length, book=book, auth=auth)
+
 
 
 @app.route("/livesearch",methods=["POST","GET"])
@@ -126,8 +129,10 @@ def livesearch():
     """
     db.cursor.execute(sorgu)
     results = db.cursor.fetchall()
+    
     return jsonify(results)
     
+
 
 @app.route("/getlogged", methods=["POST","GET"])
 def getlogged():
@@ -136,6 +141,7 @@ def getlogged():
         if session["logged_in"] == True:
             x = 1
     return jsonify(x);
+
 
 
 @app.route("/getnotification", methods=["POST","GET"])
@@ -156,6 +162,7 @@ def getnotification():
     return jsonify(results)
 
 
+
 @app.route("/readnotification", methods=["POST","GET"])
 def readnotification():
     
@@ -165,10 +172,12 @@ def readnotification():
             UPDATE mediaread.user_has_friend SET mediaread.user_has_friend.flag = 1
             WHERE mediaread.user_has_friend.userId = """+str(key)+""" and mediaread.user_has_friend.friendId = """+str(session["userId"])
         db.cursor.execute(sorgu)
-        print(sorgu)
         db.con.commit()
+          
     
+      
     return "true"
+
 
 
 @app.route('/books', methods = ["GET","POST"])
@@ -210,7 +219,7 @@ def books_page():
             db.cursor.execute(sorgu+str(userId)+" GROUP BY mediaread.user_has_readlist.readlist_idreadlist")
             readlists = db.cursor.fetchall()
 
-
+        
         return render_template("books.html", allData=allData, length=length, readlists=readlists)    
     
     else:
@@ -223,6 +232,7 @@ def books_page():
 
             ids = bookId.split("-")
             userId = session["userId"]
+            
             if session["logged_in"]:
                 bookId = ids[0]
                 authorId = ids[1]
@@ -231,11 +241,13 @@ def books_page():
                 try:
                     db.cursor.execute(sorgu)
                     db.con.commit()
+                    
                     flash("You added this book in your library","success")
 
-                except IntegrityError:
+                except mysql.connector.Error:
                     flash("You already have this book in your library","danger")
 
+            
             return redirect(url_for("books_page"))
         
         if readlistId is not None:
@@ -251,12 +263,13 @@ def books_page():
                     sorgu = "INSERT INTO mediaread.user_has_readlist (user_idUser, readlist_idreadlist, book_idbook, book_author_id) VALUES ("+str(userId)+","+str(readlistId)+","+str(bookId)+","+str(authorId)+")"
                     db.cursor.execute(sorgu)
                     db.con.commit()
+                                        
                     flash("You added this book in your readlist","success")
 
-                except IntegrityError:
+                except mysql.connector.Error:
                     flash("You already have this book in your readlist","danger")
                     
-
+            
             return redirect(url_for("readlist_page",user_id=userId,readlist_id=readlistId))
 
 
@@ -308,6 +321,7 @@ def book_page(book_id):
         if quotes[0][9] is None:
             check = 1
 
+        
         return render_template("book.html",book=book, reviews=reviews, quotes=quotes, check=check, check2=check2)
 
     else:
@@ -323,20 +337,26 @@ def book_page(book_id):
             reviewVal = reviewVal.split("-")
             user_id = reviewVal[0]
             author_id = reviewVal[1]
-            sorgu = "INSERT INTO mediaread.user_review_book (review, rate, user_id, book_id, author_id,time) VALUES (\""+review+"\","+rate+","+str(user_id)+","+str(book_id)+","+str(author_id)+",current_timestamp())"
-            
-            db.cursor.execute(sorgu)
-            db.con.commit()
+            try:
+                sorgu = "INSERT INTO mediaread.user_review_book (review, rate, user_id, book_id, author_id,time) VALUES (\""+review+"\","+rate+","+str(user_id)+","+str(book_id)+","+str(author_id)+",current_timestamp())"
+                
+                db.cursor.execute(sorgu)
+                db.con.commit()
 
-            sorgu = "SELECT rate,readNumber from mediaread.book where idbook = " + str(book_id)
-            db.cursor.execute(sorgu)
-            comings = db.cursor.fetchone()
-            rateOld = comings[0]
-            readNumber = comings[1]
-            newRate = (rateOld * readNumber + int(rate)) / (readNumber + 1) 
-            sorgu = "UPDATE mediaread.book SET rate = "+ str(newRate)+" where idBook = "+str(book_id)
-            db.cursor.execute(sorgu)
-            db.con.commit()
+                sorgu = "SELECT rate,readNumber from mediaread.book where idbook = " + str(book_id)
+                db.cursor.execute(sorgu)
+                comings = db.cursor.fetchone()
+                rateOld = comings[0]
+                readNumber = comings[1]
+                newRate = (rateOld * readNumber + int(rate)) / (readNumber + 1) 
+                sorgu = "UPDATE mediaread.book SET rate = "+ str(newRate)+" where idBook = "+str(book_id)
+                db.cursor.execute(sorgu)
+                db.con.commit()
+                
+                flash("You succesfully gave a review to this book","success") 
+            
+            except mysql.connector.Error:
+                flash("You already gave a review to this book","danger") 
 
 
         else:
@@ -350,19 +370,26 @@ def book_page(book_id):
 
                 db.cursor.execute(sorgu)
                 db.con.commit()
+                
 
             else:
 
                 if savedbook is not None:
-
+                    
                     userid = session["userId"]
-                    sorgu = "INSERT INTO mediaread.user_saved_book (user_id, book_id) VALUES("+str(userid)+","+str(book_id)+")"
-                    db.cursor.execute(sorgu)
-                    db.con.commit()
+                    
+                    try:
+                        sorgu = "INSERT INTO mediaread.user_saved_book (user_id, book_id) VALUES("+str(userid)+","+str(book_id)+")"
+                        db.cursor.execute(sorgu)
+                        db.con.commit()
+                        
+                        flash("You added this book in Saved Books Page","success") 
+
+                    except mysql.connector.Error:
+                        flash("You already have this book in Saved Books Page","danger") 
 
 
-
-
+        
         return redirect(request.url)
     
 
@@ -373,6 +400,7 @@ def authors_page():
     db.cursor.execute("SELECT mediaread.author.idAuthor, mediaread.author.fullName, mediaread.author.authorImage, COUNT(mediaread.book.author_id) FROM mediaread.author LEFT JOIN mediaread.book ON mediaread.author.idAuthor = mediaread.book.author_id group by mediaread.author.idAuthor")
     authors = db.cursor.fetchall()
     length = len(authors)
+    
     return render_template("authors.html",authors=authors, length=length)
 
 
@@ -389,8 +417,9 @@ def author_page(author_id):
         db.cursor.execute("SELECT * FROM mediaread.category")
         categories = db.cursor.fetchall()
         db.cursor.execute("SELECT COUNT(idCategory) FROM mediaread.category")
-        lengthCategory = db.cursor.fetchone();
+        lengthCategory = db.cursor.fetchone()
 
+        
         return render_template("author.html", author_id = author_id, author=author, books=books, categories=categories, length=lengthCategory[0])
 
     else:
@@ -415,7 +444,8 @@ def author_page(author_id):
                 sorgu = "insert into mediaread.book_has_category (book_id, author_id, category_id) values ("+str(bookId)+","+str(author_id)+","+str(cat)+")"
                 db.cursor.execute(sorgu)
                 db.con.commit()
-
+            
+            
             flash("BOOK ADDED SUCCESSFULLY","success")
             
         return redirect(url_for("author_page",author_id=author_id))
@@ -426,6 +456,7 @@ def author_page(author_id):
 def add_author_page():
 
     if request.method == "GET":
+        
         return render_template("addAuthor.html")
     
     else:
@@ -437,7 +468,10 @@ def add_author_page():
             sorgu = "insert into mediaread.author (fullName, summaryAuthor, authorImage) values (\""+fullname+"\", \""+summary+"\", \""+image+"\")"
             db.cursor.execute(sorgu)
             db.con.commit()
+            
             flash("AUTHOR ADDED SUCCESSFULLY","success")
+
+        
         return redirect(url_for("authors_page"))
 
 
@@ -448,6 +482,7 @@ def categories_page():
     sorgu = "select * from mediaread.category"
     db.cursor.execute(sorgu)
     categories = db.cursor.fetchall()
+    
     return render_template("categories.html", categories=categories)
     
 
@@ -469,6 +504,7 @@ def category_page(category_id):
     db.cursor.execute(sorgu)
     datas = db.cursor.fetchall()
     length = len(datas)
+    
     return render_template("category.html", datas=datas, length=length)
 
 
@@ -518,6 +554,7 @@ def library_page(user_id):
         db.cursor.execute(sorgu+str(user_id)+" GROUP BY mediaread.user_has_readlist.readlist_idreadlist")
         readlists = db.cursor.fetchall()
 
+        
         return render_template("library.html", datas=datas, length=length,readlists=readlists)
 
     else:
@@ -540,6 +577,7 @@ def library_page(user_id):
             db.con.commit()
             flash("You've delete this book in your library","success")
 
+            
             return redirect(request.url)
         
         if idler is not None:
@@ -548,25 +586,35 @@ def library_page(user_id):
             bookId = ids[0]
             authorId = ids[1]
 
-            sorgu = "INSERT INTO mediaread.user_review_book (review, rate, user_id, book_id, author_id, time) VALUES (\""+review+"\","+str(rate)+","+str(userId)+","+str(bookId)+","+str(authorId)+",current_timestamp())"
-            db.cursor.execute(sorgu)
-            db.con.commit()
+            try:
+                sorgu4 = "INSERT INTO mediaread.user_read_book (user_id, book_id, author_id, time) VALUES ("+str(userId)+", "+str(bookId)+", "+str(authorId)+",current_timestamp())"
+                db.cursor.execute(sorgu4)
+                db.con.commit()
+                flash("You added this book to Read Books Page","success")
 
-            sorgu2 = "SELECT * FROM mediaread.book where mediaread.book.idbook = " + str(bookId)
-            db.cursor.execute(sorgu2)
-            datas = db.cursor.fetchone()
+                sorgu = "INSERT INTO mediaread.user_review_book (review, rate, user_id, book_id, author_id, time) VALUES (\""+review+"\","+str(rate)+","+str(userId)+","+str(bookId)+","+str(authorId)+",current_timestamp())"
+                db.cursor.execute(sorgu)
+                db.con.commit()
 
-            readNum = datas[8]
-            rateOld = datas[5]
-            readNum += 1
-            rateNew = ( rateOld * (readNum - 1) + int(rate) ) / readNum
-            sorgu3 = "UPDATE mediaread.book SET rate="+str(rateNew)+", readNumber="+str(readNum)+" where mediaread.book.idbook = "+bookId
-            db.cursor.execute(sorgu3)
-            db.con.commit()
-            sorgu4 = "INSERT INTO mediaread.user_read_book (user_id, book_id, author_id, time) VALUES ("+str(userId)+", "+str(bookId)+", "+str(authorId)+",current_timestamp())"
-            db.cursor.execute(sorgu4)
-            db.con.commit()
-            flash("You added this book to Read Books Page","success")
+                sorgu2 = "SELECT * FROM mediaread.book where mediaread.book.idbook = " + str(bookId)
+                db.cursor.execute(sorgu2)
+                datas = db.cursor.fetchone()
+
+                readNum = datas[8]
+                rateOld = datas[5]
+                readNum += 1
+                rateNew = ( rateOld * (readNum - 1) + int(rate) ) / readNum
+
+                sorgu3 = "UPDATE mediaread.book SET rate="+str(rateNew)+", readNumber="+str(readNum)+" where mediaread.book.idbook = "+bookId
+                db.cursor.execute(sorgu3)
+                db.con.commit()
+                
+                flash("You added this book to Read Books Page","success") 
+
+            except mysql.connector.Error:
+                    flash("You already have this book in Read Books Page","danger") 
+
+            
             return redirect(url_for("readbook_page",user_id=userId))
         
         if readlistId is not None:
@@ -583,10 +631,12 @@ def library_page(user_id):
                     sorgu = "INSERT INTO mediaread.user_has_readlist (user_idUser, readlist_idreadlist, book_idbook, book_author_id) VALUES ("+str(userId)+","+str(readlistId)+","+str(bookId)+","+str(authorId)+")"
                     db.cursor.execute(sorgu)
                     db.con.commit()
+                    
                     flash("You added this book in your readlist","success")
 
-                except IntegrityError:
+                except mysql.connector.Error:
                     flash("You already have this book in your readlist","danger")
+            
             
             return redirect(url_for("readlist_page",user_id=userId,readlist_id=readlistId))
 
@@ -626,6 +676,7 @@ def readbook_page(user_id):
         db.cursor.execute(sorgu+str(user_id)+" GROUP BY mediaread.user_has_readlist.readlist_idreadlist")
         readlists = db.cursor.fetchall()
 
+        
         return render_template("readbook.html", books=books, length=length, empty=empty, readlists=readlists)
 
     else:
@@ -642,6 +693,7 @@ def readbook_page(user_id):
             db.cursor.execute(sorgu)
             db.con.commit()
 
+            
             return redirect(request.url)
 
         else:
@@ -659,8 +711,9 @@ def readbook_page(user_id):
                     db.con.commit()
                     flash("You added this book in your readlist","success")
 
-                except IntegrityError:
+                except mysql.connector.Error:
                     flash("You already have this book in your readlist","danger")
+            
             
             return redirect(url_for("readlist_page",user_id=userId,readlist_id=readlistId))
 
@@ -735,7 +788,7 @@ def user(user_id):
         db.cursor.execute(sorgu+str(user_id)+" ORDER BY mediaread.book.bookName ASC")
         read = db.cursor.fetchall()
         length5 = 1
-        if quotes[0][5] is None:
+        if read[0][5] is None:
             length5 = 0
 
         sorgu = """ 
@@ -794,18 +847,27 @@ def user(user_id):
             sorgu = "DELETE FROM mediaread.user_has_friend WHERE userId = " + str(user_id) + " and friendId = " + str(unfollow)
             db.cursor.execute(sorgu)
             db.con.commit()
+
+            
             return redirect(request.url)
 
         else:
 
             follower = session["userId"]
             follows = user_id
-            if(follower != follows):
-                sorgu = "INSERT INTO mediaread.user_has_friend (userId, friendId, time) VALUES (" + str(follower) + ", " + str(follows) + ", current_timestamp())"
-                print(sorgu)
-                db.cursor.execute(sorgu)
-                db.con.commit()
 
+            if(follower != follows):
+
+                try:
+                    sorgu = "INSERT INTO mediaread.user_has_friend (userId, friendId, time) VALUES (" + str(follower) + ", " + str(follows) + ", current_timestamp())"
+                    db.cursor.execute(sorgu)
+                    db.con.commit()
+                    flash("You succesfully followed","success") 
+                
+                except mysql.connector.Error:
+                    flash("You already gave a review to this book","danger") 
+
+            
             return redirect(request.url)
 
 
@@ -892,6 +954,8 @@ def statistics(user_id):
     db.cursor.execute(sorgu)
     quoteCount = db.cursor.fetchone()
 
+
+    
     return render_template("statistic.html",ratedBooks=ratedBooks,check1=check1, sum1=sum1, bookpage=bookpage, categories=categories, length=length, authors=authors, lastYear=lastYear[0],reviewNum=reviewCount[0], quoteNum=quoteCount[0])
     
 
@@ -909,6 +973,8 @@ def readlists_page(user_id):
         WHERE mediaread.user_has_readlist.user_idUser = """ + str(user_id) + """ GROUP BY mediaread.user_has_readlist.readlist_idreadlist"""
         db.cursor.execute(sorgu)
         lists = db.cursor.fetchall()
+
+        
         return render_template("readlists.html", lists=lists)
 
     else:
@@ -924,7 +990,7 @@ def readlists_page(user_id):
         db.con.commit()
 
         
-
+        
         return redirect(request.url)
 
 
@@ -948,6 +1014,8 @@ def readlist_page(user_id, readlist_id):
         db.cursor.execute(sorgu)
         books = db.cursor.fetchall()
         length = len(books)
+
+        
         return render_template("readlist.html", books=books, length=length)
 
     else:
@@ -958,6 +1026,7 @@ def readlist_page(user_id, readlist_id):
         db.cursor.execute(sorgu)
         db.con.commit()
 
+        
         return redirect(request.url)
 
 
@@ -970,6 +1039,8 @@ def create_readlist_page(user_id):
         sorgu = "SELECT * FROM mediaread.book LEFT JOIN mediaread.author ON mediaread.book.author_id = mediaread.author.idAuthor" 
         db.cursor.execute(sorgu)
         books = db.cursor.fetchall()
+
+        
         return render_template("createReadlist.html", books=books)
 
     else:
@@ -996,6 +1067,7 @@ def create_readlist_page(user_id):
             db.con.commit()
 
 
+        
         return redirect(url_for("readlists_page",user_id=user_id))
 
 
@@ -1019,6 +1091,8 @@ def saved(user_id):
         books = db.cursor.fetchall()
 
         length = len(books)
+
+        
         return render_template("saved.html", books=books, length=length)
 
     else:
@@ -1027,6 +1101,8 @@ def saved(user_id):
         sorgu = "DELETE FROM mediaread.user_saved_book WHERE user_id = "+str(user_id)+" AND book_id = "+str(bookId)
         db.cursor.execute(sorgu)
         db.con.commit()
+
+        
         return redirect(request.url)
 
 
@@ -1062,13 +1138,16 @@ def trends():
     db.cursor.execute(sorgu)
     trendauthors = db.cursor.fetchall()
 
+    
     return render_template("trends.html", trendbooks=trendbooks, trendauthors=trendauthors)
+
 
 
 @app.route('/register', methods = ["GET","POST"])
 def register_page():
 
     if request.method == "GET":
+
         return render_template("register.html")
 
     else:
@@ -1078,11 +1157,17 @@ def register_page():
         password = request.form["password"]
 
         if fullname and email and username and password:
-            sorgu = "insert into mediaread.user (username, fullName, email, password) values (\""+username+"\", \""+fullname+"\", \""+email+"\", \""+password+"\")"
-            db.cursor.execute(sorgu)
-            db.con.commit()
-            flash("REGISTERED SUCCESSFULLY","success")
 
+            try:
+                sorgu = "insert into mediaread.user (username, fullName, email, password) values (\""+username+"\", \""+fullname+"\", \""+email+"\", \""+password+"\")"
+                db.cursor.execute(sorgu)
+                db.con.commit()
+                flash("REGISTERED SUCCESSFULLY","success")
+            
+            except mysql.connector.Error:
+                flash("This username or email has registered before","danger") 
+
+        
         return redirect(url_for("login_page"))
 
 
@@ -1119,6 +1204,7 @@ def login_page():
             else:
                 flash("WRONG USERNAME","danger")
                 
+        
         return redirect(url_for("login_page"))
 
 

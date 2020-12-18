@@ -200,7 +200,7 @@ $(document).ready(function() {
         $(".notificationdiv").hide("fast");
         $(this).parent().parent().toggleClass("bottom380");
         $(this).toggleClass("rotate180deg");
-        setTimeout(() => {  $(".profCard").toggle(300); }, 300);
+        $(".profCard").toggle("fast");
         
     })
 
@@ -245,14 +245,13 @@ $(document).ready(function() {
 
     function yourFunction(){
         
-        console.log("ilk aşama");
+        
         $.ajax({
             method: "post",
             url: "/getlogged",
             success: function(res){
                 console.log(res);
                 if(res == 1){
-                        console.log("control 1");
                         $.ajax({
                             method: "post",
                             url: "/getnotification",
@@ -279,6 +278,17 @@ $(document).ready(function() {
     
     yourFunction();
 
+    function msgInfos(){
+
+        if( $(".msgInfo").css("display") == "block" ) {
+            setTimeout(function(){
+                $(".msgInfo").hide();
+            },3000);
+        } else {
+        }
+        setTimeout(msgInfos,100);
+    }
+    msgInfos();
     
 
 });
