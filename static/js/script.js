@@ -245,22 +245,36 @@ $(document).ready(function() {
 
     function yourFunction(){
         
+        console.log("ilk aşama");
         $.ajax({
             method: "post",
-            url: "/getnotification",
+            url: "/getlogged",
             success: function(res){
-                var check = 0;
-                $.each(res, function(index, value){
-                    if(value[0] == 0){
-                        check = 1;
-                    }
-                })
-                if(check == 1){
-                    $(".notification2").append("<i class='fas fa-circle'></i>")
+                console.log(res);
+                if(res == 1){
+                        console.log("control 1");
+                        $.ajax({
+                            method: "post",
+                            url: "/getnotification",
+                            success: function(res){
+                                var check = 0;
+                                $.each(res, function(index, value){
+                                    if(value[0] == 0){
+                                        check = 1;
+                                    }
+                                })
+                                if(check == 1){
+                                    $(".notification2").append("<i class='fas fa-circle'></i>")
+                                }
+                            }
+                        })
+                    
                 }
             }
         })
-        setTimeout(yourFunction, 1000);
+
+        
+        setTimeout(yourFunction, 3000);
     }
     
     yourFunction();

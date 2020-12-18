@@ -114,7 +114,7 @@
                 <div class="quotePart mt-4">
                     
 
-                    <h3 class="ml-5 mb-5">Quote from Books</h3>
+                    <h3 class="ml-5 mb-5">Quotes from Books</h3>
                     
                     {% if checkQ == 0 %}
 
@@ -123,7 +123,7 @@
                             <div class="col-12 mt-4 cardRenkleri">
                                 <div class="card">
                                     <div class="card-header d-flex">
-                                        <a href="/users/{{ quote[0] }}"> <b>{{ quote[2] }} </b></a> &nbsp add a quote to &nbsp
+                                        <a href="/users/{{ quote[0] }}"> <b>{{ quote[2] }} </b></a> add a quote to 
                                         <a href="/books/{{ quote[8] }}">{{ quote[12] }}</a>
                                     </div>
                                     <div class="card-body">
@@ -172,8 +172,8 @@
                             <table class="table table-striped table-hover authorBooksTable">
                                 <thead class="bg-info text-white">
                                     <tr>
-                                        <th>Book Cover</th>
-                                        <th>Book Title</th>
+                                        <th>Cover</th>
+                                        <th>Title</th>
                                         <th>Page</th>
                                         <th>Rate</th>
                                         <th>Author</th>
@@ -223,8 +223,8 @@
 
                                     <thead class="bg-info text-white">
                                         <tr>
-                                            <th>Book Cover</th>
-                                            <th>Book Title</th>
+                                            <th>Cover</th>
+                                            <th>Title</th>
                                             <th>Page</th>
                                             <th>Rate</th>
                                             <th>Author</th>
@@ -276,7 +276,7 @@
                                     {% if "logged_in" in session %}
                                         {% if session["userId"] == user_id %}
                                             <form action="" method="post" class="ml-auto">
-                                                <button class="btn btn-outline-danger" name="unfollow" value="{{ fl[4] }}">Unfollow</button>
+                                                <button class="btn btn-outline-danger btnSmall" name="unfollow" value="{{ fl[4] }}">Unfollow</button>
                                             </form>
                                         {% else %}
                                         {% endif %}                                    

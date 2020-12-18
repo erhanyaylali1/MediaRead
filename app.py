@@ -1,5 +1,6 @@
 from flask import Flask, render_template, current_app, abort, url_for, request, render_template, redirect, session, flash, jsonify
 from flask_mysqldb import MySQL
+from werkzeug.utils import secure_filename
 from database import Database
 from MySQLdb import IntegrityError
 from operator import itemgetter
@@ -128,18 +129,30 @@ def livesearch():
     return jsonify(results)
     
 
+@app.route("/getlogged", methods=["POST","GET"])
+def getlogged():
+    x = 0
+    if "logged_in" in session:
+        if session["logged_in"] == True:
+            x = 1
+    return jsonify(x);
+
 
 @app.route("/getnotification", methods=["POST","GET"])
 def getnotification():
     
-    sorgu = """
-    SELECT mediaread.user_has_friend.flag, mediaread.user.fullName, mediaread.user.idUser
-    FROM mediaread.user_has_friend
-    LEFT JOIN mediaread.user
-    ON mediaread.user_has_friend.userId = mediaread.user.idUser
-    WHERE mediaread.user_has_friend.friendId = """ + str(session["userId"]) + " ORDER BY mediaread.user_has_friend.time DESC"
-    db.cursor.execute(sorgu)
-    results = db.cursor.fetchall()
+    results = []
+
+    if "userId" in session:
+        sorgu = """
+        SELECT mediaread.user_has_friend.flag, mediaread.user.fullName, mediaread.user.idUser
+        FROM mediaread.user_has_friend
+        LEFT JOIN mediaread.user
+        ON mediaread.user_has_friend.userId = mediaread.user.idUser
+        WHERE mediaread.user_has_friend.friendId = """ + str(session["userId"]) + " ORDER BY mediaread.user_has_friend.time DESC"
+        db.cursor.execute(sorgu)
+        results = db.cursor.fetchall()
+
     return jsonify(results)
 
 
@@ -1122,4 +1135,4 @@ def logout_page():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host="192.168.1.39", port=5000)

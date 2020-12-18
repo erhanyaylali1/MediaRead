@@ -199,6 +199,15 @@ body {
 =============================================================================================================================================================
 */
 
+.registercontainer {
+    padding-top: 100px;
+    width: 100%;
+    max-width: 100%;
+}
+.registercontainer .container2 {
+    margin-top: 0px;
+}
+
 .container2 {
     display: flex;
     align-items: flex-start;
@@ -319,7 +328,7 @@ body {
 }
 
 .verticalLine {
-    margin: 70px 0px 0px 60px;
+    margin: 0px 0px 0px 60px;
     border-left: 4px solid #148D8D;
     height: 600px;
 }
@@ -335,7 +344,6 @@ body {
     align-items: flex-start;
     justify-content: center;
     flex-direction: column;
-    margin-top: 100px;
 }
 
 .container3 .display-4 {
@@ -1233,6 +1241,10 @@ body {
     display: flex!important;
 }
 
+.addread2{
+    display: none;
+}
+
 @media screen and (max-width: 450px) {
     
     p, a, div    {
@@ -1379,7 +1391,7 @@ body {
         top: 4.7rem;
         right: 3.7rem;;
         width: 15rem;
-        z-index: 1111;
+        z-index: 111112;
         background-color: white;
         height: fit-content;
     }
@@ -1428,9 +1440,19 @@ body {
         font-size: .8rem;
     }
 
+    .booksContainer .cardDeck {
+        padding-left: 0px!important;
+        padding-right: 0px!important;
+    }
+
+    .readbookdeck .card {
+        margin-right: 12px!important;
+        margin-left: 12px!important;
+    }
+
     .booksContainer .cardDeck .card img {
-        height: 150px;
-        width: 100px;
+        height: 180px;
+        width: 120px;
     }
 
     .booksContainer .cardDeck .card .card-body {
@@ -1444,7 +1466,7 @@ body {
     }
     
     .booksContainer .cardDeck .card {
-        width: 100px;
+        width: 120px;
     }
 
     .booksContainer .cardDeck .card a{
@@ -1613,4 +1635,456 @@ body {
     .msgInfo {
         padding-top: 80px;
     }
+
+    .container2 .display-4 {
+        margin-left: 20px;
+        margin-bottom: 30px;
+        width: max-content;
+    }
+
+    .container2 .con-input {
+        
+        margin-left: 20px;
+        margin-top: 35px;
+        width: 300px!important;
+    }
+
+    .formButton{
+        margin-top: 35px;
+        margin-left: 250px;
+    }
+
+    .loginrow {
+        flex-direction: column;
+    }
+    
+    .verticalLine2 {
+        margin: 60px 0px 0 40px;
+        border-bottom: 4px solid #148D8D;
+        height: 0px;
+        width: 330px;
+    }
+
+    .container3{
+        margin-top: 20px;
+    }
+
+    .container3 h1.display-4 {
+        margin-bottom: 20px;
+    }
+
+    .container3 h1.display-4 span {
+        font-size: 2.5rem;
+    }
+
+    .container3 p {
+        font-size: 20px;
+        margin-left: 80px;
+    }
+    
+    .loginrow {
+        margin-right: auto!important;
+    }
+
+    .loginrow .col-6{
+        width: 90%;
+        max-width: 90%;
+    }
+
+    .container2 .con-input input{
+        padding: 2px 7px;
+    }
+
+    .con-input .psIcon{
+        top: 13px;
+    }
+
+    .notificationdiv ul{
+        margin-bottom: 0px;
+    }
+
+    .row{
+        flex-direction: column;
+    }
+
+    .bookContainer .col-5 {
+        max-width: 90%;
+        width: 80%;
+        margin-left: auto!important;
+        margin-right: auto!important;
+    }
+
+    .bookContainer .col-7 {
+        max-width: 90%;
+        width: 90%;
+        margin-left: auto!important;
+        margin-right: auto!important;
+        margin-bottom: 30px!important;
+    }
+
+    .bookContainer {
+        margin-top: 0px;
+        padding-top: 80px;
+    }
+
+    .bookContainer .col-4 {
+        max-width: 100%;
+    }
+    .bookContainer .col-8 {
+        max-width: 100%;
+    }
+
+    .bookImage {
+        height: 200px;
+    }
+
+    .col-7 .row {
+        flex-direction: row;
+    }
+    
+    #reviewButton, #quoteButton {
+        font-size: 1rem;
+    }
+
+    .col-6 .addToReadBook{
+        top: 17px;
+    }
+
+    .saveButton {
+        right: 30px;
+        top: 65px;
+    }
+
+    .col-6 .addReview {
+        left: -30px;
+    }
+
+    .col-6 .addReview1 {
+        left: 20px!important;
+    }
+
+    .bookContainer .col-10 {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .bookContainer .col-10 .card .card-header span {
+        position: absolute;
+        bottom: 0px;
+        right: 5px;
+        float: none;
+    }
+
+    .authorContainer {
+        margin-top: 0px;
+        padding-top: 80px;
+    }
+
+     .authorContainer .col-8, .authorContainer .col-4{
+        width: 90%;
+        max-width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .authorContainer .col-4 {
+        margin-bottom: 30px;
+
+    }
+    .authorContainer .card-body .row .col-4{
+        margin-bottom: 10px;
+    }
+
+    .authorContainer .card-body .mt-3, .authorContainer .card-body .mt-4{
+        margin-top: 15px!important;
+    }
+
+    .authorContainer .card-body .col-8{
+        margin-bottom: 10px!important;
+    }
+
+    .authorBooksTable tbody tr td img{
+        height: 90px;
+        width: 60px;
+    }
+
+    #addBookFormId{
+        width: min-content;
+        display: none;
+        position: absolute;
+        top: -20px;
+    }
+
+    .addBookForm h3{
+        font-size: 1rem;
+        margin-bottom: 15px;
+    }
+
+    .addBookForm .con-input {
+        width: 250px!important;
+    }
+
+    .addBookForm button {
+        margin-left: 200px;
+    }
+
+    .authorContainer .row .col-8 .row {
+        margin-top: 0px!important;
+    }
+    
+    .authorContainer .row .col-8 .row .my-4 {
+        margin-bottom: 10px!important;
+        margin-top: 10px!important;
+    }
+
+    .booksContainer .card .flex-row {
+        flex-direction: column!important;
+    }
+
+    .booksContainer .ml-auto {
+        margin-top: 10px;
+        margin-right: auto!important;
+    }
+    .booksContainer .ml-auto .btn-group a.btn-info {
+        font-size: 0.6rem;
+        color: white;
+        height: min-content;
+        padding: 4px 10px;
+    }
+
+    .flex-row .bookh3Title {
+        font-size: 1.2rem;
+    }
+
+    .booksContainer .card .pl-5 {
+        padding-left: 3rem!important;
+        padding-right: 3rem!important;
+    }
+
+    .booksContainer .catcard{
+        width: max-content;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .userContainer {
+        margin-top: 0px!important;
+        padding-top: 80px!important;
+    }
+
+    .userContainer div.row.mr-5{
+        margin-right: 0px!important;
+        margin-left: auto;
+        padding-right: 0px!important;
+    }
+    .userContainer .row .col-5 {
+        max-width: 90%;
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 30px;
+    }
+
+    .userContainer .row .col-7 {
+        max-width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .userContainer .row .col-7 .btn-group {
+        align-self: center;
+        flex-wrap: wrap;
+    }
+
+    .userContainer .row .col-7 .btn-group a.btn {
+        width: 100px;
+        margin: 2px;
+        border-radius: 5px;
+    }
+
+    .userContainer .booksContainer {
+        padding-top: 0px;
+    }
+
+    .reviewPart h3, .quotePart h3, .booksPart h3, .followsPart h3, .followersPart h3{
+        margin-left: 0px!important;
+        margin-right: 0px!important;
+        text-align: center;
+    }
+
+    .quotePart .cardRenkleri .card-header {
+        display: inline!important;
+    }
+
+    .quotePart .cardRenkleri, .reviewPart .cardRenkleri {
+        padding-left: 0px!important;
+        padding-right: 0px!important;
+    }
+
+    .cardlistesi .card {
+        width: 100%;
+        padding: 10px 15px!important;
+    }
+
+    .cardlistesi .card div img {
+        height: 40px;
+        width: 40px;
+    }
+
+    .cardlistesi .card a {
+        margin-left: 0.8rem!important;
+    }
+
+    .cardlistesi .card a div span {
+        font-size: 1rem;
+    }
+
+    .cardlistesi .card a span.ml-3 {
+        margin-left: 0.5rem!important;
+    }
+
+    .staticContainer {
+        margin-top: 0px!important;
+        padding-top: 80px!important;
+    }
+
+    .staticContainer .flex-row {
+        flex-direction: column!important;
+        padding: 5px 10px!important;
+    }
+    
+    .staticContainer .card .btn-group {
+        margin-top: 10px;
+        margin-bottom: 5px;
+    }
+
+    .staticContainer .card .btn-group button {
+        height: max-content;
+        font-size: 0.6rem;
+        padding: 4px 7px;
+    }
+
+    .staticContainer .row {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .staticContainer .col-4 {
+        max-width: 100%;
+    }
+
+    .statisticParts {
+        max-width: 100%;
+    }
+
+    .statisticParts div h3, .statisticParts div table {
+        margin-left: 0px!important;
+    }
+
+    .statisticRate h3{
+        margin-top: 1rem!important;
+        margin-bottom: 2rem!important;
+    }
+
+    .statisticParts table th {
+        padding: 0.5rem!important;
+    }
+
+    #pieChart1 {
+        display: none;
+    }
+
+    #pieChart2 {
+        display: none;
+    }
+
+    .trendsa {
+        margin-top: 0px!important;
+        padding-top: 80px!important;
+    }
+
+    .trendContainer{
+        margin-top: 20px!important;
+    }
+
+    .trendContainer .row {
+        flex-direction: row;
+    }
+
+    .trendContainer .row .col-4 {
+        padding: 0.5rem!important;
+        max-width: 40%;
+        flex: none;
+    }
+
+    .trendContainer .row .col-4:nth-child(2){
+        margin-left: 20px!important;
+    }
+
+    .trendsa .booksContainer {
+        padding: 0px!important;
+    }
+
+    .trendsa .tablePart .cardDeck {
+        width: 100%!important;
+    }
+
+    .trendsa .tablePart {
+        margin-top: 20px!important;
+    }
+
+    .trendsa .tablePart .cardDeck {
+        margin-top: 50px!important;
+        margin-bottom: 50px!important;
+    }
+    
+    .trendsa .trendauthors .authorCards {
+        height: min-content;
+    }
+
+    .trendsa .trendauthors .authorCards .card-body p {
+        height: min-content!important;
+    }
+
+    .registercontainer .col-5,.registercontainer .col-6 {
+        max-width: 100%;
+        margin-right: 0px!important;
+    }
+
+    .registercontainer .col-5 .container2 {
+        margin-left: 10px;
+    }
+
+    .registercontainer .col-5 .container2 .display-4 {
+        font-size: 2.7rem;
+        margin-bottom: 10px;
+    }
+
+    .registercontainer .col-5 .container2 .btn {
+        margin-left: 220px;
+    }
+
+    .registercontainer .verticalLine {
+        margin: 50px 0px 20px 50px;
+        border-bottom: 4px solid #148D8D;
+        border-left: 0px;
+        height: 0px;
+        width: 300px;        
+    }
+
+    .registercontainer .container3{
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .registercontainer .col-6 h1 {
+        font-size: 2.4rem;
+        text-align: center;
+        margin-left: 10%;
+    }
+
+    .registercontainer .col-6 .container3 p{
+        margin-left: 10%;
+    }
+     
 }

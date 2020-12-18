@@ -99,7 +99,7 @@
                         {% if "logged_in" in session %}
                             {% if session["logged_in"] %}
                             <button name="addReview" type="submit" class="addToReadBook btn btn-info"><i class="far fa-plus-square"></i><span class="ml-2">Add a Review</span></button>
-                            <div class="addReview">
+                            <div class="addReview addReview1">
                                 <form method="post" name="new_review">
                                     <div class="readBookForm">
                                         <h3 class="">Add Review</h3>
@@ -111,7 +111,7 @@
                                             <textarea class="text-white " rows="5 " name="review" placeholder="Review for Book" required="required "></textarea>
 
                                         </div>
-                                        <button type="submit " name="addReviewButton" value='{{ session["userId"] }}-{{ book[0][9] }}' class="btn formButton ">Add</button>
+                                        <button type="submit " name="addReviewButton" value='{{ session["userId"] }}-{{ book[0][9] }}' class="btn btnSmall formButton ">Add</button>
                                     </div>
                                 </form>
                             </div>
@@ -137,7 +137,7 @@
                                             <textarea class="text-white " rows="5 " name="quote" placeholder="Quote from Book" required="required "></textarea>
 
                                         </div>
-                                        <button type="submit " name="addQuoteButton" value='{{ session["userId"] }}-{{ book[0][9] }}' class="btn formButton ">Add</button>
+                                        <button type="submit " name="addQuoteButton" value='{{ session["userId"] }}-{{ book[0][9] }}' class="btn formButton btnSmall">Add</button>
                                     </div>
                                 </form>
                             </div>
