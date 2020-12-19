@@ -116,7 +116,6 @@ $(document).ready(function() {
         if ($(this).hasClass('fa-eye-slash')) {
             $(".passwordInput").attr("type", "password");
         } else {
-            console.log("text olması lazım");
             $(".passwordInput").attr("type", "text");
         }
     });
@@ -251,7 +250,6 @@ $(document).ready(function() {
             method: "post",
             url: "/getlogged",
             success: function(res){
-                console.log(res);
                 if(res == 1){
                         $.ajax({
                             method: "post",
@@ -284,7 +282,7 @@ $(document).ready(function() {
         if( $(".msgInfo").css("display") == "block" ) {
             setTimeout(function(){
                 $(".msgInfo").hide();
-            },3000);
+            },2000);
         } else {
         }
         setTimeout(msgInfos,100);
