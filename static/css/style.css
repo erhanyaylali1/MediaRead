@@ -895,6 +895,43 @@ body {
     fill: transparent!important;
 }
 
+.cardRenkleri2 .cardIndex:hover .likepart{
+    display: flex;
+    flex-direction: row;
+}
+
+.likepart {
+    position: absolute;
+    right: -48px;
+    top: 40%;
+    z-index: 2000;
+    display: none;
+}
+
+.likepart .bridge {
+    width: 8px;
+    height: 100px;
+    background-color: transparent;
+}
+
+.likepart .likediv {
+    height: 40px;
+    width: 40px;
+    background-color: transparent;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.likepart i {
+    font-size: 1.7rem;
+    color: #138496;
+}
+
+.likepart i:hover{
+    color: #53C4D6;
+}
 
 /*  
 =============================================================================================================================================================
@@ -2128,5 +2165,17 @@ body {
         width: 90%;
         top: 90px;
         right: 20px;
+    }
+
+    .likepart {
+        right: -36px;
+    }
+
+    .likepart i {
+        font-size: 1.2rem;
+    }
+
+    .cardRenkleri2 {
+        margin-left: 1rem!important;
     }
 }
