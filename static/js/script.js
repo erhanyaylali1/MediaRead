@@ -114,10 +114,10 @@ $(document).ready(function() {
         $(this).toggleClass('fa-eye');
         $(this).toggleClass('fa-eye-slash');
         if ($(this).hasClass('fa-eye-slash')) {
-            $("#passwordInput").attr("type", "password");
+            $(".passwordInput").attr("type", "password");
         } else {
             console.log("text olması lazım");
-            $("#passwordInput").attr("type", "text");
+            $(".passwordInput").attr("type", "text");
         }
     });
 
@@ -149,16 +149,20 @@ $(document).ready(function() {
     $(".addtoreadlist").click(function() {
         $(this).next().children(":first-child").show();
     })
+
     $(".addQuoteButton").click(function() {
         $(this).next().show();
     })
 
     $(".dotdiv").click(function(){
-        console.log("deneme");
-        let x = 90
         $(this).toggleClass("turn90");
-        $(this).next().children().toggle(500);
-        $(this).next().next().toggle(500);
+        if ($(this).css("right") == "12px") {
+            $(this).css("right", "10px");
+        } else {
+            $(this).css("right", "12px");
+        }
+        $(this).next().children().toggle(200);
+        $(this).next().next().toggle(200);
     })
 
     $(".trendchoice:first-child").click(function(){
@@ -170,7 +174,6 @@ $(document).ready(function() {
         $(".trendbooks").hide();
         $(".trendauthors").show();
     })
-
 
     $("#searchId").on("input", function(e){
         textInput = $("#searchId").val();
@@ -217,10 +220,10 @@ $(document).ready(function() {
                 var ids = [];
                 $.each(res, function(index, value){
                     if(value[0] == 0){
-                        data += "<li class='active'><a class='active' href='users/"+value[2]+"'>"+value[1]+"&nbsp;</a> follows you <i class='fas fa-circle'></i></li>";
+                        data += "<li class='active'><a class='active' href='users/"+value[2]+"'>"+value[1]+" follows you </a> <i class='fas fa-circle'></i></li>";
                         ids.push(value[2]);
                     } else {
-                        data += "<li class='text-pas'><a class='text-pas' href='users/"+value[2]+"'>"+value[1]+"&nbsp;</a> follows you </li>";
+                        data += "<li class='text-pas'><a class='text-pas' href='users/"+value[2]+"'>"+value[1]+" follows you </a></li>";
                     }
                 })
                 $(".notificationInDiv").html(data);
@@ -235,13 +238,11 @@ $(document).ready(function() {
         })
     })
 
-
     $(".burger").click(function(){
         $(this).toggleClass("rotate180deg")
         $(".navbar .part3").toggleClass("flex2");
         $(".navbar .part2").toggleClass("flex2");
     })
-
 
     function yourFunction(){
         

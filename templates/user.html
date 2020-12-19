@@ -32,11 +32,20 @@
                     <tbody>
                         <tr>
                             <td><b>Book Number in Library</b></td>
-                            <td>{{ len }}</td>
+                            {% if length6 == 0 %}
+                                <td>0</td>
+                            {% else %}
+                                <td>{{ len }}</td>
+                            {% endif %}
                         </tr>
                         <tr>
                             <td><b>Read Book</b></td>
-                            <td>{{ len2 }}</td>
+                            {% if length5 == 0 %}
+                                <td>0</td>
+                            {% else %}
+                                <td>{{ len2 }}</td>
+                            {% endif %}
+                            
                         </tr>
                         <tr>
                             <td><b>Readlist Number</b></td>
@@ -315,7 +324,7 @@
                     {% else %}
                                 <div class="card mb-3 py-2 px-3">
                                      
-                                        <span> No Following</span>                           
+                                        <span> No Followers</span>                           
                                     
                                 </div>
                     {% endif %}

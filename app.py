@@ -3,8 +3,9 @@ from flask_mysqldb import MySQL
 from werkzeug.utils import secure_filename
 from database import Database
 from operator import itemgetter
-import pymysql
 import mysql.connector
+from passlib.hash import sha256_crypt
+
 
 app = Flask(__name__)
 app.secret_key = "MediaRead"
@@ -363,6 +364,7 @@ def book_page(book_id):
 
             if quoteVal is not None:
             
+                quote = quote.replace('"',"'")
                 quoteVal = quoteVal.split("-")
                 user_id = quoteVal[0]
                 author_id = quoteVal[1]
@@ -686,6 +688,7 @@ def readbook_page(user_id):
         readlistId = request.form.getlist("readlist")
         if quote is not None:
 
+            quote = quote.replace('"',"'")
             idler = ids.split("-")
             bookId = idler[0]
             authorId = idler[1]
@@ -1155,6 +1158,7 @@ def register_page():
         email = request.form["email"]
         username = request.form["username"]
         password = request.form["password"]
+        password = sha256_crypt.hash(password)
 
         if fullname and email and username and password:
 
@@ -1191,7 +1195,7 @@ def login_page():
             
             if check:
 
-                if check[0] == password:
+                if  sha256_crypt.verify(password, check[0]):
                     session["logged_in"] = True
                     session["username"] = username
                     session["userId"] = check[1]

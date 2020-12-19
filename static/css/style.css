@@ -227,7 +227,8 @@ body {
 }
 
 .container2 .display-4 {
-    margin-left: 150px;
+    margin-left: 100px;
+    width: max-content;
 }
 
 .con-input {
@@ -239,7 +240,7 @@ body {
     position: relative;
     width: 350px;
     margin-top: 25px;
-    margin-left: 150px;
+    margin-left: 100px;
     outline: 1px solid white;
 }
 
@@ -325,7 +326,7 @@ body {
     background-color: white;
     color: #148D8D;
     border: 2px solid #148D8D;
-    margin-left: 400px;
+    margin-left: 380px;
 }
 
 .formButton:hover {
@@ -585,6 +586,10 @@ body {
 
 .booksContainer .cardDeck .card .card-body {
     padding: 1rem;
+}
+
+.loginrow .container2 {
+    padding-top: 60px;
 }
 
 .booksContainer .cardDeck .card .card-body p:first-child {
@@ -1203,12 +1208,18 @@ body {
     height: max-content;
     max-height: 350px;
     overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.notificationdiv ul::-webkit-scrollbar {
+    display: none;
 }
 
 .notificationdiv ul li{
     list-style: none;
-    padding: 25px 20px;
-    height: 30px;
+    padding: 5px 20px;
+    height: auto;
     display: flex;
     align-items: center;
     font-size: 1.1rem;
@@ -1617,6 +1628,10 @@ body {
         left: -20px;
     }
 
+    .loginrow .container2 {
+        padding-top: 0px!important;
+    }
+
     .borderB{
         font-size: 1.1rem;
     }
@@ -1639,7 +1654,7 @@ body {
     }
 
     .booksContainer .cardDeck .card button.addToLibrary  {
-        top: 45px;
+        top: 40px;
         height: 20px;
         width: 20px;
     }
@@ -1702,9 +1717,12 @@ body {
         margin-right: auto!important;
     }
 
+    
+
     .loginrow .col-6{
         width: 90%;
         max-width: 90%;
+        margin-bottom: 30px;
     }
 
     .container2 .con-input input{
@@ -2090,6 +2108,10 @@ body {
     .registercontainer .container3{
         margin-left: auto;
         margin-right: auto;
+    }
+
+    .registercontainer .col-6 {
+        margin-bottom: 30px;
     }
 
     .registercontainer .col-6 h1 {
