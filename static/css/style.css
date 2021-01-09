@@ -637,6 +637,12 @@ body {
     top: 96px;
 }
 
+.addToLibraryfromBook {
+    position: absolute;
+    left: 100px;
+    top: 96px;
+}
+
 .fa-bookmark{
     font-size: 1.2rem;
 }
@@ -644,6 +650,14 @@ body {
 .fa-bookmark:hover {
     color: #138496;
     cursor: pointer;
+}
+
+.book2buttons p{
+    display: none;
+}
+
+.book2buttons:hover p {
+    display: inline;
 }
 
 /*  
@@ -1176,7 +1190,6 @@ body {
 .profCard {    
     position: fixed;
     top: 52%;
-    display: none;
 }
 
 .showprofileicon{
@@ -1304,6 +1317,58 @@ body {
 .addread2{
     display: none;
 }
+
+.accountContainer {
+    padding: 120px;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.leftbar .btn-group {
+    padding-top: 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+.leftbar .btn-group button {
+    background-color: #138496;
+    border: 1px solid #138496;
+    color: white;
+    padding: 10px 15px;
+    cursor: pointer; 
+    width: 100%;
+    display: block;
+    border-bottom-left-radius: 5px; 
+    border-bottom-right-radius: 5px;
+  }
+  
+  .leftbar .btn-group button:not(:last-child) {
+    border-bottom-left-radius: 0px; 
+    border-bottom-right-radius: 0px;
+    border-top-left-radius: 5px; 
+    border-top-right-radius: 5px;
+  }
+  
+  .leftbar .btn-group button:hover {
+     background-color: #097580;
+  }
+
+  .leftbar .btn-group button:focus {
+      border: none;
+      outline: none;
+  }
+
+  .secondAccountForm {
+      display: none;
+  }
+
+  .cardRenkleri .fa-edit:hover{
+      cursor: pointer;
+      color: #097580;
+  }
+
 
 /*
 #################################################################################################################
@@ -2187,4 +2252,23 @@ body {
     .cardRenkleri2 {
         margin-left: 1rem!important;
     }
+
+    .leftbar {
+        flex: auto;
+        max-width: 100%;
+        margin-bottom: 50px;
+    }
+
+    .accountContainer { 
+        padding: 60px 0px 20px 0px;
+    }
+
+    .addToLibraryfromBook {
+        position: absolute;
+        left: 30px;
+        top: 65px;
+    }
+
+
+
 }

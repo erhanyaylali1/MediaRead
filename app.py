@@ -333,6 +333,7 @@ def book_page(book_id):
         review = request.form.get("review")
         rate = request.form.get("rate")
         savedbook = request.form.get("savedbook")
+        addtolibrary = request.form.get("addToLibraryfromBook")
 
         if reviewVal is not None:
             reviewVal = reviewVal.split("-")
@@ -372,6 +373,22 @@ def book_page(book_id):
 
                 db.cursor.execute(sorgu)
                 db.con.commit()
+                
+            elif addtolibrary is not None:
+
+                userid = session["userId"]
+                ids = addtolibrary.split("-")
+                authorId = ids[0]
+                bookdId = ids[1]
+                
+                try:
+                    sorgu = "INSERT INTO mediaread.user_has_book (user_id, book_id, author_id) VALUES ("+str(userid)+","+str(bookdId)+","+authorId+")"
+                    db.cursor.execute(sorgu)
+                    db.con.commit()
+                    flash("You added This Book to Your Library Succesfully","success")
+                
+                except mysql.connector.Error:
+                    flash("You Already Have This Book in your Library","danger")
                 
 
             else:
@@ -845,6 +862,11 @@ def user(user_id):
     else:
 
         unfollow = request.form.get("unfollow")
+        edited = request.form.get("editqoute")
+        quoteid = request.form.get("quoteid")
+        reviewid = request.form.get("reviewid")
+        editreview = request.form.get("editreview")
+
         if unfollow is not None:
 
             sorgu = "DELETE FROM mediaread.user_has_friend WHERE userId = " + str(user_id) + " and friendId = " + str(unfollow)
@@ -852,6 +874,23 @@ def user(user_id):
             db.con.commit()
 
             
+            return redirect(request.url)
+
+        elif edited is not None:
+
+            sorgu = "UPDATE mediaread.quote SET mediaread.quote.quoteContent = '" + str(edited) + "' WHERE mediaread.quote.idQuote = " + str(quoteid)
+            db.cursor.execute(sorgu)
+            db.con.commit()
+
+            return redirect(request.url)
+
+        elif editreview is not None:
+
+            sorgu = "UPDATE mediaread.user_review_book SET review = '" + str(editreview) + "' WHERE mediaread.user_review_book.reviewId = " + str(reviewid)
+            
+            db.cursor.execute(sorgu)
+            db.con.commit()
+
             return redirect(request.url)
 
         else:
@@ -1173,6 +1212,69 @@ def register_page():
 
         
         return redirect(url_for("login_page"))
+
+
+
+@app.route('/users/<int:user_id>/account', methods = ["GET","POST"])
+def account(user_id):
+    
+    sorgu = "SELECT * FROM mediaread.user Where idUser ="+str(user_id)
+    db.cursor.execute(sorgu)
+    infos = db.cursor.fetchone()
+
+    if request.method == "GET":
+        
+        if "logged_in" in session:
+            if session["logged_in"]:
+                if user_id == session["userId"]:
+                    return render_template("account.html",infos=infos)
+        
+        return redirect(url_for("home_page"))
+
+    else:
+
+        name = request.form.get("name")
+        email = request.form.get("email")
+        username = request.form.get("username")
+        password = request.form.get("password")
+
+        oldpassword = request.form.get("oldpassword")
+        newpassword = request.form.get("newpassword")
+        newpassword2 = request.form.get("newpassword2")
+
+        if newpassword2 is None:
+
+            if  sha256_crypt.verify(password, infos[4]):
+                
+                sorgu = "UPDATE user SET username='"+username+"',email='"+email+"',fullName='"+name+"' WHERE idUser=" + str(user_id)
+                db.cursor.execute(sorgu)
+                db.con.commit()
+                flash("INFORMATIONS SUCCESFULLY UPDATED","success")
+
+            else:
+                flash("WRONG PASSWORD","danger")
+        
+        else:
+            
+            if newpassword2 == newpassword:
+                if sha256_crypt.verify(oldpassword, infos[4]):
+                    newpassword = sha256_crypt.hash(newpassword)
+                    sorgu = "UPDATE user SET password='"+newpassword+"' WHERE idUser="+str(user_id)
+                    db.cursor.execute(sorgu)
+                    db.con.commit()
+                    flash("INFORMATIONS SUCCESFULLY UPDATED","success")
+                else:
+                    flash("WRONG PASSWORD","danger")
+            else:
+                flash("PASSWORDS DON'T MATCH","danger")
+
+
+
+
+
+
+        return redirect(request.url)
+        
 
 
 

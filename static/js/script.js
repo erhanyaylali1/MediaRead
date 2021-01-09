@@ -290,4 +290,54 @@ $(document).ready(function() {
     msgInfos();
     
 
+    $("#firstForm").click(function(){
+        if($(".firstAccountForm").css("display") != "block")
+        {
+            $(".firstAccountForm").toggle();
+            $(".secondAccountForm").toggle();
+        }
+    })
+
+    $("#secondForm").click(function(){
+        if($(".secondAccountForm").css("display") != "block")
+        {
+            $(".firstAccountForm").toggle();
+            $(".secondAccountForm").toggle();
+        }
+    })
+
+    $("#passwordChecbox").change(function(){
+        if ($(".accountPassword").attr("type") == "password"){
+            $(".accountPassword").attr("type","text"); 
+        }
+        else {
+            $(".accountPassword").attr("type","password"); 
+        }
+    })
+
+    $(".quotePart .fa-edit").click(function(){
+        var id = $(this).attr("value");
+        var div = $(this).parent().parent().next();
+        var text = div.children(":first-child").text();
+        text = text.trim();
+        div.children(":first-child").hide();
+        div.append("<form method='POST'></form>");
+        div.children(":last-child").append("<textarea name='editqoute' style='width:100%'></textarea>");
+        div.children(":last-child").append("<button name='quoteid' class='btn btn-sm float-right btn-primary' value='"+id+"'>Edit</button>");
+        div.children(":last-child").children(":first-child").text(text);
+    })
+
+    $(".reviewPart .fa-edit").click(function(){
+        var id = $(this).attr("value");
+        var div = $(this).parent().parent().next();
+        var text = div.children(":first-child").text();
+        text = text.trim();
+        div.children(":first-child").hide();
+        div.append("<form method='POST'></form>");
+        div.children(":last-child").append("<textarea name='editreview' style='width:100%'></textarea>");
+        div.children(":last-child").append("<button name='reviewid' class='btn btn-sm float-right btn-primary' value='"+id+"'>Edit</button>");
+        div.children(":last-child").children(":first-child").text(text);
+        $(this).hide();
+    })
+
 });

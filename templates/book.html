@@ -80,9 +80,16 @@
                 {% if "logged_in" in session %}
                     {% if session["logged_in"] %}
 
-                        <form action="" method="post" class="saveButton">
+                    <form action="" method="post" class="addToLibraryfromBook book2buttons">
+                        <button type="submit" name="addToLibraryfromBook" class="btn" value="{{book[0][9]}}-{{book[0][0]}}">
+                            <i class="fas fa-plus"></i>
+                            <p>Add to Library</p>
+                        </button>
+                    </form>
+                        <form action="" method="post" class="saveButton book2buttons">
                             <button type="submit" name="savedbook" class="btn" value="{{session['userId']}}-{{book[0][0]}}">
-                                <i class="far fa-bookmark" data-toggle="tooltip" data-placement="top" title="Save"></i>
+                                <p>Save this Book</p>
+                                <i class="far fa-bookmark"></i>
                             </button>
                         </form>
 

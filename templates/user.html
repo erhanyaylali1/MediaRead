@@ -94,9 +94,18 @@
 
                         <div class="col-12 mt-4 cardRenkleri">
                             <div class="card">
-                                <div class="card-header">
-                                    <a href="/users/{{review[0]}}"> <b> {{ review[2] }} </b> </a> add a review to
-                                    <a href="/books/{{review[12]}}"> {{ review[13] }}</a>
+                                <div class="card-header d-flex w-100">
+                                    <a href="/users/{{review[0]}}"> <b> {{ review[2] }} </b> </a>&nbsp;add a review to
+                                    <a href="/books/{{review[12]}}">&nbsp;{{ review[13] }}</a>
+                                    {% if "logged_in" in session %}
+                                        {% if session["userId"] == user_id %}
+                                            <div class="ml-auto">
+                                                <i class="far fa-edit" value="{{review[5]}}"></i>
+                                            </div>
+                                        {% else %}
+                                        {% endif %}                                    
+                                    {% else %}
+                                    {% endif %} 
                                 </div>
                                 <div class="card-body p-3">
                                     <p class="card-text">
@@ -131,9 +140,18 @@
 
                             <div class="col-12 mt-4 cardRenkleri">
                                 <div class="card">
-                                    <div class="card-header d-flex">
-                                        <a href="/users/{{ quote[0] }}"> <b>{{ quote[2] }} </b></a> add a quote to 
-                                        <a href="/books/{{ quote[8] }}">{{ quote[12] }}</a>
+                                    <div class="card-header d-flex w-100">
+                                        <a href="/users/{{ quote[0] }}"> <b>{{ quote[2] }} </b></a>&nbsp;add a quote to 
+                                        <a href="/books/{{ quote[8] }}">&nbsp;{{ quote[12] }}</a>
+                                        {% if "logged_in" in session %}
+                                        {% if session["userId"] == user_id %}
+                                            <div class="ml-auto">
+                                                <i class="far fa-edit" value="{{quote[5]}}"></i>
+                                            </div>
+                                        {% else %}
+                                        {% endif %}                                    
+                                    {% else %}
+                                    {% endif %}
                                     </div>
                                     <div class="card-body">
                                         <p class="card-text">
