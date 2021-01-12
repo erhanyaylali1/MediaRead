@@ -1,1 +1,1 @@
-python app.py runserver
+python app2.py runserver
