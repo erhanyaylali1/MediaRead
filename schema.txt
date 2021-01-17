@@ -1,0 +1,236 @@
+
+
+-- -----------------------------------------------------
+-- Table `heroku_badd5654fb121ee`.`book`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `heroku_badd5654fb121ee`.`book` (
+  `idbook` INT  NOT NULL,
+  `bookName` INT NOT NULL,
+  `pageNumber` VARCHAR(45) NOT NULL,
+  `publisher` VARCHAR(45) NOT NULL,
+  `summaryBook` LONGTEXT NOT NULL,
+  `rate`  INT NULL DEFAULT '0',
+  `bookImage` INT  NOT NULL,
+  `author_id` INT  NOT NULL,
+  `readNumber` INT  NULL DEFAULT '0',
+  PRIMARY KEY (`idbook`, `author_id`));
+
+
+-- -----------------------------------------------------
+-- Table `heroku_badd5654fb121ee`.`category`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `heroku_badd5654fb121ee`.`category` (
+  `idCategory` INT  NOT NULL,
+  `categoryName` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idCategory`));
+
+
+-- -----------------------------------------------------
+-- Table `heroku_badd5654fb121ee`.`book_has_category`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `heroku_badd5654fb121ee`.`book_has_category` (
+  `book_id` INT  NOT NULL,
+  `author_id` INT  NOT NULL,
+  `category_id` INT  NOT NULL,
+  PRIMARY KEY (`book_id`, `author_id`, `category_id`),
+  CONSTRAINT `fk_book_has_category_book1`
+    FOREIGN KEY (`book_id` , `author_id`)
+    REFERENCES `heroku_badd5654fb121ee`.`book` (`idbook` , `author_id`),
+  CONSTRAINT `fk_book_has_category_category1`
+    FOREIGN KEY (`category_id`)
+    REFERENCES `heroku_badd5654fb121ee`.`category` (`idCategory`));
+
+
+-- -----------------------------------------------------
+-- Table `heroku_badd5654fb121ee`.`user`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `heroku_badd5654fb121ee`.`user` (
+  `idUser` INT  NOT NULL,
+  `username` VARCHAR(45) NOT NULL,
+  `fullName` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idUser`));
+ENGINE = InnoDB
+AUTO_INCREMENT = 30
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `heroku_badd5654fb121ee`.`quote`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `heroku_badd5654fb121ee`.`quote` (
+  `idQuote` INT  NOT NULL,
+  `quoteContent` LONGTEXT NULL DEFAULT NULL,
+  `user_id` INT  NOT NULL,
+  `book_id` INT  NOT NULL,
+  `author_id` INT  NOT NULL,
+  `time` DATETIME NOT NULL,
+  PRIMARY KEY (`idQuote`, `user_id`, `book_id`, `author_id`),
+  CONSTRAINT `fk_quote_book1`
+    FOREIGN KEY (`book_id` , `author_id`)
+    REFERENCES `heroku_badd5654fb121ee`.`book` (`idbook` , `author_id`),
+  CONSTRAINT `fk_quote_user1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `heroku_badd5654fb121ee`.`user` (`idUser`));
+ENGINE = InnoDB
+AUTO_INCREMENT = 17
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `heroku_badd5654fb121ee`.`readlist`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `heroku_badd5654fb121ee`.`readlist` (
+  `idreadlist` INT   NOT NULL,
+  `readlistName` VARCHAR(45) NULL DEFAULT NULL,
+  `summary` LONGTEXT NULL DEFAULT NULL,
+  PRIMARY KEY (`idreadlist`));
+ENGINE = InnoDB
+AUTO_INCREMENT = 4
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `heroku_badd5654fb121ee`.`user_has_book`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `heroku_badd5654fb121ee`.`user_has_book` (
+  `user_id`  INT NOT NULL,
+  `book_id`  INT NOT NULL,
+  `author_id` INT  NOT NULL,
+  PRIMARY KEY (`user_id`, `book_id`, `author_id`),
+  CONSTRAINT `fk_user_has_book1_book1`
+    FOREIGN KEY (`book_id` , `author_id`)
+    REFERENCES `heroku_badd5654fb121ee`.`book` (`idbook` , `author_id`),
+  CONSTRAINT `fk_user_has_book1_user1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `heroku_badd5654fb121ee`.`user` (`idUser`));
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `heroku_badd5654fb121ee`.`user_has_friend`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `heroku_badd5654fb121ee`.`user_has_friend` (
+  `userId`  INT NOT NULL,
+  `friendId`  INT  NOT NULL,
+  `flag`  INT NULL DEFAULT '0',
+  `time`  DATETIME NULL DEFAULT NULL,
+  PRIMARY KEY (`userId`, `friendId`),
+  CONSTRAINT `user_has_friend_ibfk_1`
+    FOREIGN KEY (`userId`)
+    REFERENCES `heroku_badd5654fb121ee`.`user` (`idUser`),
+  CONSTRAINT `user_has_friend_ibfk_2`
+    FOREIGN KEY (`friendId`)
+    REFERENCES `heroku_badd5654fb121ee`.`user` (`idUser`));
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `heroku_badd5654fb121ee`.`user_has_readlist`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `heroku_badd5654fb121ee`.`user_has_readlist` (
+  `user_idUser` INT  NOT NULL,
+  `readlist_idreadlist` INT  NOT NULL,
+  `book_idbook` INT  NOT NULL,
+  `book_author_id`  INT NOT NULL,
+  PRIMARY KEY (`user_idUser`, `readlist_idreadlist`, `book_idbook`, `book_author_id`),
+  CONSTRAINT `fk_user_has_readlist_book1`
+    FOREIGN KEY (`book_idbook` , `book_author_id`)
+    REFERENCES `heroku_badd5654fb121ee`.`book` (`idbook` , `author_id`),
+  CONSTRAINT `fk_user_has_readlist_readlist1`
+    FOREIGN KEY (`readlist_idreadlist`)
+    REFERENCES `heroku_badd5654fb121ee`.`readlist` (`idreadlist`),
+  CONSTRAINT `fk_user_has_readlist_user1`
+    FOREIGN KEY (`user_idUser`)
+    REFERENCES `heroku_badd5654fb121ee`.`user` (`idUser`));
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `heroku_badd5654fb121ee`.`user_read_book`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `heroku_badd5654fb121ee`.`user_read_book` (
+  `user_id` INT  NOT NULL,
+  `book_id` INT  NOT NULL,
+  `author_id` INT  NOT NULL,
+  `time` DATETIME NULL DEFAULT NULL,
+  PRIMARY KEY (`user_id`, `book_id`, `author_id`));
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `heroku_badd5654fb121ee`.`user_review_book`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `heroku_badd5654fb121ee`.`user_review_book` (
+  `reviewId` INT  NOT NULL,
+  `review` LONGTEXT NOT NULL,
+  `rate` INT  NOT NULL,
+  `user_id` INT  NOT NULL,
+  `book_id`  INT NOT NULL,
+  `author_id`  INT NOT NULL,
+  `time` DATETIME NOT NULL,
+  PRIMARY KEY (`reviewId`, `user_id`, `book_id`, `author_id`),
+  CONSTRAINT `fk_user_has_book1_book2`
+    FOREIGN KEY (`book_id` , `author_id`)
+    REFERENCES `heroku_badd5654fb121ee`.`book` (`idbook` , `author_id`),
+  CONSTRAINT `fk_user_has_book1_user2`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `heroku_badd5654fb121ee`.`user` (`idUser`));
+ENGINE = InnoDB
+AUTO_INCREMENT = 36
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `heroku_badd5654fb121ee`.`user_saved_book`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `heroku_badd5654fb121ee`.`user_saved_book` (
+  `user_id` INT  NOT NULL,
+  `book_id` INT  NOT NULL,
+  PRIMARY KEY (`user_id`, `book_id`),
+  CONSTRAINT `fk_user_has_book_book1`
+    FOREIGN KEY (`book_id`)
+    REFERENCES `heroku_badd5654fb121ee`.`book` (`idbook`),
+  CONSTRAINT `fk_user_has_book_user1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `heroku_badd5654fb121ee`.`user` (`idUser`));
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `heroku_badd5654fb121ee`.`user_will_read`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `heroku_badd5654fb121ee`.`user_will_read` (
+  `user_idUser` INT   NOT NULL,
+  `book_idbook` INT  NOT NULL,
+  `book_author_id`  INT NOT NULL,
+  PRIMARY KEY (`user_idUser`, `book_idbook`, `book_author_id`),
+  CONSTRAINT `fk_user_has_book1_book3`
+    FOREIGN KEY (`book_idbook` , `book_author_id`)
+    REFERENCES `heroku_badd5654fb121ee`.`book` (`idbook` , `author_id`),
+  CONSTRAINT `fk_user_has_book1_user3`
+    FOREIGN KEY (`user_idUser`)
+    REFERENCES `heroku_badd5654fb121ee`.`user` (`idUser`));
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

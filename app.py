@@ -8,9 +8,9 @@ from passlib.hash import sha256_crypt
 
 
 app = Flask(__name__)
+
 app.secret_key = "MediaRead"
-db = Database("127.0.0.1", "root", "3347", "mediaread")
-db.check = 0
+db = Database("eu-cdbr-west-03.cleardb.net", "bd4018a3c576d2", "ea541dfd", "heroku_badd5654fb121ee")
 
 
 @app.route('/')
