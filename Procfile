@@ -1,1 +1,1 @@
-web: python app:app
+Relase: python run.py
