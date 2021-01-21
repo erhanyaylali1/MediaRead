@@ -1,0 +1,108 @@
+{% extends "layout.html" %} {% block title %} {{ author[1] }} {% endblock %} {% block content %}
+
+<div class="container authorContainer">
+
+    <div class="row">
+        <div class="col-4">
+            <div class="card">
+                <div class="card-header">
+                    <p class="bookh3Title mb-0">Information about Author</p>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <img src="{{ author[3] }}" class="img-thumbnail mx-auto bookImage">
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-4">
+                            <b>Full Name</b>
+                        </div>
+                        <div class="col-8">
+                            {{ author[1] }}
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-4">
+                            <b>Summary</b>
+                        </div>
+                        <div class="col-8">
+                            {{ author[2] }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-8">
+            <table class="table table-hover authorBooksTable">
+                <thead class="" style="background-color: #C7935B; color:white;">
+                    <tr>
+                        <th>Picture</th>
+                        <th>Book Title</th>
+                        <th>Page</th>
+                        <th>Rate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for book in books %}
+
+                    <tr>
+                        <td>
+                            <a href="/books/{{ book[0] }}"><img src="{{ book[6] }}" alt=""></a>
+                        </td>
+                        <td><a href="/books/{{ book[0] }}">{{ book[1] }}</a></td>
+                        <td>{{ book[2] }}</td>
+                        <td>{{ book[5] }}</td>
+                    </tr>
+
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="row mt-5">
+                <div class="my-4 mx-5">
+                    <button class="btn btn-primary text-white addBookForm btnSmall">Add Book</button>
+                </div>
+                <form id="addBookFormId" class="ml-4 mb-5 p-3" action="" method="post" name="addBook" autocomplete="off">
+                    <div class="addBookForm">
+                        <h3 class="">Book's Information</h3>
+                        <div class="con-input">
+
+                            <input type="text" name="title" placeholder="Book Title" required="required">
+
+                        </div>
+                        <div class="con-input">
+
+                            <input type="text" name="page" placeholder="Book Page" required="required">
+
+                        </div>
+                        <div class="con-input">
+
+                            <input type="text" name="publisher" placeholder="Book Publisher" required="required">
+
+                        </div>
+                        <div class="con-input">
+
+                            <textarea class="text-white" rows="5" name="summary" placeholder="Book Summary" required="required"></textarea>
+
+                        </div>
+                        <div class="form-group con-input flex-column">
+                            <label for="exampleFormControlSelect2" class="text-white">Category</label>
+                            <select multiple class="form-control" name="cat" id="exampleFormControlSelect2">
+                                {% for i in range(0, length)  %}                                    
+                                    <option value="{{categories[i][0]}}">{{categories[i][1]}}</option>
+                                {% endfor %}
+                              </select>
+                        </div>
+                        <div class="con-input">
+
+                            <input type="text" name="image" placeholder="Book Image URL" required="required">
+
+                        </div>
+                        <button type="submit" class="btn formButton btnSmall">Add</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    {% endblock %}

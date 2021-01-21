@@ -1,0 +1,46 @@
+{% extends "layout.html" %} {% block title %} Add Author {% endblock %} {% block content %}
+
+<div class="row">
+
+    <div class="col-5">
+
+
+        <form action="" method="post" name="addAuthor" autocomplete="off">
+            <div class="container2">
+                <p class="display-4">Author's Information</p>
+                <div class="con-input">
+
+                    <input type="text" name="fullname" placeholder="Author Full Name" required="required">
+
+                </div>
+                <div class="con-input">
+
+                    <textarea class="text-white" rows="5" name="summary" placeholder="Author Summary" required="required"></textarea>
+
+                </div>
+                <div class="con-input">
+
+                    <input type="text" name="image" placeholder="Author Image URL" required="required">
+
+                </div>
+                <button type="submit" class="btn formButton">Add</button>
+            </div>
+        </form>
+    </div>
+    <div class="verticalLine">
+
+    </div>
+    <div class="col-6">
+        <div class="container3">
+            <h1 class="display-4">Add Author</span>
+            </h1>
+            <p>By Adding Author, We can share larger Author Database</p>
+            <p>You can help us share better experiements by adding authors that doesn't exist in our database</p>
+        </div>
+    </div>
+
+</div>
+
+
+
+{% endblock %}

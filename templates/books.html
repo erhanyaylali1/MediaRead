@@ -1,0 +1,89 @@
+{% extends "layout.html" %} {% block title %} Books {% endblock %} {% block content %}
+
+<div class="container booksContainer">
+
+    <div class="card titlecard mb-5">
+        <div class="card-body pl-5 d-flex flex-row align-items-center">
+            <div>
+                <p class="bookh3Title m-0">Books (Total: {{ length }} Books)</p>
+            </div>
+            <div class="ml-auto">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-info dropdown-toggle btnSmall" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Sort
+                    </button>
+                    <div class="dropdown-menu bg-info">
+                        <a type="button" class="btn btn-info" href="?sort=book_a">Book Name <i class=" ml-1 fas fa-arrow-down"></i></a>
+                        <a type="button" class="btn btn-info" href="?sort=book_d">Book Name <i class=" ml-1 fas fa-arrow-up"></i></a>
+                        <a type="button" class="btn btn-info" href="?sort=author_a">Author Name <i class=" ml-1 fas fa-arrow-down"></i></a>
+                        <a type="button" class="btn btn-info" href="?sort=author_d">Author Name <i class=" ml-1 fas fa-arrow-up"></i></a>
+                        <a type="button" class="btn btn-info" href="?sort=rate_d">Rate <i class=" ml-1 fas fa-arrow-down"></i></a>
+                        <a type="button" class="btn btn-info" href="?sort=rate_a">Rate <i class=" ml-1 fas fa-arrow-up"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cardDeck px-4 mb-5">
+
+        {%for i in range(0, length)%}
+
+        <div class="card">
+            
+            {% if "logged_in" in session and session["logged_in"] == True %}
+                
+
+                    <div class="dotdiv bg-danger"><i class="fas fa-ellipsis-v dots"></i></div>
+                    <form action="" method="post">
+                        <button name="bookId" value="{{allData[i][0]}}-{{allData[i][7]}}" type="submit" class="addToLibrary btn btn-primary"><span class="mr-2">Add to Library</span><i class="far fa-plus-square"></i></button>
+                    </form>
+                    <button class="addtoreadlist addread2 btn btn-primary"><span class="mr-2">Add to Readlist</span><i class="far fa-plus"></i></button>
+                    <form action="" method="post">
+                    
+                        <div class="readlistList pt-2 px-3">
+                            <fieldset id="">      
+                                <legend class="text-white borderB pb-2 px-4">Select Playlist</legend>
+                                <table class="table table-hover authorBooksTable mb-0">
+                                    <tbody>
+
+                                        {% for readlist in readlists %}
+
+                                            <tr>
+                                                <td><input type="checkbox" name="readlist" value="{{allData[i][0]}}-{{allData[i][7]}}-{{readlist[4]}}"></td>
+                                                <td> {{ readlist[5] }} </td>
+                                            </tr>
+
+                                        {% endfor %}
+                                        
+                                    </tbody>
+                                </table>    
+                            </fieldset>       
+                            
+                            <button class="btn btn-primary btn-sm mb-2 mt-1 float-right addlistbut">Add</button>
+                        </div>
+
+                    </form>
+                        
+            
+            
+            {% else %}
+            {% endif %}
+
+            <a href="/books/{{ allData[i][0] }}"><img class="card-img-top" src="{{ allData[i][6] }}" alt="Book Card Image"></a>
+            <div class="card-body">
+                <p><a href="/books/{{ allData[i][0] }}">{{ allData[i][1] }}</a></p>
+                <p class="card-text"><a href="/authors/{{ allData[i][7] }}"> {{ allData[i][10] }}</a></p>
+                {% if allData[i][5] != 0 %}
+                <p class="card-text text-right "><small class="">Rate: {{ allData[i][5] }}</small></p>
+                {% else %}
+                <p class="card-text text-right"><small class="">No Rate Yet </small></p>
+                {% endif %}
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

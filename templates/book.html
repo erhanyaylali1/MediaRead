@@ -1,0 +1,236 @@
+    {% extends "layout.html" %} {% block title %} {{ book[0][1] }} {% endblock %} {% block content %}
+
+
+<div class="container bookContainer">
+
+    <div class="row">
+
+        <div class="col-5 mb-5">
+            <div class="card">
+                <div class="card-header text-left">
+                    <p class="bookh3Title mb-0">Informations of Books</p>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <img src="{{ book[0][6] }}" class="img-thumbnail mx-auto bookImage">
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-4">
+                            <b>Title</b>
+                        </div>
+                        <div class="col-8">
+                            {{ book[0][1] }}
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-4">
+                            <b>Author</b>
+                        </div>
+                        <div class="col-8">
+                            <a href="/authors/{{ book[0][9] }}">{{ book[0][10] }}</a>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-4">
+                            <b>Category</b>
+                        </div>
+                        <div class="col-8">
+                            {% for boo in book %}
+                            <a href="/categories/{{ boo[16] }}">{{ boo[17] }}, </a> {% endfor %}
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-4">
+                            <b>Summary</b>
+                        </div>
+                        <div class="col-8">
+                            {{ book[0][4] }}
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-4">
+                            <b>Page Number</b>
+                        </div>
+                        <div class="col-8">
+                            {{ book[0][2] }}
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-4">
+                            <b>Read Number</b>
+                        </div>
+                        <div class="col-8">
+                            {{ book[0][8] }}
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-4">
+                            <b>Rate</b>
+                        </div>
+                        <div class="col-8">
+                            {{ book[0][5] }}/10
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-7 mb-5">
+            <div class="row mb-3">
+                {% if "logged_in" in session %}
+                    {% if session["logged_in"] %}
+
+                    <form action="" method="post" class="addToLibraryfromBook book2buttons">
+                        <button type="submit" name="addToLibraryfromBook" class="btn" value="{{book[0][9]}}-{{book[0][0]}}">
+                            <i class="fas fa-plus"></i>
+                            <p>Add to Library</p>
+                        </button>
+                    </form>
+                        <form action="" method="post" class="saveButton book2buttons">
+                            <button type="submit" name="savedbook" class="btn" value="{{session['userId']}}-{{book[0][0]}}">
+                                <p>Save this Book</p>
+                                <i class="far fa-bookmark"></i>
+                            </button>
+                        </form>
+
+                    {% else %}
+                    {% endif %}
+                
+                {% else %}
+                {% endif %}
+                <div class="col-6">
+                    <div class="card bookCard">
+                        <div class="card-header text-center" id="reviewButton">
+                            Reviews
+                        </div>
+                        {% if "logged_in" in session %}
+                            {% if session["logged_in"] %}
+                            <button name="addReview" type="submit" class="addToReadBook btn btn-info"><i class="far fa-plus-square"></i><span class="ml-2">Add a Review</span></button>
+                            <div class="addReview addReview1">
+                                <form method="post" name="new_review">
+                                    <div class="readBookForm">
+                                        <h3 class="">Add Review</h3>
+                                        <div class="con-input">
+                                            <input type="text" name="rate" , placeholder="Rate out of 10" required="required">
+                                        </div>
+                                        <div class="con-input ">
+
+                                            <textarea class="text-white " rows="5 " name="review" placeholder="Review for Book" required="required "></textarea>
+
+                                        </div>
+                                        <button type="submit " name="addReviewButton" value='{{ session["userId"] }}-{{ book[0][9] }}' class="btn btnSmall formButton ">Add</button>
+                                    </div>
+                                </form>
+                            </div>
+                            {% else %} {% endif %}
+                        {% else %} {% endif %}
+
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-header text-center" id="quoteButton">
+                            Quotes
+                        </div>
+                        {% if "logged_in" in session %}
+                            {% if session["logged_in"] %}
+                            <button name="addQuote" type="submit" class="addToReadBook btn btn-info"><i class="far fa-plus-square"></i><span class="ml-2">Add a Quote</span></button>
+                            <div class="addReview">
+                                <form method="post" name="new_quote">
+                                    <div class="readBookForm">
+                                        <h3 class=" ">Add Quote</h3>
+                                        <div class="con-input ">
+
+                                            <textarea class="text-white " rows="5 " name="quote" placeholder="Quote from Book" required="required "></textarea>
+
+                                        </div>
+                                        <button type="submit " name="addQuoteButton" value='{{ session["userId"] }}-{{ book[0][9] }}' class="btn formButton btnSmall">Add</button>
+                                    </div>
+                                </form>
+                            </div>
+                            {% else %} {% endif %}
+                        {% else %} {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div id="reviews" class="row">
+                <h3 class="text-center bookh3Title">Reviews</h3>
+                
+                {% if check2 == 1 %}
+                <div class="col-10 mx-auto mt-4">
+                    <div class="card py-2 px-5">
+                        No Review Yet.
+                    </div>
+                </div>
+                {% else %} {% for review in reviews %}
+
+                <div class="col-10 mx-auto mt-4 cardRenkleri">
+                    <div class="card">
+                        <div class="card-header">
+                            <a href="/users/{{ review[12] }}"><b>{{ review[18]}}</b></a> add a review.
+
+                        </div>
+                        <div class="card-body p-3">
+                            <p class="card-text">
+                                {{ review[10]}}
+                            </p>
+                        </div>
+
+                        <div class="card-footer p-1 px-3">
+                            <span class="text-left">
+                                {{ review[15]}}
+                            </span>
+                            <span class="float-right">
+                                Rate: {{ review[11]}}/10
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor %} {% endif %}
+
+            </div>
+
+            <div id="quotes" class="row">
+
+                <h3 class="text-center bookh3Title">Quotes</h3>
+
+                {% if check == 0 %} {% for quote in quotes %}
+
+                <div class="col-10 mx-auto mt-4 cardRenkleri">
+                    <div class="card">
+                        <div class="card-header">
+                            <a href="/users/{{ quote[15] }}"><b>{{ quote[17] }}</b></a> add a quote.
+                            <span class="float-right">
+                                        {{ quote[14] }}   
+                                    </span>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">
+                                {{ quote[10] }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor %} {% else %}
+
+                <div class="col-10 mx-auto mt-4">
+                    <div class="card py-2 px-5">
+                        No Quote Yet.
+                    </div>
+                </div>
+
+                {% endif %}
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
